@@ -16,6 +16,7 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 
+set nocompatible
 set cursorline " Adds horizontal line through cursor
 set showmatch
 
@@ -48,6 +49,12 @@ nnoremap B ^
 nnoremap E $
 nnoremap $ <nop>
 nnoremap ^ <nop>
+
+nnoremap <tab> %
+vnoremap <tab> %
+
+nnoremap j gj
+nnoremap k gk
 
 " Remap leader
 let mapleader = "\<Space>"

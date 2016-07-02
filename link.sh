@@ -9,6 +9,6 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 # Fish
 mkdir -p ~/.config/fish
-ln -s config.fish ~/.config/fish
+ln -sr config.fish ~/.config/fish
 
 # Bash

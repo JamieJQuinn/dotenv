@@ -4,8 +4,8 @@
 mkdir -p ~/.vim
 mkdir -p ~/.config
 ln -s ~/.vim ~/.config/nvim
-ln -s .vimrc ~/.config/nvim/init.vim
-ln -s .vimrc ~/.vimrc
+ln -sr .vimrc ~/.vimrc
+ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 # Fish
 mkdir -p ~/.config/fish

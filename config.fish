@@ -1,13 +1,14 @@
 # Python
-eval (python -m virtualfish)
+#eval (python -m virtualfish)
 
 # RVM 
-rvm default
-set PATH /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games /usr/local/games /snap/bin /home/jamie/.rvm/bin ~/.rvm/bin
-function be
-	bundle exec $argv
-end
-set RUBYGEMS_GEMDEPS -
+#set PATH $PATH ~/.rvm/bin
+#rvm default
+#alias be="bundle exec"
+#set RUBYGEMS_GEMDEPS -
+
+# ASDF
+#source ~/.asdf/asdf.fish
 
 function fish_user_key_bindings
   bind \cz fg

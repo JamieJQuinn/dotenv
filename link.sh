@@ -6,9 +6,3 @@ mkdir -p ~/.config
 ln -s ~/.vim ~/.config/nvim
 ln -sr .vimrc ~/.vimrc
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-
-# Fish
-mkdir -p ~/.config/fish
-ln -sr config.fish ~/.config/fish
-
-# Bash

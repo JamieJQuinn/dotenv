@@ -4,17 +4,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-" Sets syntax + indentation per filetype
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-
 " Tab stuff
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
+
+" Sets syntax + indentation per filetype
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
 
 set nocompatible
 set cursorline " Adds horizontal line through cursor
@@ -25,20 +25,42 @@ set foldenable
 set foldlevelstart=10
 set foldmethod=indent
 
+" Toggle relative/absolute numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <C-n> :call NumberToggle()<cr>
+
 " Enable mouse
 set mouse=a
 
 set shell=sh
+" Vim replaces term title with files being edited
 set title
+" Line numbering
 set number
+" Current number tracking
 set ruler
-set hidden " Can change buffer without saving current
+" Can change buffer without saving current
+set hidden 
+" Increase history limit
 set history=1000
 
+" Search options
 set ignorecase
 set smartcase
 set hlsearch
 set incsearch
+
+" Set global swapfile storage, rather than clutter working dirs
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
 
 " Show whitespace
 set listchars=tab:>-,trail:·,eol:$

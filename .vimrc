@@ -1,8 +1,8 @@
-" auto-install vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
+" Remap leader
+let mapleader = "\<Space>"
+
+" Fix sloppy linux
+set backspace=indent,eol,start
 
 " Tab stuff
 set tabstop=2
@@ -16,40 +16,31 @@ filetype on
 filetype plugin on
 filetype indent on
 
-set nocompatible
-set cursorline " Adds horizontal line through cursor
-set showmatch
-
 " Code folds at indent
 set foldenable
 set foldlevelstart=10
 set foldmethod=indent
-
-" Toggle relative/absolute numbers
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
-
-nnoremap <C-n> :call NumberToggle()<cr>
-
-" Enable mouse
+" Mouse support
 set mouse=a
-
+" Shell
 set shell=sh
 " Vim replaces term title with files being edited
 set title
-" Line numbering
-set number
+"Line numbering
+"set number
+"set relativenumber
 " Current number tracking
 set ruler
 " Can change buffer without saving current
 set hidden 
 " Increase history limit
 set history=1000
+" Who needs vi?
+set nocompatible
+" Adds horizontal line through cursor
+set cursorline 
+" Show matching brackets
+set showmatch
 
 " Search options
 set ignorecase
@@ -64,44 +55,57 @@ set undodir=~/.vim/undo//
 
 " Show whitespace
 set listchars=tab:>-,trail:·,eol:$
-nnoremap <silent> <leader>s :set nolist!<CR>
+nnoremap <silent> <Leader>s :set nolist!<CR>
 
-" remap to beginning/end of line
-nnoremap B ^
-nnoremap E $
-nnoremap $ <nop>
-nnoremap ^ <nop>
+" Remap to beginning/end of line
+noremap B ^
+noremap E $
+noremap $ <nop>
+noremap ^ <nop>
 
+noremap B ^
+noremap E $
+noremap $ <nop>
+noremap ^ <nop>
+
+noremap B ^
+noremap E $
+noremap $ <nop>
+noremap ^ <nop>
+
+" Easier bracket matching
 nnoremap <tab> %
 vnoremap <tab> %
 
+" Better movement
 nnoremap j gj
 nnoremap k gk
 
-" Remap leader
-let mapleader = "\<Space>"
-
 " Easy C+P
-vmap <leader>y "+y
+vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" Fix sloppy linux
-set backspace=indent,eol,start
+function! ToggleGutter()
+  :set invnumber
+  :set invrelativenumber
+endfunction
 
-" CtrlP stuff
-" Ignore everything in .gitignore:
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']  
+nnoremap <Leader>g :GitGutterSignsToggle<CR>
+nnoremap <Leader>n :call ToggleGutter()<CR>
 
-" NERDTree Stuff
-map <C-\> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+nnoremap <Leader>v :vspl<cr>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>e :e#<cr>
 
-" NERDCommenter Stuff
-map <C-_> <leader>c<space>
+"auto-install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
 
 call plug#begin()    
 " Theme
@@ -135,6 +139,18 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
 
 call plug#end()
+
+" CtrlP stuff
+" Ignore everything in .gitignore:
+let g:ctrlp_use_caching = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+
+" NERDTree Stuff
+map <C-\> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" NERDCommenter Stuff
+map <C-_> <Leader>c<space>
 
 " Enable solarized theme
 syntax enable

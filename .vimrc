@@ -23,7 +23,7 @@ set foldmethod=indent
 " Mouse support
 set mouse=a
 " Shell
-set shell=sh
+set shell=/bin/sh
 " Vim replaces term title with files being edited
 set title
 "Line numbering
@@ -47,11 +47,6 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-
-" Set global swapfile storage, rather than clutter working dirs
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
 
 " Show whitespace
 set listchars=tab:>-,trail:·,eol:$
@@ -88,6 +83,22 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
+
+nmap <Leader>l <C-w>l
+nmap <Leader>h <C-w>h
+
+nmap <Leader>m :call ToggleMouse()<CR>
+
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+endfunc
 
 function! ToggleGutter()
   :set invnumber
@@ -132,6 +143,11 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 " Auto-brackets
 Plug 'Raimondi/delimitMate'
+" Code Completion
+Plug 'Valloric/YouCompleteMe'
+
+" Searching
+Plug 'rking/ag.vim', {'on': 'Ag'}
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
@@ -151,6 +167,31 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " NERDCommenter Stuff
 map <C-_> <Leader>c<space>
+
+" Neomake
+autocmd! BufWritePost * Neomake
+let g:neomake_ruby_rubocop_maker = {
+    \ 'args': ['--verbose'],
+    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+    \ }
+let g:neomake_ruby_rubocop_makers = ['rubocop']
+
+let g:neomake_cpp_gpp_maker = {
+    \ 'args': [],
+    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+    \ }
+let g:neomake_cpp_gpp_makers = ['gpp']
+
+if executable('pt')
+  " Tell unite to use ag for searching
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+  " Tell ag.vim to use pt binary
+  let g:ag_prg="pt --nogroup --nocolor --column"
+  let g:ag_working_path_mode="r"
+endif
 
 " Enable solarized theme
 syntax enable

@@ -1,0 +1,16 @@
+# User bin
+set PATH $PATH ~/.bin
+
+# ctrl-f runs fg
+function fish_user_key_bindings
+  bind \cf 'fg %'
+end
+
+# Nice git aliases
+alias gc 'git checkout'
+alias gs 'git status'
+alias gd 'git diff'
+alias gb 'git branch'
+
+# easy open
+alias a 'xdg-open'

@@ -1,19 +1,7 @@
-# User bin
-set PATH $PATH /home/vagrant/.bin
+. ~/.config/fish/config.fish
 
 # fap devops
 set PATH $PATH /home/vagrant/prog/fap/devops-scripts
-
-function fish_user_key_bindings
-  bind \cf 'fg %'
-end
-
-alias gc 'git checkout'
-alias gs 'git status'
-alias gd 'git diff'
-alias gb 'git branch'
-
-alias a 'xdg-open'
 
 alias be 'bundle exec'
 
@@ -24,9 +12,6 @@ end
 function mix
   elixir --erl '-smp enable' -S mix $argv
 end
-
-# ASDF
-#source ~/.asdf/asdf.fish
 
 # Direnv
 eval (direnv hook fish)

@@ -133,6 +133,7 @@ Plug 'neomake/neomake'
 Plug 'tpope/vim-surround'
 " Nice bar @ bottom
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Easy commenting
 Plug 'scrooloose/nerdcommenter'
 " Notes git diffs in gutter
@@ -193,6 +194,21 @@ if executable('pt')
   let g:ag_prg="pt --nogroup --nocolor --column"
   let g:ag_working_path_mode="r"
 endif
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+" airline symbols
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " Enable solarized theme
 syntax enable

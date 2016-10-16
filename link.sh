@@ -1,7 +1,7 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
 # Get working directory
-set DIR (cd (dirname (status -f)); and pwd) 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Vim/Nvim
 mkdir -p ~/.vim
@@ -13,8 +13,9 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 # Fish
 mkdir -p ~/.config/fish
 ln -s $DIR/config.fish.global ~/.config/fish/config.fish.global
-if test -e ~/.config/fish/config.fish
+if [ -e "~/.config/fish/config.fish" ]
+then
   echo "Local fish config exists already"
 else
   echo ". ~/.config/fish/config.fish.global" >> ~/.config/fish/config.fish
-end
+fi

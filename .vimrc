@@ -153,6 +153,7 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-rails'
 Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
+Plug 'parkr/vim-jekyll'
 
 call plug#end()
 

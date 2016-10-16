@@ -12,5 +12,10 @@ alias gs 'git status'
 alias gd 'git diff'
 alias gb 'git branch'
 
+# Greeting
+function fish_greeting
+  w
+end
+
 # easy open
 alias a 'xdg-open'

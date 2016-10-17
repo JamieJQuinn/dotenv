@@ -1,117 +1,6 @@
 " Remap leader
 let mapleader = "\<Space>"
 
-" Fix sloppy linux
-set backspace=indent,eol,start
-
-" Tab stuff
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-
-" Sets syntax + indentation per filetype
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-
-" Code folds at indent
-set foldenable
-set foldlevelstart=10
-set foldmethod=indent
-" Mouse support
-set mouse=a
-" Shell
-set shell=/bin/sh
-" Vim replaces term title with files being edited
-set title
-"Line numbering
-"set number
-"set relativenumber
-" Current number tracking
-set ruler
-" Can change buffer without saving current
-set hidden 
-" Increase history limit
-set history=1000
-" Who needs vi?
-set nocompatible
-" Adds horizontal line through cursor
-set cursorline 
-" Show matching brackets
-set showmatch
-
-" Search options
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
-
-" Show whitespace
-set listchars=tab:>-,trail:·,eol:$
-nnoremap <silent> <Leader>s :set nolist!<CR>
-
-" Remap to beginning/end of line
-noremap B ^
-noremap E $
-noremap $ <nop>
-noremap ^ <nop>
-
-noremap B ^
-noremap E $
-noremap $ <nop>
-noremap ^ <nop>
-
-noremap B ^
-noremap E $
-noremap $ <nop>
-noremap ^ <nop>
-
-" Easier bracket matching
-nnoremap <tab> %
-vnoremap <tab> %
-
-" Better movement
-nnoremap j gj
-nnoremap k gk
-
-" Easy C+P
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-
-nmap <Leader>l <C-w>l
-nmap <Leader>h <C-w>h
-
-nmap <Leader>m :call ToggleMouse()<CR>
-
-function! ToggleMouse()
-    " check if mouse is enabled
-    if &mouse == 'a'
-        " disable mouse
-        set mouse=
-    else
-        " enable mouse everywhere
-        set mouse=a
-    endif
-endfunc
-
-function! ToggleGutter()
-  :set invnumber
-  :set invrelativenumber
-endfunction
-
-nnoremap <Leader>g :GitGutterSignsToggle<CR>
-nnoremap <Leader>n :call ToggleGutter()<CR>
-
-nnoremap <Leader>v :vspl<cr>
-nnoremap <Leader>q :q<cr>
-nnoremap <Leader>e :e#<cr>
-
 "auto-install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -146,7 +35,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'Raimondi/delimitMate'
 " Code Completion
 Plug 'Valloric/YouCompleteMe'
-
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
 
@@ -155,6 +43,9 @@ Plug 'tpope/vim-rails'
 Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
 Plug 'parkr/vim-jekyll'
+" Python indentation
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
 
 call plug#end()
 
@@ -225,7 +116,104 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+" YCM
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 " Enable solarized theme
 syntax enable
 set background=dark
 colorscheme solarized
+
+" Fix sloppy linux
+set backspace=indent,eol,start
+
+" Tab stuff
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+
+" Sets syntax + indentation per filetype
+let python_highlight_all=1
+syntax on
+filetype plugin indent on
+
+" Code folds at indent
+set foldenable
+set foldlevelstart=10
+set foldmethod=indent
+" Mouse support
+set mouse=a
+" Shell
+set shell=/bin/sh
+" Vim replaces term title with files being edited
+set title
+"Line numbering
+"set number
+"set relativenumber
+" Current number tracking
+set ruler
+" Can change buffer without saving current
+set hidden 
+" Increase history limit
+set history=1000
+" Who needs vi?
+set nocompatible
+" Adds horizontal line through cursor
+set cursorline 
+" Show matching brackets
+set showmatch
+
+" Search options
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+" Show whitespace
+set listchars=tab:>-,trail:·,eol:$
+nnoremap <silent> <Leader>s :set nolist!<CR>
+
+" Remap to beginning/end of line
+noremap B ^
+noremap E $
+noremap $ <nop>
+noremap ^ <nop>
+
+" Easier bracket matching
+nnoremap <tab> %
+vnoremap <tab> %
+
+" Better movement
+nnoremap j gj
+nnoremap k gk
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+nmap <Leader>m :call ToggleMouse()<CR>
+
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+endfunc
+
+function! ToggleGutter()
+  :set invnumber
+  :set invrelativenumber
+endfunction
+
+nnoremap <Leader>n :call ToggleGutter()<CR>
+
+nnoremap <Leader>v :vspl<cr>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>e :e#<cr>

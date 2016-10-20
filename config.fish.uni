@@ -1,0 +1,14 @@
+. ~/.config/fish/config.fish.global
+
+# anaconda
+set PATH ~/anaconda3/bin $PATH
+set PATH ~/anaconda2/bin $PATH
+# Mendeley
+set PATH ~/bin/mendeley/bin $PATH
+# mpi for fortran
+set PATH /usr/lib64/mpich/bin $PATH
+
+# nvim
+alias vim 'nvim'
+setenv VISUAL /usr/bin/nvim
+setenv EDITOR "$VISUAL"

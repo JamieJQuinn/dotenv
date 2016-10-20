@@ -68,17 +68,15 @@ map <C-_> <Leader>c<space>
 
 " Neomake
 autocmd! BufWritePost * Neomake
-let g:neomake_ruby_rubocop_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
-let g:neomake_ruby_rubocop_makers = ['rubocop']
-
-let g:neomake_cpp_gpp_maker = {
-    \ 'args': [],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
-let g:neomake_cpp_gpp_makers = ['gpp']
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_warning_sign = {
+  \ 'text': 'W',
+  \ 'texthl': 'WarningMsg',
+  \ }
+let g:neomake_error_sign = {
+  \ 'text': 'E',
+  \ 'texthl': 'ErrorMsg',
+  \ }
 
 if executable('pt')
   " Tell unite to use ag for searching

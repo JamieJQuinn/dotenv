@@ -37,12 +37,15 @@ Plug 'Raimondi/delimitMate'
 Plug 'Valloric/YouCompleteMe'
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
+" Testing in vim
+Plug 'janko-m/vim-test'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
 Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
 Plug 'parkr/vim-jekyll'
+Plug 'jalvesaq/Nvim-R'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -88,6 +91,21 @@ if executable('pt')
   let g:ag_prg="pt --nogroup --nocolor --column"
   let g:ag_working_path_mode="r"
 endif
+
+" Vim Test
+nmap <silent> <leader>T :TestNearest<CR>
+nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+
+function! EchoStrategy(cmd)
+  echo 'Command for running tests: ' . a:cmd
+endfunction
+let test#custom_strategies = {'echo': function('EchoStrategy')}
+"let test#strategy = 'echo'
+let test#elixir#exunit#executable = 'elixir --erl "-smp enable" -S mix test'
+let test#filename_modifier = ':p'
+let test#strategy = "neovim"
 
 " air-line
 let g:airline_powerline_fonts = 1
@@ -187,6 +205,12 @@ noremap ^ <nop>
 " Easier bracket matching
 nnoremap <tab> %
 vnoremap <tab> %
+
+" Better C+P
+nnoremap <Leader>y "+y
+vnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
+vnoremap <Leader>p "+p
 
 " Better movement
 nnoremap j gj

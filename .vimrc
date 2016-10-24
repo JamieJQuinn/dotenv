@@ -216,6 +216,13 @@ vnoremap <Leader>p "+p
 nnoremap j gj
 nnoremap k gk
 
+" Weaning myself off arrow keys
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" Window switching
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -241,6 +248,9 @@ endfunction
 
 nnoremap <Leader>n :call ToggleGutter()<CR>
 
+" Just easier commands
+nnoremap <Leader>x :x<cr>
 nnoremap <Leader>v :vspl<cr>
+nnoremap <Leader>w :w<cr>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>

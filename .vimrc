@@ -35,6 +35,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Raimondi/delimitMate'
 " Code Completion
 Plug 'Valloric/YouCompleteMe'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Testing in vim
@@ -46,6 +47,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
 Plug 'parkr/vim-jekyll'
 Plug 'jalvesaq/Nvim-R'
+Plug 'tpope/vim-markdown'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -61,6 +63,11 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>
 map <Leader>gd :Gdiff<CR>
+
+" Vim-Markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
+autocmd BufNewFile,BufReadPost *.mdk set filetype=markdown
 
 " NERDTree Stuff
 map <C-\> :NERDTreeToggle<CR>
@@ -140,6 +147,7 @@ let g:airline_symbols.linenr = ''
 " YCM
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Enable solarized theme
 syntax enable

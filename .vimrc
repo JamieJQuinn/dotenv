@@ -193,7 +193,6 @@ set nocompatible
 set cursorline 
 " Show matching brackets
 set showmatch
-
 " Search options
 set ignorecase
 set smartcase
@@ -202,7 +201,10 @@ set incsearch
 
 " Show whitespace
 set listchars=tab:>-,trail:·,eol:$
-nnoremap <silent> <Leader>s :set nolist!<CR>
+nnoremap <silent> <Leader>w :set nolist!<CR>
+
+" Enable/Disable spellchecker
+noremap <silent> <Leader>s :set spelllang=en_gb invspell<CR>
 
 " Remap to beginning/end of line
 noremap B ^
@@ -224,6 +226,13 @@ vnoremap <Leader>p "+p
 nnoremap j gj
 nnoremap k gk
 
+" Weaning myself off arrow keys
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" Window switching
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -249,6 +258,8 @@ endfunction
 
 nnoremap <Leader>n :call ToggleGutter()<CR>
 
+" Just easier commands
+nnoremap <Leader>x :x<cr>
 nnoremap <Leader>v :vspl<cr>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>

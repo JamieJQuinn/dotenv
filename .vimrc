@@ -47,7 +47,10 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
 Plug 'parkr/vim-jekyll'
 Plug 'jalvesaq/Nvim-R'
-Plug 'tpope/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'elzr/vim-json'
+Plug 'JamieJQuinn/vim-madoko'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -64,10 +67,11 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>i
 map <Leader>gd :Gdiff<CR>
 
-" Vim-Markdown
+" Vim-Pandoc
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mdk set filetype=markdown
+let g:ycm_filetype_blacklist = {}
 
 " NERDTree Stuff
 map <C-\> :NERDTreeToggle<CR>
@@ -75,6 +79,17 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " NERDCommenter Stuff
 map <C-_> <Leader>c<space>
+
+"Vim-R
+let R_assign = 0
+
+" Tabular
+if exists(":Tabularize")
+  nmap <Leader>t= :Tabularize /=<CR>
+  vmap <Leader>t= :Tabularize /=<CR>
+  nmap <Leader>t: :Tabularize /:\zs<CR>
+  vmap <Leader>t: :Tabularize /:\zs<CR>
+endif
 
 " Neomake
 autocmd! BufWritePost * Neomake

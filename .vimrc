@@ -49,7 +49,6 @@ Plug 'parkr/vim-jekyll'
 Plug 'jalvesaq/Nvim-R'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'elzr/vim-json'
 Plug 'JamieJQuinn/vim-madoko'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'

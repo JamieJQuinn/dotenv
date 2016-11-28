@@ -7,6 +7,12 @@ set PATH ~/anaconda2/bin $PATH
 set PATH ~/bin/mendeley/bin $PATH
 # mpi for fortran
 set PATH /usr/lib64/mpich/bin $PATH
+# gcc
+set PATH /maths/scratch/local/bin $PATH
+# Latex
+set PATH /usr/local/texlive/2016/bin/x86_64-linux $PATH
+set INFOPATH /usr/local/texlive/2016/texmf-dist/doc/info $INFOPATH
+set MANPATH /usr/local/texlive/2016/texmf-dist/doc/man $MANPATH
 
 # nvim
 alias vim 'nvim'

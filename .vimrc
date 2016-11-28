@@ -63,7 +63,7 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 
 " Fugitive
 map <Leader>gs :Gstatus<CR>
-map <Leader>gc :Gcommit<CR>
+map <Leader>gc :Gcommit<CR>i
 map <Leader>gd :Gdiff<CR>
 
 " Vim-Pandoc
@@ -92,7 +92,6 @@ endif
 
 " Neomake
 autocmd! BufWritePost * Neomake
-let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_warning_sign = {
   \ 'text': 'W',
   \ 'texthl': 'WarningMsg',
@@ -102,6 +101,15 @@ let g:neomake_error_sign = {
   \ 'texthl': 'ErrorMsg',
   \ }
 
+let g:neomake_python_enabled_makers = ['flake8']
+
+let g:neomake_cpp_enabled_makers = []
+let g:neomake_cpp_clang_maker = {
+   \ 'exe': 'clang++',
+   \ 'args': ['-Wall', '-Wextra', '-Weverything', '-pedantic', '-Wno-sign-conversion', '-Wno-pragma-once-outside-header'],
+   \ }
+
+" Ag
 if executable('pt')
   " Tell unite to use ag for searching
   let g:unite_source_grep_command = 'pt'
@@ -161,7 +169,7 @@ let g:airline_symbols.linenr = ''
 " YCM
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 
 " Enable solarized theme
 syntax enable
@@ -181,6 +189,9 @@ set expandtab
 let python_highlight_all=1
 syntax on
 filetype plugin indent on
+
+" Latex
+let g:tex_flavor = 'latex'
 
 " Code folds at indent
 set foldenable
@@ -229,6 +240,11 @@ noremap ^ <nop>
 " Easier bracket matching
 nnoremap <tab> %
 vnoremap <tab> %
+
+" Call make
+noremap <F5> :silent make\|redraw!\|cc<CR>
+noremap <F6> :make<CR>
+noremap <F7> :make test<CR>
 
 " Better C+P
 nnoremap <Leader>y "+y

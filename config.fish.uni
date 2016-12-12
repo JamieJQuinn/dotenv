@@ -14,6 +14,13 @@ set PATH /usr/local/texlive/2016/bin/x86_64-linux $PATH
 set INFOPATH /usr/local/texlive/2016/texmf-dist/doc/info $INFOPATH
 set MANPATH /usr/local/texlive/2016/texmf-dist/doc/man $MANPATH
 
+# Set compilers
+setenv CC (which gcc)
+setenv CXX (which g++)
+
+# Set Library path
+set -x LD_LIBRARY_PATH "/maths/scratch/local/lib:/maths/scratch/local/lib64:$LD_LIBRARY_PATH"
+
 # nvim
 alias vim 'nvim'
 setenv VISUAL /usr/bin/nvim

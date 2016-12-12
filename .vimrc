@@ -70,7 +70,6 @@ map <Leader>gd :Gdiff<CR>
 " Vim-Pandoc
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
-autocmd BufNewFile,BufReadPost *.mdk set filetype=markdown
 let g:ycm_filetype_blacklist = {}
 
 " NERDTree Stuff
@@ -268,6 +267,9 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Insert date
+nnoremap <Leader>d "=strftime("%c")<CR>P"
 
 nmap <Leader>m :call ToggleMouse()<CR>
 

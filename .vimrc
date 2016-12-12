@@ -50,6 +50,7 @@ Plug 'jalvesaq/Nvim-R'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'JamieJQuinn/vim-madoko'
+Plug 'vim-latex/vim-latex'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -71,6 +72,11 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mdk set filetype=markdown
 let g:ycm_filetype_blacklist = {}
+
+" For Latex
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+let g:Tex_CompileRule_pdf = 'xelatex --interaction=nonstopmode $*'
 
 " NERDTree Stuff
 map <C-\> :NERDTreeToggle<CR>

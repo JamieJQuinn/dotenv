@@ -10,6 +10,7 @@ endif
 call plug#begin()    
 " Theme
 Plug 'altercation/vim-colors-solarized'
+
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
 " vimrc defaults
@@ -40,12 +41,13 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Testing in vim
 Plug 'janko-m/vim-test'
+"Jekyll in vim
+Plug 'parkr/vim-jekyll'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
 Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
-Plug 'parkr/vim-jekyll'
 Plug 'jalvesaq/Nvim-R'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'

@@ -69,15 +69,19 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>i
 map <Leader>gd :Gdiff<CR>
 
-" Vim-Pandoc
+" Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
 let g:ycm_filetype_blacklist = {}
 
-" For Latex
+" Latex
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 let g:Tex_CompileRule_pdf = 'xelatex --interaction=nonstopmode $*'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_UseMakefile=1
+let g:tex_flavor = 'latex'
+let g:Tex_AutoFolding=0
 
 " NERDTree Stuff
 map <C-\> :NERDTreeToggle<CR>
@@ -197,13 +201,6 @@ let python_highlight_all=1
 syntax on
 filetype plugin indent on
 
-" Latex
-let g:tex_flavor = 'latex'
-
-" Code folds at indent
-set foldenable
-set foldlevelstart=10
-set foldmethod=indent
 " Mouse support
 set mouse=a
 " Shell
@@ -230,6 +227,8 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
+" disable folding
+set nofoldenable
 
 " Show whitespace
 set listchars=tab:>-,trail:·,eol:$

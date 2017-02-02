@@ -1,8 +1,8 @@
 . ~/.config/fish/config.fish.global
 
 # anaconda
-set PATH ~/anaconda3/bin $PATH
-set PATH ~/anaconda2/bin $PATH
+set PATH $PATH ~/anaconda3/bin 
+set PATH $PATH ~/anaconda2/bin 
 # Mendeley
 set PATH ~/bin/mendeley/bin $PATH
 # Ruby bin

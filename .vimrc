@@ -291,6 +291,10 @@ function! ToggleMouse()
     endif
 endfunc
 
+command Fish execute "term fish"
+
+nnoremap <Leader>f :Fish<CR>
+
 function! ToggleGutter()
   :set invnumber
   :set invrelativenumber

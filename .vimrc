@@ -77,11 +77,12 @@ let g:ycm_filetype_blacklist = {}
 " Latex
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
-let g:Tex_CompileRule_pdf = 'xelatex --interaction=nonstopmode $*'
+let g:Tex_CompileRule_pdf = 'latexmk --pdf $*'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_UseMakefile=1
-let g:tex_flavor = 'latex'
 let g:Tex_AutoFolding=0
+let g:Tex_Env_equation = "\\begin{equation}\<CR><++>\<CR>\\end{equation}<++>"
+let g:Tex_Env_align = "\\begin{align}\<CR><++>\<CR>\\end{align}<++>"
 
 " NERDTree Stuff
 map <C-\> :NERDTreeToggle<CR>

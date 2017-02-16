@@ -13,8 +13,6 @@ Plug 'altercation/vim-colors-solarized'
 
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
-" vimrc defaults
-Plug 'tpope/vim-sensible'
 " Tree view
 Plug 'scrooloose/nerdtree'
 " Async Linters
@@ -35,13 +33,12 @@ Plug 'tpope/vim-fugitive'
 " Auto-brackets
 Plug 'Raimondi/delimitMate'
 " Code Completion
-Plug 'Valloric/YouCompleteMe'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Testing in vim
 Plug 'janko-m/vim-test'
-"Jekyll in vim
+" Jekyll in vim
 Plug 'parkr/vim-jekyll'
 
 " FILETYPE STUFF
@@ -58,6 +55,9 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 
 call plug#end()
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
 
 " CtrlP stuff
 " Ignore everything in .gitignore:

@@ -1,6 +1,3 @@
-# User bin
-set PATH  ~/.bin $PATH
-
 # ctrl-f runs fg
 function fish_user_key_bindings
   bind \cf 'fg %'

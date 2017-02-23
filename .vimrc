@@ -40,6 +40,10 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'janko-m/vim-test'
 " Jekyll in vim
 Plug 'parkr/vim-jekyll'
+" Writing mode
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'reedes/vim-pencil'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
@@ -176,6 +180,10 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+" Limelight
+let g:limelight_conceal_ctermfg = 241
+let g:limelight_default_coefficient = 0.7
+
 " Enable solarized theme
 syntax enable
 set background=dark
@@ -227,7 +235,11 @@ set nofoldenable
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 " Disable autocommenting
-set formatoptions-=ro
+set formatoptions-=r
+set formatoptions-=o
+
+" Writers mode
+map <F11> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
 
 " Show whitespace
 set listchars=tab:>-,trail:·

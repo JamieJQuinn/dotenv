@@ -71,7 +71,6 @@ map <Leader>gd :Gdiff<CR>
 " Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
-let g:ycm_filetype_blacklist = {}
 
 " Latex
 set grepprg=grep\ -nH\ $*
@@ -176,11 +175,6 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
-
-" YCM
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_confirm_extra_conf = 0
 
 " Enable solarized theme
 syntax enable

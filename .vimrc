@@ -256,8 +256,8 @@ noremap <F7> :make test<CR>
 
 " Better C+P
 nnoremap <Leader>y "+y
-vnoremap <Leader>y "+y
 nnoremap <Leader>p "+p
+vnoremap <Leader>y "+y
 vnoremap <Leader>p "+p
 
 " Better movement

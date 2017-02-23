@@ -44,6 +44,7 @@ Plug 'parkr/vim-jekyll'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'reedes/vim-pencil'
+Plug 'dbmrq/vim-ditto'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
@@ -184,6 +185,19 @@ let g:airline_symbols.linenr = ''
 let g:limelight_conceal_ctermfg = 241
 let g:limelight_default_coefficient = 0.7
 
+" Pencil
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+  autocmd FileType tex         call pencil#init()
+augroup END
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#conceallevel = 0
+
+" Ditto
+au FileType markdown,text,tex DittoOn
+
 " Enable solarized theme
 syntax enable
 set background=dark
@@ -193,10 +207,7 @@ colorscheme solarized
 set backspace=indent,eol,start
 
 " Tab stuff
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
+set tabstop=2 expandtab shiftwidth=2
 
 " Sets syntax + indentation per filetype
 let python_highlight_all=1
@@ -221,7 +232,7 @@ set history=1000
 " Who needs vi?
 set nocompatible
 " Adds horizontal line through cursor
-set cursorline 
+"set cursorline 
 " Show matching brackets
 set showmatch
 " Search options
@@ -239,10 +250,11 @@ set formatoptions-=r
 set formatoptions-=o
 
 " Writers mode
-map <F11> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
+map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
 
 " Show whitespace
 set listchars=tab:>-,trail:·
+set nolist!
 nnoremap <silent> <Leader>w :set nolist!<CR>
 
 " Enable/Disable spellchecker

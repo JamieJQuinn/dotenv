@@ -198,7 +198,7 @@ filetype plugin indent on
 " Mouse support
 set mouse=a
 " Shell
-set shell=/bin/sh
+set shell=/bin/bash
 " Vim replaces term title with files being edited
 set title
 "Line numbering
@@ -223,9 +223,14 @@ set hlsearch
 set incsearch
 " disable folding
 set nofoldenable
+" set column highlighting at character 80
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
+" Disable autocommenting
+set formatoptions-=ro
 
 " Show whitespace
-set listchars=tab:>-,trail:·,eol:$
+set listchars=tab:>-,trail:·
 nnoremap <silent> <Leader>w :set nolist!<CR>
 
 " Enable/Disable spellchecker
@@ -236,6 +241,9 @@ noremap B ^
 noremap E $
 noremap $ <nop>
 noremap ^ <nop>
+
+" Remap semicolon to be colon
+nnoremap ; :
 
 " Easier bracket matching
 nnoremap <tab> %

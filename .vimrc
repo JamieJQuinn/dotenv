@@ -31,7 +31,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 " Auto-brackets
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 " Code Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Searching

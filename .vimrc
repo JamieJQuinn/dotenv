@@ -7,7 +7,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin()    
+call plug#begin()
 " Theme
 Plug 'altercation/vim-colors-solarized'
 
@@ -226,35 +226,28 @@ set title
 " Current number tracking
 set ruler
 " Can change buffer without saving current
-set hidden 
+set hidden
 " Increase history limit
 set history=1000
 " Who needs vi?
 set nocompatible
-" Adds horizontal line through cursor
-"set cursorline 
 " Show matching brackets
 set showmatch
 " Search options
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
+set ignorecase smartcase hlsearch incsearch
 " disable folding
 set nofoldenable
 " set column highlighting at character 80
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 " Disable autocommenting
-set formatoptions-=r
-set formatoptions-=o
+au FileType * set fo-=r fo-=o
 
 " Writers mode
 map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
 
 " Show whitespace
-set listchars=tab:>-,trail:·
-set nolist!
+set listchars=tab:>-,trail:· nolist!
 nnoremap <silent> <Leader>w :set nolist!<CR>
 
 " Enable/Disable spellchecker

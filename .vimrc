@@ -32,8 +32,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 " Auto-brackets
 Plug 'jiangmiao/auto-pairs'
-" Code Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Testing in vim
@@ -59,6 +57,12 @@ Plug 'vim-latex/vim-latex'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
+
+" Neovim only plugins
+if has('nvim')
+  " Code Completion
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
 
 call plug#end()
 
@@ -156,7 +160,7 @@ let test#elixir#exunit#executable = 'elixir --erl "-smp enable" -S mix test'
 let test#filename_modifier = ':p'
 let test#strategy = "neovim"
 
-" air-line
+" airline
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
@@ -200,6 +204,9 @@ augroup END
 let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#conceallevel = 0
 
+" Writers mode
+map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
+
 " Ditto
 au FileType markdown,text,tex DittoOn
 
@@ -216,7 +223,6 @@ set tabstop=2 expandtab shiftwidth=2
 
 " Sets syntax + indentation per filetype
 let python_highlight_all=1
-syntax on
 filetype plugin indent on
 
 " Mouse support
@@ -225,9 +231,6 @@ set mouse=a
 set shell=/bin/bash
 " Vim replaces term title with files being edited
 set title
-"Line numbering
-"set number
-"set relativenumber
 " Current number tracking
 set ruler
 " Can change buffer without saving current
@@ -248,9 +251,6 @@ call matchadd('ColorColumn', '\%81v', 100)
 " Disable autocommenting
 au FileType * set fo-=r fo-=o
 
-" Writers mode
-map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
-
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!
 nnoremap <silent> <Leader>w :set nolist!<CR>
@@ -264,19 +264,15 @@ noremap E $
 noremap $ <nop>
 noremap ^ <nop>
 
-" Remap semicolon to be colon
-nnoremap ; :
-
 " Easier bracket matching
 nnoremap <tab> %
 vnoremap <tab> %
 
 " Call make
-noremap <F5> :silent make\|redraw!\|cc<CR>
 noremap <F6> :make<CR>
 noremap <F7> :make test<CR>
 
-" Better C+P
+" Better copy + paste
 nnoremap <Leader>y "+y
 nnoremap <Leader>p "+p
 vnoremap <Leader>y "+y
@@ -309,7 +305,7 @@ function! ToggleMouse()
         " disable mouse
         set mouse=
     else
-        " enable mouse everywhere
+        " enable mouse
         set mouse=a
     endif
 endfunc

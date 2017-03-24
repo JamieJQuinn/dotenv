@@ -53,6 +53,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'jalvesaq/Nvim-R'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'suan/vim-instant-markdown'
 Plug 'JamieJQuinn/vim-madoko'
 Plug 'vim-latex/vim-latex'
 " Python indentation
@@ -60,6 +61,10 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 
 call plug#end()
+
+" markdown preview
+let g:instant_markdown_autostart = 0
+nnoremap <Leader>mp :InstantMarkdownPreview<CR>
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1

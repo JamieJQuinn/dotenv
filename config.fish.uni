@@ -1,29 +1,28 @@
 . ~/.config/fish/config.fish.global
 
 # anaconda
-set PATH /maths/scratch/anaconda2/bin $PATH
 set PATH /maths/scratch/anaconda3/bin $PATH 
+set PATH /maths/scratch/anaconda2/bin $PATH
 # Visit
 set PATH /maths/scratch/visit-install/bin $PATH
+# Linuxbrew
+set PATH $PATH /maths/scratch/linuxbrew/bin
 # Mendeley
 set PATH ~/bin/mendeley/bin $PATH
 # Ruby bin
 set PATH ~/bin $PATH
 # mpi for fortran
 #set PATH /usr/lib64/mpich/bin $PATH
-# local bin
-#set PATH /maths/scratch/local/bin $PATH
 # Latex
 set PATH /usr/local/texlive/2016/bin/x86_64-linux $PATH
 set INFOPATH /usr/local/texlive/2016/texmf-dist/doc/info $INFOPATH
 set MANPATH /usr/local/texlive/2016/texmf-dist/doc/man $MANPATH
+# Maple
+set PATH /maths/maple2015/bin $PATH
 
 # Set compilers
 setenv CC (which gcc)
 setenv CXX (which g++)
-
-# Set Library path
-set -x LD_LIBRARY_PATH "/maths/scratch/local/lib:/maths/scratch/local/lib64:$LD_LIBRARY_PATH"
 
 # nvim
 alias vim 'nvim'

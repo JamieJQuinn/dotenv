@@ -53,7 +53,7 @@ Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'suan/vim-instant-markdown'
 Plug 'JamieJQuinn/vim-madoko'
-Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
 " Python indentation
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'

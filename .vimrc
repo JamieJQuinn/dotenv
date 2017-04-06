@@ -43,6 +43,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
+" Better repeat
+Plug 'tpope/vim-repeat'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'

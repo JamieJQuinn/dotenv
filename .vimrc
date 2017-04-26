@@ -45,6 +45,15 @@ Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
 " Better repeat
 Plug 'tpope/vim-repeat'
+" More % matching
+Plug 'vim-scripts/matchit.zip'
+" Snippets
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+" Better tab
+Plug 'ervandew/supertab'
+" Better Numbers
+"Plug 'myusuf3/numbers.vim'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
@@ -74,6 +83,16 @@ nnoremap <Leader>mp :InstantMarkdownPreview<CR>
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+
+" Supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Utilsnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsEditSplit="vertical"
 
 " CtrlP stuff
 " Ignore everything in .gitignore:

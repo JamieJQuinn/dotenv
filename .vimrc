@@ -207,6 +207,8 @@ au FileType markdown,text,tex DittoOn
 syntax enable
 set background=dark
 colorscheme solarized
+hi clear SpellBad
+hi SpellBad ctermfg=LightRed cterm=underline
 
 " Fix sloppy linux
 set backspace=indent,eol,start

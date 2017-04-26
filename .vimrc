@@ -73,6 +73,8 @@ Plug 'vim-scripts/indentpython.vim'
 if has('nvim')
   " Code Completion
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/neocomplete.vim'
 endif
 
 call plug#end()

@@ -13,8 +13,6 @@ Plug 'altercation/vim-colors-solarized'
 
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
-" Tree view
-Plug 'scrooloose/nerdtree'
 " Async Linters
 Plug 'neomake/neomake'
 " Modify brackets, tags, quotes, etc easily
@@ -26,8 +24,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
 " Notes git diffs in gutter
 Plug 'airblade/vim-gitgutter'
-" Shows git status in nerdtree
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Better file management
+Plug 'tpope/vim-vinegar'
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 " Auto-brackets
@@ -85,6 +83,24 @@ nnoremap <Leader>mp :InstantMarkdownPreview<CR>
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#max_menu_width = 0
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+let g:deoplete#omni#input_patterns.tex = '\\(?:'
+        \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+        \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+        \ . '|hyperref\s*\[[^]]*'
+        \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+        \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|usepackage(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|documentclass(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ .')'
+
+set guicursor=
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -131,7 +147,11 @@ if exists(":Tabularize")
 endif
 
 " Neomake
-autocmd! BufWritePost * Neomake
+if has('nvim')
+  autocmd! BufWritePost * Neomake
+else
+  nmap <Leader>l :Neomake<CR>
+endif
 let g:neomake_warning_sign = {
   \ 'text': 'W',
   \ 'texthl': 'WarningMsg',
@@ -141,13 +161,16 @@ let g:neomake_error_sign = {
   \ 'texthl': 'ErrorMsg',
   \ }
 
-let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_python_enabled_makers = ['pylint']
 
-let g:neomake_cpp_enabled_makers = []
-let g:neomake_cpp_clang_maker = {
-   \ 'exe': 'clang++',
-   \ 'args': ['-Wall', '-Wextra', '-Weverything', '-pedantic', '-Wno-sign-conversion', '-Wno-pragma-once-outside-header'],
-   \ }
+"let g:neomake_cpp_enabled_makers = []
+"let g:neomake_cpp_clang_maker = {
+   "\ 'exe': 'clang++',
+   "\ 'args': ['-Wall', '-Wextra', '-Weverything', '-pedantic', '-Wno-sign-conversion', '-Wno-pragma-once-outside-header'],
+   "\ }
+
+nmap ]w :lnext<CR>
+nmap [w :lprev<CR>
 
 " Ag
 if executable('pt')
@@ -162,10 +185,10 @@ if executable('pt')
 endif
 
 " Vim Test
-nmap <silent> <leader>T :TestNearest<CR>
-nmap <silent> <leader>t :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tt :TestFile<CR>
+nmap <silent> <leader>ta :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
 
 function! EchoStrategy(cmd)
   echo 'Command for running tests: ' . a:cmd
@@ -182,10 +205,26 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+let g:airline_section_y = '%{PencilMode()}'
+"let g:airline#extensions#neomake#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ '' : 'V',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ '' : 'S',
+    \ }
 
 " Limelight
 let g:limelight_conceal_ctermfg = 241
-let g:limelight_default_coefficient = 0.7
+let g:limelight_default_coefficient = 0.8
 
 " Pencil
 augroup pencil
@@ -196,6 +235,20 @@ augroup pencil
 augroup END
 let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#conceallevel = 0
+let g:pencil#autoformat_blacklist = [
+        \ 'markdownCode',
+        \ 'markdownUrl',
+        \ 'markdownIdDeclaration',
+        \ 'markdownLinkDelimiter',
+        \ 'markdownHighlight[A-Za-z0-9]+',
+        \ 'mkdCode',
+        \ 'mkdIndentCode',
+        \ 'markdownFencedCodeBlock',
+        \ 'markdownInlineCode',
+        \ 'mmdTable[A-Za-z0-9]*',
+        \ 'txtCode',
+        \ 'texMath',
+        \ ]
 
 " Writers mode
 map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
@@ -220,6 +273,8 @@ set tabstop=2 expandtab shiftwidth=2
 let python_highlight_all=1
 filetype plugin indent on
 
+" Disable hard wrapping
+set formatoptions-=t
 " Mouse support
 set mouse=a
 " Shell
@@ -240,6 +295,9 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 " disable folding
 set nofoldenable
+" numbering
+"set number
+"set relativenumber
 " Fix airline over ssh
 set laststatus=2
 " set column highlighting at character 80
@@ -313,6 +371,7 @@ endfunc
 
 function! ToggleGutter()
   :set invrelativenumber
+  :set invnumber
 endfunction
 
 nnoremap <Leader>n :call ToggleGutter()<CR>

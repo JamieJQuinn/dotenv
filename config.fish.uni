@@ -1,18 +1,14 @@
 . ~/.config/fish/config.fish.global
 
 # anaconda
-set PATH /maths/scratch/anaconda3/bin $PATH 
+set PATH /maths/scratch/anaconda3/bin $PATH
 set PATH /maths/scratch/anaconda2/bin $PATH
 # Visit
 set PATH /maths/scratch/visit-install/bin $PATH
-# Linuxbrew
-set PATH $PATH /maths/scratch/linuxbrew/bin
-# Mendeley
-set PATH ~/bin/mendeley/bin $PATH
+# Zotero
+set PATH ~/bin/Zotero_linux-x86_64 $PATH
 # Ruby bin
 set PATH ~/bin $PATH
-# mpi for fortran
-#set PATH /usr/lib64/mpich/bin $PATH
 # Latex
 set PATH /usr/local/texlive/2016/bin/x86_64-linux $PATH
 set INFOPATH /usr/local/texlive/2016/texmf-dist/doc/info $INFOPATH
@@ -20,9 +16,17 @@ set MANPATH /usr/local/texlive/2016/texmf-dist/doc/man $MANPATH
 # Maple
 set PATH /maths/maple2015/bin $PATH
 
-# Set compilers
-setenv CC (which gcc)
-setenv CXX (which g++)
+# brew
+#set XDG_DATA_DIRS /maths/scratch/linuxbrew/share $XDG_DATA_DIRS
+#set PATH /maths/scratch/linuxbrew/bin /maths/scratch/linuxbrew/sbin $PATH
+
+# GCC
+set PATH /home/pgrad2/1101974q/prog/gcc-euclid/gcc-6.3.0-build/bin $PATH
+set LD_LIBRARY_PATH /home/pgrad2/1101974q/prog/gcc-euclid/gcc-6.3.0-build/lib $LD_LIBRARY_PATH
+set LD_LIBRARY_PATH /home/pgrad2/1101974q/prog/gcc-euclid/gcc-6.3.0-build/lib64 $LD_LIBRARY_PATH
+# OPENMPI
+set PATH /home/pgrad2/1101974q/prog/openmpi-euclid/open-mpi-build/bin $PATH
+set LD_LIBRARY_PATH /home/pgrad2/1101974q/prog/openmpi-euclid/open-mpi-build/lib $LD_LIBRARY_PATH
 
 # nvim
 alias vim 'nvim'

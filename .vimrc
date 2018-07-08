@@ -384,6 +384,6 @@ nnoremap <Leader>n :call ToggleGutter()<CR>
 
 " Just easier commands
 nnoremap <Leader>x :x<cr>
-nnoremap <Leader>v :vspl<cr>
+nnoremap <Leader>v :vspl<cr><C-W><C-L>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>

@@ -7,7 +7,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin()
+silent!call plug#begin()
 " Theme
 Plug 'altercation/vim-colors-solarized'
 

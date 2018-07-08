@@ -34,8 +34,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Testing in vim
 Plug 'janko-m/vim-test'
-" Jekyll in vim
-Plug 'parkr/vim-jekyll'
 " Writing mode
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -55,17 +53,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'jamiejquinn/vim-zettel'
 
 " FILETYPE STUFF
-Plug 'tpope/vim-rails'
-Plug 'elixir-lang/vim-elixir'
 Plug 'pangloss/vim-javascript'
-Plug 'jalvesaq/Nvim-R'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'suan/vim-instant-markdown'
-Plug 'JamieJQuinn/vim-madoko'
 Plug 'lervag/vimtex'
-" Python indentation
-Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 
 " Neovim only plugins
@@ -363,5 +354,6 @@ nnoremap <Leader>n :call ToggleGutter()<CR>
 " Just easier commands
 nnoremap <Leader>x :x<cr>
 nnoremap <Leader>v :vspl<cr><C-W><C-L>
+nnoremap <Leader>h <C-W><C-S><C-W><C-J>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>

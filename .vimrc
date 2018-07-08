@@ -48,10 +48,11 @@ Plug 'vim-scripts/matchit.zip'
 " Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
-" Better tab
-Plug 'ervandew/supertab'
-" Better Numbers
-"Plug 'myusuf3/numbers.vim'
+" Zettelkasten
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'jamiejquinn/vim-zettel'
 
 " FILETYPE STUFF
 Plug 'tpope/vim-rails'
@@ -80,6 +81,11 @@ call plug#end()
 " markdown preview
 let g:instant_markdown_autostart = 0
 nnoremap <Leader>mp :InstantMarkdownPreview<CR>
+
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/Dropbox/zettelkasten/',
+                     \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki files
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1

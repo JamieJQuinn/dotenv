@@ -301,6 +301,12 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 " disable folding
 set nofoldenable
+" gvim font
+set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline\ 10
+" Spelling
+set spelllang=en_gb
+hi clear SpellBad
+hi SpellBad ctermfg=LightRed cterm=underline
 " numbering
 "set number
 "set relativenumber

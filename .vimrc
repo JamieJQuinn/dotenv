@@ -32,8 +32,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
-" Testing in vim
-Plug 'janko-m/vim-test'
 " Writing mode
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -69,10 +67,6 @@ endif
 
 call plug#end()
 
-" markdown preview
-let g:instant_markdown_autostart = 0
-nnoremap <Leader>mp :InstantMarkdownPreview<CR>
-
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/zettelkasten/',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
@@ -103,9 +97,6 @@ let g:tex_flavor='latex'
 
 " NERDCommenter Stuff
 map <C-_> <Leader>c<space>
-
-"Vim-R
-let R_assign = 0
 
 " Tabular
 if exists(":Tabularize")
@@ -152,21 +143,6 @@ if executable('pt')
   let g:ag_prg="pt --nogroup --nocolor --column"
   let g:ag_working_path_mode="r"
 endif
-
-" Vim Test
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tt :TestFile<CR>
-nmap <silent> <leader>ta :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-
-function! EchoStrategy(cmd)
-  echo 'Command for running tests: ' . a:cmd
-endfunction
-let test#custom_strategies = {'echo': function('EchoStrategy')}
-"let test#strategy = 'echo'
-let test#elixir#exunit#executable = 'elixir --erl "-smp enable" -S mix test'
-let test#filename_modifier = ':p'
-let test#strategy = "neovim"
 
 " airline
 let g:airline_powerline_fonts = 1
@@ -274,9 +250,6 @@ set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline\ 10
 set spelllang=en_gb
 hi clear SpellBad
 hi SpellBad ctermfg=LightRed cterm=underline
-" numbering
-"set number
-"set relativenumber
 " Fix airline over ssh
 set laststatus=2
 " set column highlighting at character 80
@@ -291,6 +264,9 @@ nnoremap <silent> <Leader>w :set nolist!<CR>
 
 " Enable/Disable spellchecker
 noremap <silent> <Leader>s :set spelllang=en_gb invspell<CR>
+
+" Open up a terminal
+noremap <Leader>tt :vspl<cr><C-W><C-L>:term fish<cr>i
 
 " Remap to beginning/end of line
 noremap B ^

@@ -127,10 +127,6 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>i
 map <Leader>gd :Gdiff<CR>
 
-" Markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd BufNewFile,BufReadPost *.mkd set filetype=markdown
-
 " Latex
 let g:tex_flavor='latex'
 
@@ -232,15 +228,24 @@ let g:airline_mode_map = {
 let g:limelight_conceal_ctermfg = 241
 let g:limelight_default_coefficient = 0.8
 
+" Ditto
+au FileType markdown,markdown.pandoc,text,tex DittoOn
+
+" Spelling
+au FileType markdown,markdown.pandoc,text,tex set spell
+
 " Pencil
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType markdown.pandoc call pencil#init()
   autocmd FileType text         call pencil#init()
   autocmd FileType tex         call pencil#init()
 augroup END
 let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#autoformat = 0
 let g:pencil#conceallevel = 0
+let g:pencil#textwidth = 74
 let g:pencil#autoformat_blacklist = [
         \ 'markdownCode',
         \ 'markdownUrl',
@@ -257,17 +262,12 @@ let g:pencil#autoformat_blacklist = [
         \ ]
 
 " Writers mode
-map <F10> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
-
-" Ditto
-au FileType markdown,text,tex DittoOn
+map <F10> :Goyo <bar> :Limelight!! <CR>
 
 " Enable solarized theme
 syntax enable
 set background=dark
 colorscheme solarized
-hi clear SpellBad
-hi SpellBad ctermfg=LightRed cterm=underline
 
 " Fix sloppy linux
 set backspace=indent,eol,start

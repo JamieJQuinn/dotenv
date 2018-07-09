@@ -9,7 +9,7 @@ endif
 
 silent!call plug#begin()
 " Theme
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -34,7 +34,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Writing mode
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
 " Better repeat
@@ -44,6 +43,7 @@ Plug 'vim-scripts/matchit.zip'
 " Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
+
 " Zettelkasten
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
@@ -84,6 +84,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 " CtrlP stuff
 " Ignore everything in .gitignore:
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+map <C-r> :CtrlPMRUFiles<cr>
 
 " Fugitive
 map <Leader>gs :Gstatus<CR>
@@ -149,7 +150,6 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_section_y = '%{PencilMode()}'
-"let g:airline#extensions#neomake#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_mode_map = {
     \ '__' : '-',
@@ -165,21 +165,18 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
-" Limelight
-let g:limelight_conceal_ctermfg = 241
-let g:limelight_default_coefficient = 0.8
-
 " Ditto
-au FileType markdown,markdown.pandoc,text,tex DittoOn
+au FileType markdown,markdown.pandoc,text,tex,vimwiki DittoOn
 
 " Spelling
-au FileType markdown,markdown.pandoc,text,tex set spell
+au FileType markdown,markdown.pandoc,text,tex,vimwiki set spell
 
 " Pencil
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType markdown.pandoc call pencil#init()
+  autocmd FileType vimwiki         call pencil#init()
   autocmd FileType text         call pencil#init()
   autocmd FileType tex         call pencil#init()
 augroup END
@@ -187,28 +184,15 @@ let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#autoformat = 0
 let g:pencil#conceallevel = 0
 let g:pencil#textwidth = 74
-let g:pencil#autoformat_blacklist = [
-        \ 'markdownCode',
-        \ 'markdownUrl',
-        \ 'markdownIdDeclaration',
-        \ 'markdownLinkDelimiter',
-        \ 'markdownHighlight[A-Za-z0-9]+',
-        \ 'mkdCode',
-        \ 'mkdIndentCode',
-        \ 'markdownFencedCodeBlock',
-        \ 'markdownInlineCode',
-        \ 'mmdTable[A-Za-z0-9]*',
-        \ 'txtCode',
-        \ 'texMath',
-        \ ]
 
 " Writers mode
-map <F10> :Goyo <bar> :Limelight!! <CR>
+map <F10> :Goyo <bar> :call ToggleBackground() <CR>
 
 " Enable solarized theme
 syntax enable
-set background=dark
-colorscheme solarized
+set termguicolors
+set bg=dark
+colorscheme solarized8
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -251,13 +235,8 @@ set guioptions-=L  "remove left-hand scroll bar
 set guicursor=
 " Spelling
 set spelllang=en_gb
-hi clear SpellBad
-hi SpellBad ctermfg=LightRed cterm=underline
 " Fix airline over ssh
 set laststatus=2
-" set column highlighting at character 80
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
 " Disable autocommenting
 au FileType * set fo-=r fo-=o
 
@@ -326,6 +305,14 @@ endfunc
 function! ToggleGutter()
   :set invrelativenumber
   :set invnumber
+endfunction
+
+function! ToggleBackground()
+  if &bg == "light"
+    :set bg=dark
+  else
+    :set bg=light
+  endif
 endfunction
 
 nnoremap <Leader>n :call ToggleGutter()<CR>

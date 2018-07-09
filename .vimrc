@@ -75,8 +75,6 @@ let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki f
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
-set guicursor=
-
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
 
@@ -244,8 +242,13 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 " disable folding
 set nofoldenable
-" gvim font
-set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline\ 10
+" gvim stuff
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 11
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set guicursor=
 " Spelling
 set spelllang=en_gb
 hi clear SpellBad

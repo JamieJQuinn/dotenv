@@ -1,5 +1,6 @@
 " Remap leader
 let mapleader = "\<Space>"
+set encoding=utf-8
 
 "auto-install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -10,6 +11,7 @@ endif
 silent!call plug#begin()
 " Theme
 Plug 'lifepillar/vim-solarized8'
+Plug 'altercation/vim-colors-solarized'
 
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -190,9 +192,13 @@ map <F10> :Goyo <bar> :call ToggleBackground() <CR>
 
 " Enable solarized theme
 syntax enable
-set termguicolors
 set bg=dark
-colorscheme solarized8
+if has("patch-7.4-1799") || has("nvim")
+  set termguicolors
+  colorscheme solarized8
+else
+  colorscheme solarized
+endif
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -233,6 +239,7 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guicursor=
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0
 " Spelling
 set spelllang=en_gb
 " Fix airline over ssh

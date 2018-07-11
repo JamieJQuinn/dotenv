@@ -192,10 +192,11 @@ map <F10> :Goyo <bar> :call ToggleBackground() <CR>
 
 " Enable solarized theme
 syntax enable
-set bg=dark
+set background=dark
+let g:user_bg="dark"
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
-  colorscheme solarized8
+  colorscheme solarized8_flat
 else
   colorscheme solarized
 endif
@@ -315,10 +316,12 @@ function! ToggleGutter()
 endfunction
 
 function! ToggleBackground()
-  if &bg == "light"
-    :set bg=dark
+  if g:user_bg == "light"
+    :set background=dark
+    :let g:user_bg="dark"
   else
-    :set bg=light
+    :set background=light
+    :let g:user_bg="light"
   endif
 endfunction
 

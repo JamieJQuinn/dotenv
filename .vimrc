@@ -55,7 +55,7 @@ Plug 'jamiejquinn/vim-zettel'
 " FILETYPE STUFF
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/tabular'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'plasticboy/vim-markdown'
 Plug 'lervag/vimtex'
 Plug 'vim-scripts/indentpython.vim'
 
@@ -74,6 +74,7 @@ call plug#end()
 let g:vimwiki_list = [{'path': '~/Dropbox/zettelkasten/',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki files
+let g:vimwiki_conceallevel=0
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -168,17 +169,24 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
+" Set markdown properly
+let g:vim_markdown_folding_disabled = 1
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+let g:vim_markdown_folding_level = 2
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_frontmatter = 1
+
 " Ditto
-au FileType markdown,markdown.pandoc,text,tex,vimwiki DittoOn
+au FileType markdown,text,tex,vimwiki DittoOn
 
 " Spelling
-au FileType markdown,markdown.pandoc,text,tex,vimwiki set spell
+au FileType markdown,text,tex,vimwiki set spell
 
 " Pencil
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType markdown.pandoc call pencil#init()
   autocmd FileType vimwiki         call pencil#init()
   autocmd FileType text         call pencil#init()
   autocmd FileType tex         call pencil#init()
@@ -197,7 +205,7 @@ set background=dark
 let g:user_bg="dark"
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
-  colorscheme solarized8_flat
+  colorscheme solarized8
 else
   colorscheme solarized
 endif

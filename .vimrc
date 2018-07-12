@@ -64,6 +64,7 @@ if has('nvim')
   " Code Completion
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
+  " Code Completion
   Plug 'Shougo/neocomplete.vim'
 endif
 

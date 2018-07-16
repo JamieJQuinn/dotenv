@@ -75,6 +75,7 @@ let g:vimwiki_list = [{'path': '~/Dropbox/zettelkasten/',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki files
 let g:vimwiki_conceallevel=0
+autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -249,7 +250,6 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guicursor=
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0
 " Spelling
 set spelllang=en_gb
 " Fix airline over ssh

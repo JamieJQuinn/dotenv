@@ -15,7 +15,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-two-firewatch'
 
 " Fuzzy search
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 " Async Linters
 Plug 'neomake/neomake'
 " Modify brackets, tags, quotes, etc easily
@@ -37,7 +37,7 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
-Plug 'kopischke/unite-spell-suggest'
+"Plug 'kopischke/unite-spell-suggest'
 " Better repeat
 Plug 'tpope/vim-repeat'
 " More % matching
@@ -54,10 +54,17 @@ Plug 'mhinz/vim-startify'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'jamiejquinn/vim-zettel'
+"Plug 'michal-h21/vim-zettel'
+"Plug 'jamiejquinn/vim-zettel'
 
 " Markdown Preview
 "Plug 'JamshedVesuna/vim-markdown-preview'
+
+" vim-templates
+Plug 'tibabit/vim-templates'
+
+" Clever closing brackets
+Plug 'Townk/vim-autoclose'
 
 " Markdown image paste
 Plug 'ferrine/md-img-paste.vim'
@@ -95,6 +102,9 @@ else
   colorscheme solarized
 endif
 
+" Templates
+let g:tmpl_search_paths = ['~/.vim/templates']
+
 " Sets syntax + indentation per filetype
 let python_highlight_all=1
 filetype plugin indent on
@@ -104,9 +114,11 @@ let g:vimwiki_list = [{'path': '~/pCloudDrive/notes/zettelkasten',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext=1 " Disable all md files being represented as vimwiki files
 let g:vimwiki_conceallevel=0
-augroup vimwiki_markdown_syntax
+augroup vimwiki_syntax
   au!
-  autocmd Filetype vimwiki set syntax=markdown
+  autocmd FileType vimwiki cd %:p:h
+  autocmd FileType vimwiki TemplateInit vimwiki
+  autocmd FileType vimwiki set syntax=markdown
 augroup END
 
 " Deoplete
@@ -118,10 +130,48 @@ let g:neocomplete#enable_at_startup = 1
 " Utilsnips
 let g:UltiSnipsExpandTrigger="<tab>"
 
+" fzf
+map <C-p> :FZF<cr>
+" fzf returns selected filename and matched line from the file, we need to
+" strip that
+function! s:get_fzf_filename(line)
+  " the filename is separated by : from rest of the line
+  let parts =  split(a:line,":")
+  " we need to remove the extension
+  let filename = parts[0]
+  return filename
+endfunction
+
+function! s:wiki_search(line)
+  let filename = <sid>get_fzf_filename(a:line)
+  let parts = split(filename,'\.')
+  let filename_wo_ext = parts[0]
+  echo filename_wo_ext
+  execute 'normal! a[['.filename_wo_ext.']]'
+  "execute 'normal! a['.filename_wo_ext.']('.filename_wo_ext.')'
+endfunction
+
+" make fulltext search in all VimWiki files using FZF
+command! -bang -nargs=* ZettelSearch call fzf#vim#files(<q-args>, {
+      \'down': '~40%',
+      \'sink':function('<sid>wiki_search')})
+
+"command! -bang -nargs=* ZettelSearch call fzf#vim#ag(<q-args>,
+      "\'--skip-vcs-ignores', {
+      "\'down': '~40%',
+      "\'sink':function('<sid>wiki_search'),
+      "\'options':'--exact'})
+
+augroup zettelkasten
+  au!
+  au FileType vimwiki nnoremap <silent> <Plug>ZettelSearchMap :ZettelSearch<cr>
+  au FileType vimwiki imap <silent> [[ <esc><Plug>ZettelSearchMap
+augroup end
+
 " CtrlP stuff
 " Ignore everything in .gitignore:
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-map <C-b> :CtrlPMRUFiles<cr>
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+"map <C-b> :CtrlPMRUFiles<cr>
 
 " Markdown Preview
 "let vim_markdown_preview_hotkey='<C-m>'
@@ -324,6 +374,7 @@ set nocompatible
 set showmatch
 " Search options
 set ignorecase smartcase hlsearch incsearch
+let @/ = ""
 " disable folding
 set nofoldenable
 " gvim stuff

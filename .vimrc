@@ -59,6 +59,9 @@ Plug 'jamiejquinn/vim-zettel'
 " Markdown Preview
 Plug 'JamshedVesuna/vim-markdown-preview'
 
+" Markdown image paste
+Plug 'ferrine/md-img-paste.vim'
+
 " FILETYPE STUFF
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/tabular'
@@ -211,6 +214,12 @@ let g:pencil#autoformat = 0
 let g:pencil#conceallevel = 0
 let g:pencil#textwidth = 74
 
+" markdown-img-paste
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+" there are some defaults for image directory and image name, you can change them
+ let g:mdip_imgdir = 'img'
+ let g:mdip_imgname = 'copy-paste-image'
+
 " Writers mode
 "map <F10> :Goyo <bar> call ToggleBackground() <CR>
 map <F10> :Goyo <CR>
@@ -275,6 +284,9 @@ hi link markdownFootnote Type
 hi link markdownFootnoteDefinition Type
 " Change horizontal rule
 hi link markdownRule markdownListMarker
+
+hi Italic gui=italic cterm=italic
+hi link markdownItalic Italic
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -346,9 +358,9 @@ noremap <F7> :make test<CR>
 
 " Better copy + paste
 nnoremap <Leader>y "+y
-nnoremap <Leader>p "+p
 vnoremap <Leader>y "+y
-vnoremap <Leader>p "+p
+"nnoremap <Leader>p "+p
+"vnoremap <Leader>p "+p
 
 " Better movement
 nnoremap j gj

@@ -57,7 +57,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'jamiejquinn/vim-zettel'
 
 " Markdown Preview
-Plug 'JamshedVesuna/vim-markdown-preview'
+"Plug 'JamshedVesuna/vim-markdown-preview'
 
 " Markdown image paste
 Plug 'ferrine/md-img-paste.vim'
@@ -81,12 +81,33 @@ endif
 
 call plug#end()
 
+" Enable colorscheme
+syntax enable
+set background=dark
+let g:user_bg="dark"
+if has("patch-7.4-1799") || has("nvim")
+  set termguicolors
+  "colorscheme solarized8
+  colorscheme two-firewatch
+  let g:two_firewatch_italics=1
+  let g:airline_theme='twofirewatch'
+else
+  colorscheme solarized
+endif
+
+" Sets syntax + indentation per filetype
+let python_highlight_all=1
+filetype plugin indent on
+
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/pCloudDrive/notes/zettelkasten',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki files
+let g:vimwiki_global_ext=1 " Disable all md files being represented as vimwiki files
 let g:vimwiki_conceallevel=0
-autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+augroup vimwiki_markdown_syntax
+  au!
+  autocmd Filetype vimwiki set syntax=markdown
+augroup END
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -103,11 +124,11 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 map <C-b> :CtrlPMRUFiles<cr>
 
 " Markdown Preview
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_browser='Firefox'
-let vim_markdown_preview_toggle=1
+"let vim_markdown_preview_hotkey='<C-m>'
+"let vim_markdown_preview_browser='Firefox'
+"let vim_markdown_preview_toggle=1
 "let vim_markdown_preview_temp_file=1
-let vim_markdown_preview_use_xdg_open=1
+"let vim_markdown_preview_use_xdg_open=1
 
 " Fugitive
 map <Leader>gs :Gstatus<CR>
@@ -199,15 +220,15 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_frontmatter = 1
 
 " Ditto
-au FileType markdown,text,tex,vimwiki DittoOn
+augroup ditto
+  au!
+  au FileType markdown,text,tex,vimwiki DittoOn
+augroup end
 
 " Pencil
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType vimwiki         call pencil#init()
-  autocmd FileType text         call pencil#init()
-  autocmd FileType tex         call pencil#init()
+  autocmd FileType markdown,mkd,vimwiki,text,tex call pencil#init()
 augroup END
 let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#autoformat = 0
@@ -215,10 +236,13 @@ let g:pencil#conceallevel = 0
 let g:pencil#textwidth = 74
 
 " markdown-img-paste
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+augroup markdown_image_paste
+  au!
+  autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+augroup end
 " there are some defaults for image directory and image name, you can change them
- let g:mdip_imgdir = 'img'
- let g:mdip_imgname = 'copy-paste-image'
+let g:mdip_imgdir = 'img'
+let g:mdip_imgname = 'copy-paste-image'
 
 " Writers mode
 "map <F10> :Goyo <bar> call ToggleBackground() <CR>
@@ -227,20 +251,6 @@ map <F10> :Goyo <CR>
 " Goyo
 let g:goyo_width=100
 let g:goyo_height=100
-
-" Enable solarized theme
-syntax enable
-set background=dark
-let g:user_bg="dark"
-if has("patch-7.4-1799") || has("nvim")
-  set termguicolors
-  "colorscheme solarized8
-  colorscheme two-firewatch
-  let g:two_firewatch_italics=1
-  let g:airline_theme='twofirewatch'
-else
-  colorscheme solarized
-endif
 
 " Spelling
 set spelllang=en_gb
@@ -293,10 +303,6 @@ set backspace=indent,eol,start
 
 " Tab stuff
 set tabstop=2 expandtab shiftwidth=2
-
-" Sets syntax + indentation per filetype
-let python_highlight_all=1
-filetype plugin indent on
 
 " Disable hard wrapping
 set formatoptions-=t
@@ -422,3 +428,4 @@ nnoremap <Leader>v :vspl<cr><C-W><C-L>
 nnoremap <Leader>h <C-W><C-S><C-W><C-J>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>
+nnoremap vv viw

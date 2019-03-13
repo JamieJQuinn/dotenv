@@ -12,6 +12,7 @@ silent!call plug#begin()
 " Theme
 Plug 'lifepillar/vim-solarized8'
 Plug 'altercation/vim-colors-solarized'
+Plug 'rakr/vim-two-firewatch'
 
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -26,8 +27,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
 " Notes git diffs in gutter
 Plug 'airblade/vim-gitgutter'
-" Better file management
-Plug 'tpope/vim-vinegar'
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 " Auto-brackets
@@ -38,13 +37,18 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
+Plug 'kopischke/unite-spell-suggest'
 " Better repeat
 Plug 'tpope/vim-repeat'
 " More % matching
-Plug 'vim-scripts/matchit.zip'
+"Plug 'vim-scripts/matchit.zip'
 " Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
+" tree view
+Plug 'scrooloose/nerdtree'
+" Change vim's starting screen
+Plug 'mhinz/vim-startify'
 
 " Zettelkasten
 Plug 'vimwiki/vimwiki'
@@ -52,10 +56,14 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'jamiejquinn/vim-zettel'
 
+" Markdown Preview
+Plug 'JamshedVesuna/vim-markdown-preview'
+
 " FILETYPE STUFF
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-markdown'
 Plug 'lervag/vimtex'
 Plug 'vim-scripts/indentpython.vim'
 
@@ -71,7 +79,7 @@ endif
 call plug#end()
 
 " Vimwiki
-let g:vimwiki_list = [{'path': '~/Dropbox/zettelkasten/',
+let g:vimwiki_list = [{'path': '~/pCloudDrive/notes/zettelkasten',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext=0 " Disable all md files being represented as vimwiki files
 let g:vimwiki_conceallevel=0
@@ -91,6 +99,13 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 map <C-b> :CtrlPMRUFiles<cr>
 
+" Markdown Preview
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_browser='Firefox'
+let vim_markdown_preview_toggle=1
+"let vim_markdown_preview_temp_file=1
+let vim_markdown_preview_use_xdg_open=1
+
 " Fugitive
 map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>i
@@ -101,6 +116,9 @@ let g:tex_flavor='latex'
 
 " NERDCommenter Stuff
 map <C-_> <Leader>c<space>
+
+" NERDTree
+map <C-\> :NERDTreeToggle<CR>
 
 " Tabular
 if exists(":Tabularize")
@@ -171,7 +189,6 @@ let g:airline_mode_map = {
     \ }
 
 " Set markdown properly
-let g:vim_markdown_folding_disabled = 1
 let g:tex_conceal = ""
 let g:vim_markdown_math = 1
 let g:vim_markdown_folding_level = 2
@@ -180,9 +197,6 @@ let g:vim_markdown_frontmatter = 1
 
 " Ditto
 au FileType markdown,text,tex,vimwiki DittoOn
-
-" Spelling
-au FileType markdown,text,tex,vimwiki set spell
 
 " Pencil
 augroup pencil
@@ -198,7 +212,12 @@ let g:pencil#conceallevel = 0
 let g:pencil#textwidth = 74
 
 " Writers mode
-map <F10> :Goyo <bar> :call ToggleBackground() <CR>
+"map <F10> :Goyo <bar> call ToggleBackground() <CR>
+map <F10> :Goyo <CR>
+
+" Goyo
+let g:goyo_width=100
+let g:goyo_height=100
 
 " Enable solarized theme
 syntax enable
@@ -206,10 +225,56 @@ set background=dark
 let g:user_bg="dark"
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
-  colorscheme solarized8
+  "colorscheme solarized8
+  colorscheme two-firewatch
+  let g:two_firewatch_italics=1
+  let g:airline_theme='twofirewatch'
 else
   colorscheme solarized
 endif
+
+" Spelling
+set spelllang=en_gb
+au FileType markdown,text,tex,vimwiki set spell
+hi clear SpellBad
+hi clear SpellLocal
+hi clear SpellRare
+hi clear SpellCap
+hi link SpellBad Error
+hi link SpellLocal Error
+hi link SpellCap Error
+hi link SpellRare Type
+"hi SpellBad gui=underline
+"hi SpellLocal gui=underline
+"hi SpellCap gui=underline
+"hi SpellRare gui=underline
+
+" Markdown colorscheme tweaks
+" Change headings
+hi clear markdownHeadingDelimiter
+hi link markdownHeadingDelimiter modeMsg
+hi link htmlH1 NONE
+hi clear htmlH2
+hi clear htmlH3
+hi clear htmlH4
+hi clear htmlH5
+hi clear htmlH6
+" Remove annoying URL colours
+"hi clear markdownUrl
+"hi link markdownUrl Comment
+"hi clear mkdLinkDefTarget
+"hi clear mkdLinkDef
+"hi clear mkdLink
+hi link markdownLinkText NONE
+hi link markdownId NONE
+hi link markdownUrlTitle NONE
+hi link markdownLinkDelimiter Comment
+hi link markdownLinkTextDelimiter Comment
+" Change footnote
+hi link markdownFootnote Type
+hi link markdownFootnoteDefinition Type
+" Change horizontal rule
+hi link markdownRule markdownListMarker
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -244,14 +309,12 @@ set ignorecase smartcase hlsearch incsearch
 " disable folding
 set nofoldenable
 " gvim stuff
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 11
-set guioptions-=m  "remove menu bar
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
+" set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guicursor=
-" Spelling
-set spelllang=en_gb
 " Fix airline over ssh
 set laststatus=2
 " Disable autocommenting
@@ -304,7 +367,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Insert date
-nnoremap <Leader>d "=strftime("%c")<CR>P"
+nnoremap <Leader>d "=strftime("%FT%T%z")<CR>P"
 
 nmap <Leader>m :call ToggleMouse()<CR>
 
@@ -324,13 +387,18 @@ function! ToggleGutter()
   :set invnumber
 endfunction
 
+let g:markdown_mode="false"
 function! ToggleBackground()
-  if g:user_bg == "light"
-    :set background=dark
-    :let g:user_bg="dark"
-  else
+  if g:markdown_mode == "false"
+    :let g:markdown_mode = "true"
     :set background=light
-    :let g:user_bg="light"
+    :set spell
+    :colorscheme pencil
+  else
+    :let g:markdown_mode = "false"
+    :set nospell
+    :set background=dark
+    :colorscheme two-firewatch
   endif
 endfunction
 

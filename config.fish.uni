@@ -1,5 +1,10 @@
 . ~/.config/fish/config.fish.global
 
+# brew
+#set XDG_DATA_DIRS /maths/scratch/linuxbrew/share $XDG_DATA_DIRS
+set PATH /home/pgrad2/1101974q/.linuxbrew/bin /home/pgrad2/1101974q/.linuxbrew/sbin $PATH
+#set LD_LIBRARY_PATH /home/pgrad2/1101974q/.linuxbrew/lib:$LD_LIBRARY_PATH
+
 # anaconda
 set PATH /maths/scratch/anaconda2/bin $PATH
 set PATH /maths/scratch/anaconda3/bin $PATH
@@ -17,11 +22,8 @@ set INFOPATH /usr/local/texlive/2016/texmf-dist/doc/info $INFOPATH
 set MANPATH /usr/local/texlive/2016/texmf-dist/doc/man $MANPATH
 # Maple
 set PATH /maths/maple2015/bin $PATH
-
-# brew
-#set XDG_DATA_DIRS /maths/scratch/linuxbrew/share $XDG_DATA_DIRS
-set PATH /home/pgrad2/1101974q/.linuxbrew/bin /home/pgrad2/1101974q/.linuxbrew/sbin $PATH
-#set LD_LIBRARY_PATH /home/pgrad2/1101974q/.linuxbrew/lib:$LD_LIBRARY_PATH
+# pandoc
+set PATH /maths/scratch/pandoc-2.7.1/bin $PATH
 
 # GCC
 set PATH /home/pgrad2/1101974q/prog/gcc-euclid/gcc-6.3.0-build/bin $PATH
@@ -38,3 +40,4 @@ alias vim 'nvim'
 alias logvim 'cd ~/Dropbox/shared-folders/MacTaggart/log; vim log.md'
 setenv VISUAL /usr/bin/nvim
 setenv EDITOR "$VISUAL"
+. ~/.config/fish/config.fish.global

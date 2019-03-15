@@ -63,17 +63,18 @@ Plug 'junegunn/fzf.vim'
 " vim-templates
 Plug 'tibabit/vim-templates'
 
-" Clever closing brackets
-Plug 'Townk/vim-autoclose'
-
 " Markdown image paste
 Plug 'ferrine/md-img-paste.vim'
+
+" pandoc
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " FILETYPE STUFF
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
-Plug 'tpope/vim-markdown'
+"Plug 'tpope/vim-markdown'
 Plug 'lervag/vimtex'
 Plug 'vim-scripts/indentpython.vim'
 
@@ -112,12 +113,12 @@ filetype plugin indent on
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/pCloudDrive/notes/zettelkasten',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_global_ext=1 " Disable all md files being represented as vimwiki files
+let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 augroup vimwiki_syntax
   au!
   autocmd FileType vimwiki cd %:p:h
-  autocmd FileType vimwiki TemplateInit vimwiki
+  "autocmd FileType vimwiki TemplateInit vimwiki
   autocmd FileType vimwiki set syntax=markdown
 augroup END
 
@@ -184,6 +185,13 @@ augroup end
 map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>i
 map <Leader>gd :Gdiff<CR>
+
+" Pandoc
+let g:pandoc#syntax#conceal#use = 0
+augroup pandoc_syntax
+  au!
+  autocmd FileType pandoc set syntax=markdown
+augroup END
 
 " Latex
 let g:tex_flavor='latex'
@@ -354,6 +362,8 @@ set backspace=indent,eol,start
 " Tab stuff
 set tabstop=2 expandtab shiftwidth=2
 
+"Concealling off
+set conceallevel=0
 " Disable hard wrapping
 set formatoptions-=t
 " Mouse support

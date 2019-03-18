@@ -30,8 +30,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 " Git wrapper
 Plug 'tpope/vim-fugitive'
-" Auto-brackets
-Plug 'jiangmiao/auto-pairs'
 " Searching
 Plug 'rking/ag.vim', {'on': 'Ag'}
 " Writing mode
@@ -103,6 +101,7 @@ else
 endif
 
 " Templates
+let g:tmpl_auto_initialize=0
 let g:tmpl_search_paths = ['~/.vim/templates']
 
 " Sets syntax + indentation per filetype
@@ -147,8 +146,8 @@ function! s:wiki_search(line)
   let parts = split(filename,'\.')
   let filename_wo_ext = parts[0]
   echo filename_wo_ext
-  execute 'normal! a[['.filename_wo_ext.']]'
-  "execute 'normal! a['.filename_wo_ext.']('.filename_wo_ext.')'
+  "execute 'normal! a[['.filename_wo_ext.']]'
+  execute 'normal! a['.filename_wo_ext.']('.filename_wo_ext.')'
 endfunction
 
 " make fulltext search in all VimWiki files using FZF

@@ -13,6 +13,7 @@ silent!call plug#begin()
 Plug 'lifepillar/vim-solarized8'
 Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-two-firewatch'
+Plug 'reedes/vim-colors-pencil'
 
 " Fuzzy search
 "Plug 'ctrlpvim/ctrlp.vim'
@@ -37,7 +38,6 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 Plug 'dbmrq/vim-ditto'
-"Plug 'kopischke/unite-spell-suggest'
 " Better repeat
 Plug 'tpope/vim-repeat'
 " More % matching
@@ -92,12 +92,11 @@ call plug#end()
 " Enable colorscheme
 syntax enable
 set background=dark
-let g:user_bg="dark"
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
   "colorscheme solarized8
-  colorscheme two-firewatch
   let g:two_firewatch_italics=1
+  colorscheme two-firewatch
   let g:airline_theme='twofirewatch'
 else
   colorscheme solarized
@@ -119,7 +118,7 @@ augroup vimwiki_syntax
   au!
   autocmd FileType vimwiki cd %:p:h
   "autocmd FileType vimwiki TemplateInit vimwiki
-  autocmd FileType vimwiki set syntax=markdown
+  autocmd FileType vimwiki set syntax=pandoc
 augroup END
 
 " Deoplete
@@ -188,10 +187,7 @@ map <Leader>gd :Gdiff<CR>
 
 " Pandoc
 let g:pandoc#syntax#conceal#use = 0
-augroup pandoc_syntax
-  au!
-  autocmd FileType pandoc set syntax=markdown
-augroup END
+let g:pandoc#spell#enabled = 0
 
 " Latex
 let g:tex_flavor='latex'
@@ -250,6 +246,10 @@ endif
 
 " airline
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#wordcount#filetypes =
+\ ['help', 'markdown', 'text', 'pandoc', 'tex', 'mail']
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -278,10 +278,10 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_frontmatter = 1
 
 " Ditto
-augroup ditto
-  au!
-  au FileType markdown,text,tex,vimwiki DittoOn
-augroup end
+"augroup ditto
+  "au!
+  "au FileType markdown,text,tex,vimwiki DittoOn
+"augroup end
 
 " Pencil
 augroup pencil
@@ -312,49 +312,51 @@ let g:goyo_height=100
 
 " Spelling
 set spelllang=en_gb
-au FileType markdown,text,tex,vimwiki set spell
-hi clear SpellBad
-hi clear SpellLocal
-hi clear SpellRare
-hi clear SpellCap
-hi link SpellBad Error
-hi link SpellLocal Error
-hi link SpellCap Error
-hi link SpellRare Type
-"hi SpellBad gui=underline
-"hi SpellLocal gui=underline
-"hi SpellCap gui=underline
-"hi SpellRare gui=underline
+"au FileType markdown,text,tex,vimwiki set spell
+function! FixSpellingHighlighting()
+  hi clear SpellBad
+  hi clear SpellLocal
+  hi clear SpellRare
+  hi clear SpellCap
+  "hi link SpellBad Error
+  "hi link SpellLocal Error
+  "hi link SpellCap Error
+  hi link SpellRare Error
+  hi SpellBad gui=underline
+  hi SpellLocal gui=underline
+  hi SpellCap gui=underline
+  "hi SpellRare gui=underline
+endfunction
 
-" Markdown colorscheme tweaks
-" Change headings
-hi clear markdownHeadingDelimiter
-hi link markdownHeadingDelimiter modeMsg
-hi link htmlH1 NONE
-hi clear htmlH2
-hi clear htmlH3
-hi clear htmlH4
-hi clear htmlH5
-hi clear htmlH6
-" Remove annoying URL colours
-"hi clear markdownUrl
-"hi link markdownUrl Comment
-"hi clear mkdLinkDefTarget
-"hi clear mkdLinkDef
-"hi clear mkdLink
-hi link markdownLinkText NONE
-hi link markdownId NONE
-hi link markdownUrlTitle NONE
-hi link markdownLinkDelimiter Comment
-hi link markdownLinkTextDelimiter Comment
-" Change footnote
-hi link markdownFootnote Type
-hi link markdownFootnoteDefinition Type
-" Change horizontal rule
-hi link markdownRule markdownListMarker
+"" Markdown colorscheme tweaks
+"" Change headings
+"hi clear markdownHeadingDelimiter
+"hi link markdownHeadingDelimiter modeMsg
+"hi link htmlH1 NONE
+"hi clear htmlH2
+"hi clear htmlH3
+"hi clear htmlH4
+"hi clear htmlH5
+"hi clear htmlH6
+"" Remove annoying URL colours
+""hi clear markdownUrl
+""hi link markdownUrl Comment
+""hi clear mkdLinkDefTarget
+""hi clear mkdLinkDef
+""hi clear mkdLink
+"hi link markdownLinkText NONE
+"hi link markdownId NONE
+"hi link markdownUrlTitle NONE
+"hi link markdownLinkDelimiter Comment
+"hi link markdownLinkTextDelimiter Comment
+"" Change footnote
+"hi link markdownFootnote Type
+"hi link markdownFootnoteDefinition Type
+"" Change horizontal rule
+"hi link markdownRule markdownListMarker
 
-hi Italic gui=italic cterm=italic
-hi link markdownItalic Italic
+"hi Italic gui=italic cterm=italic
+"hi link markdownItalic Italic
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -403,8 +405,14 @@ au FileType * set fo-=r fo-=o
 set listchars=tab:>-,trail:· nolist!
 nnoremap <silent> <Leader>w :set nolist!<CR>
 
+function! ToggleSpelling()
+  set spelllang=en_gb invspell
+  ToggleDitto
+  call FixSpellingHighlighting()
+endfunction
+
 " Enable/Disable spellchecker
-noremap <silent> <Leader>s :set spelllang=en_gb invspell<CR>
+noremap <silent> <Leader>s :call ToggleSpelling()<CR>
 
 " Open up a terminal
 noremap <Leader>tt :vspl<cr><C-W><C-L>:term fish<cr>i
@@ -471,15 +479,15 @@ function! ToggleBackground()
   if g:markdown_mode == "false"
     :let g:markdown_mode = "true"
     :set background=light
-    :set spell
     :colorscheme pencil
   else
     :let g:markdown_mode = "false"
-    :set nospell
     :set background=dark
     :colorscheme two-firewatch
   endif
 endfunction
+
+nnoremap <Leader>b :call ToggleBackground()<CR>
 
 nnoremap <Leader>n :call ToggleGutter()<CR>
 

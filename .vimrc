@@ -167,6 +167,14 @@ augroup zettelkasten
   au FileType vimwiki imap <silent> [[ <esc><Plug>ZettelSearchMap
 augroup end
 
+function! s:new_wiki_page(name)
+  echo a:name
+  execute "e ".fnameescape(a:name).".md"
+  :TemplateInit vimwiki
+endfunction
+
+command! -nargs=* Wnew call s:new_wiki_page(<q-args>)
+
 " CtrlP stuff
 " Ignore everything in .gitignore:
 "let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']

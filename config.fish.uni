@@ -37,6 +37,7 @@ set LIBRARY_PATH $LD_LIBRARY_PATH
 
 # nvim
 alias vim 'nvim'
+alias notes 'cd /home/pgrad2/1101974q/pCloudDrive/notes'
 alias logvim 'cd ~/Dropbox/shared-folders/MacTaggart/log; vim log.md'
 setenv VISUAL /usr/bin/nvim
 setenv EDITOR "$VISUAL"

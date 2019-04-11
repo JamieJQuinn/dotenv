@@ -16,7 +16,7 @@ Plug 'rakr/vim-two-firewatch'
 Plug 'reedes/vim-colors-pencil'
 
 " Fuzzy search
-"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " Async Linters
 Plug 'neomake/neomake'
 " Modify brackets, tags, quotes, etc easily
@@ -117,7 +117,7 @@ augroup vimwiki_syntax
   au!
   autocmd FileType vimwiki cd %:p:h
   "autocmd FileType vimwiki TemplateInit vimwiki
-  autocmd FileType vimwiki set syntax=pandoc
+  autocmd FileType vimwiki set syntax=markdown
 augroup END
 
 " Deoplete
@@ -130,7 +130,7 @@ let g:neocomplete#enable_at_startup = 1
 let g:UltiSnipsExpandTrigger="<tab>"
 
 " fzf
-map <C-p> :FZF<cr>
+"map <C-p> :FZF<cr>
 " fzf returns selected filename and matched line from the file, we need to
 " strip that
 function! s:get_fzf_filename(line)
@@ -195,6 +195,11 @@ map <Leader>gd :Gdiff<CR>
 " Pandoc
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#spell#enabled = 0
+augroup pandoc_syntax
+  au!
+  "autocmd FileType vimwiki TemplateInit vimwiki
+  autocmd FileType pandoc set syntax=markdown
+augroup END
 
 " Latex
 let g:tex_flavor='latex'
@@ -328,7 +333,7 @@ function! FixSpellingHighlighting()
   "hi link SpellBad Error
   "hi link SpellLocal Error
   "hi link SpellCap Error
-  hi link SpellRare Error
+  hi link SpellRare ErrorMsg
   hi SpellBad gui=underline
   hi SpellLocal gui=underline
   hi SpellCap gui=underline

@@ -128,6 +128,7 @@ let g:neocomplete#enable_at_startup = 1
 
 " Utilsnips
 let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
 
 " fzf
 "map <C-p> :FZF<cr>
@@ -177,7 +178,7 @@ command! -nargs=* Wnew call s:new_wiki_page(<q-args>)
 
 " CtrlP stuff
 " Ignore everything in .gitignore:
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 "map <C-b> :CtrlPMRUFiles<cr>
 
 " Markdown Preview
@@ -462,8 +463,13 @@ nnoremap <Right> <nop>
 " Window switching
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <leader>ll <C-W><C-L>
+nnoremap <leader>hh <C-W><C-H>
+
+" Buffer switching
+map <C-L> :bnext<cr>
+map <C-H> :bprevious<cr>
+map <leader>bq :bd <BAR> bd #<cr>
 
 " Insert date
 nnoremap <Leader>d "=strftime("%FT%T%z")<CR>P"

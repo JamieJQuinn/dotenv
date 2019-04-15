@@ -39,7 +39,7 @@ set LIBRARY_PATH $LD_LIBRARY_PATH
 alias vim 'nvim'
 alias notes 'cd /home/pgrad2/1101974q/pCloudDrive/notes'
 alias logvim 'cd ~/Dropbox/shared-folders/MacTaggart/log; vim log.md'
-alias vnc_4k 'vncserver -geometry 2560x1440'
+alias vnc_4k 'vncserver -geometry 2350x1200'
 setenv VISUAL /usr/bin/nvim
 setenv EDITOR "$VISUAL"
 . ~/.config/fish/config.fish.global

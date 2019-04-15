@@ -89,13 +89,14 @@ call plug#end()
 
 " Enable colorscheme
 syntax enable
-set background=dark
+set background=light
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
   "colorscheme solarized8
-  let g:two_firewatch_italics=1
-  colorscheme two-firewatch
-  let g:airline_theme='twofirewatch'
+  "let g:two_firewatch_italics=1
+  "colorscheme two-firewatch
+  "let g:airline_theme='twofirewatch'
+  colorscheme pencil
 else
   colorscheme solarized
 endif
@@ -317,10 +318,11 @@ let g:mdip_imgname = 'copy-paste-image'
 
 " Writers mode
 "map <F10> :Goyo <bar> call ToggleBackground() <CR>
-map <F10> :Goyo <CR>
+"map <F10> :Goyo <CR>
+nnoremap <leader>go :Goyo <CR>
 
 " Goyo
-let g:goyo_width=100
+let g:goyo_width=70
 let g:goyo_height=100
 
 " Spelling
@@ -492,16 +494,18 @@ function! ToggleGutter()
   :set invnumber
 endfunction
 
-let g:markdown_mode="false"
+let g:markdown_mode="true"
 function! ToggleBackground()
   if g:markdown_mode == "false"
     :let g:markdown_mode = "true"
     :set background=light
     :colorscheme pencil
+    :let g:airline_theme = 'pencil'
   else
     :let g:markdown_mode = "false"
     :set background=dark
     :colorscheme two-firewatch
+    :let g:airline_theme = 'twofirewatch'
   endif
 endfunction
 

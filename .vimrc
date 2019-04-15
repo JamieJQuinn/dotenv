@@ -74,6 +74,7 @@ Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 "Plug 'tpope/vim-markdown'
 Plug 'lervag/vimtex'
+Plug 'hisaknown/deoplete-latex'
 Plug 'vim-scripts/indentpython.vim'
 
 " Neovim only plugins

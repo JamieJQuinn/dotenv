@@ -88,16 +88,22 @@ endif
 
 call plug#end()
 
+" Firewatch settings
+let g:two_firewatch_italics=1
+
+" Pencil theme settings
+let g:pencil_terminal_italics = 1
+
 " Enable colorscheme
 syntax enable
 set background=light
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
   "colorscheme solarized8
-  "let g:two_firewatch_italics=1
   "colorscheme two-firewatch
   "let g:airline_theme='twofirewatch'
   colorscheme pencil
+  let g:airline_theme='pencil'
 else
   colorscheme solarized
 endif

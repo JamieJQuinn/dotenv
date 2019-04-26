@@ -96,14 +96,14 @@ let g:pencil_terminal_italics = 1
 
 " Enable colorscheme
 syntax enable
-set background=light
+set background=dark
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
   "colorscheme solarized8
-  "colorscheme two-firewatch
-  "let g:airline_theme='twofirewatch'
-  colorscheme pencil
-  let g:airline_theme='pencil'
+  colorscheme two-firewatch
+  let g:airline_theme='twofirewatch'
+  "colorscheme pencil
+  "let g:airline_theme='pencil'
 else
   colorscheme solarized
 endif
@@ -501,7 +501,7 @@ function! ToggleGutter()
   :set invnumber
 endfunction
 
-let g:markdown_mode="true"
+let g:markdown_mode="false"
 function! ToggleBackground()
   if g:markdown_mode == "false"
     :let g:markdown_mode = "true"

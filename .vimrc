@@ -212,6 +212,7 @@ augroup END
 
 " Latex
 let g:tex_flavor='latex'
+let g:vimtex_fold_enabled = 1
 
 " NERDCommenter Stuff
 map <C-_> <Leader>c<space>
@@ -410,7 +411,9 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 let @/ = ""
 " disable folding
-set nofoldenable
+"set nofoldenable
+set foldmethod=expr
+set foldlevel=2
 " gvim stuff
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
 " set guioptions-=m  "remove menu bar

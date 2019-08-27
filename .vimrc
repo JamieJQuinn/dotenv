@@ -68,6 +68,9 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
+" Checkbox manipulation for markdown
+Plug 'jkramer/vim-checkbox'
+
 " FILETYPE STUFF
 Plug 'pangloss/vim-javascript'
 Plug 'godlygeek/tabular'
@@ -117,7 +120,7 @@ let python_highlight_all=1
 filetype plugin indent on
 
 " Vimwiki
-let g:vimwiki_list = [{'path': '~/pCloudDrive/notes/zettelkasten',
+let g:vimwiki_list = [{'path': '~/zettelkasten',
                      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
@@ -204,10 +207,11 @@ map <Leader>gd :Gdiff<CR>
 " Pandoc
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#spell#enabled = 0
+let g:pandoc#folding#fdc = 0
 augroup pandoc_syntax
   au!
   "autocmd FileType vimwiki TemplateInit vimwiki
-  autocmd FileType pandoc set syntax=markdown
+  autocmd FileType pandoc set syntax=pandoc
 augroup END
 
 " Latex
@@ -528,5 +532,6 @@ nnoremap <Leader>x :x<cr>
 nnoremap <Leader>v :vspl<cr><C-W><C-L>
 nnoremap <Leader>h <C-W><C-S><C-W><C-J>
 nnoremap <Leader>q :q<cr>
+nnoremap <Leader>w :w<cr>
 nnoremap <Leader>e :e#<cr>
 nnoremap vv viw

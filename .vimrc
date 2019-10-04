@@ -272,7 +272,7 @@ endif
 
 " airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#wordcount#filetypes =
 \ ['help', 'markdown', 'text', 'pandoc', 'tex', 'mail']
@@ -479,13 +479,8 @@ nnoremap <Right> <nop>
 " Window switching
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
-nnoremap <leader>ll <C-W><C-L>
-nnoremap <leader>hh <C-W><C-H>
-
-" Buffer switching
-map <C-L> :bnext<cr>
-map <C-H> :bprevious<cr>
-map <leader>bq :bd <BAR> bd #<cr>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Insert date
 nnoremap <Leader>d "=strftime("%FT%T%z")<CR>P"

@@ -247,6 +247,8 @@ let g:neomake_error_sign = {
   \ 'texthl': 'ErrorMsg',
   \ }
 
+let g:neomake_virtualtext_current_error = 0
+
 let g:neomake_python_enabled_makers = ['pylint']
 
 "let g:neomake_cpp_enabled_makers = []
@@ -419,12 +421,14 @@ let @/ = ""
 set foldmethod=expr
 set foldlevel=2
 " gvim stuff
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
-" set guioptions-=m  "remove menu bar
+set guifont=Cousine\ Regular\ 11
+set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guicursor=
+" Fix clipboard
+set clipboard^=unnamed,unnamedplus
 " Fix airline over ssh
 set laststatus=2
 " Disable autocommenting
@@ -459,12 +463,6 @@ vnoremap <tab> %
 " Call make
 noremap <F6> :make<CR>
 noremap <F7> :make test<CR>
-
-" Better copy + paste
-nnoremap <Leader>y "+y
-vnoremap <Leader>y "+y
-"nnoremap <Leader>p "+p
-"vnoremap <Leader>p "+p
 
 " Better movement
 nnoremap j gj

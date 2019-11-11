@@ -159,11 +159,6 @@ Plug 'mhinz/vim-startify'
 
 
 
-""" Thesaurus ###
-Plug 'Ron89/thesaurus_query.vim'
-
-
-
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'

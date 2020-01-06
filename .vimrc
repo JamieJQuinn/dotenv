@@ -135,6 +135,7 @@ if has('nvim')
 else
   nmap <Leader>l :Neomake<CR>
 endif
+let g:neomake_virtualtext_current_error = 0 " turn off virtual text
 let g:neomake_warning_sign = {
   \ 'text': 'W',
   \ 'texthl': 'WarningMsg',
@@ -218,6 +219,7 @@ augroup zettelkasten
   au FileType vimwiki imap <silent> [[ <esc><Plug>ZettelSearchMap
   au FileType vimwiki cd %:p:h
   autocmd FileType vimwiki set syntax=pandoc
+  au! BufWritePost ~/zettelkasten/* !git add "%";git commit -m "Auto commit of %:t." "%"
 augroup end
 
 function! s:get_fzf_filename(line)

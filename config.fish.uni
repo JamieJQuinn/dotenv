@@ -5,11 +5,9 @@
 set PATH /home/pgrad2/1101974q/.linuxbrew/bin /home/pgrad2/1101974q/.linuxbrew/sbin $PATH
 #set LD_LIBRARY_PATH /home/pgrad2/1101974q/.linuxbrew/lib:$LD_LIBRARY_PATH
 
-# anaconda
-set PATH /maths/scratch/anaconda2/bin $PATH
-set PATH /maths/scratch/anaconda3/bin $PATH
-#source /maths/scratch/anaconda2/etc/fish/conf.d/conda.fish
-source /maths/scratch/anaconda3/etc/fish/conf.d/conda.fish
+# Python
+#set PATH /home/pgrad2/1101974q/.local/bin $PATH
+
 # Visit
 set PATH /maths/scratch/visit-install/bin $PATH
 # Zotero
@@ -39,7 +37,8 @@ set LIBRARY_PATH $LD_LIBRARY_PATH
 alias vim 'nvim'
 alias notes 'cd /home/pgrad2/1101974q/pCloudDrive/notes'
 alias logvim 'cd ~/Dropbox/shared-folders/MacTaggart/log; vim log.md'
-alias vnc_4k 'vncserver -geometry 2350x1200'
+alias vnc_4k 'vncserver -geometry 2350x1200 -depth 16'
+alias vnc_laptop 'vncserver -geometry 1500x750 -depth 16'
 setenv VISUAL /usr/bin/nvim
 setenv EDITOR "$VISUAL"
 . ~/.config/fish/config.fish.global

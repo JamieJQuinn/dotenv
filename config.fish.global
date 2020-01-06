@@ -10,10 +10,5 @@ abbr -a gd git diff
 abbr -a gb git branch
 abbr -a gl git log
 
-# Greeting
-function fish_greeting
-  w
-end
-
 # easy open
 alias a 'xdg-open'

@@ -12,6 +12,7 @@ silent!call plug#begin()
 
 """ Theme ###
 Plug 'lifepillar/vim-solarized8'
+Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-two-firewatch'
 Plug 'reedes/vim-colors-pencil'
@@ -100,7 +101,7 @@ set background=dark
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
   "colorscheme solarized8
-  colorscheme two-firewatch
+  colorscheme nord
   let g:airline_theme='twofirewatch'
   "colorscheme pencil
   "let g:airline_theme='pencil'

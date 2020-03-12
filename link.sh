@@ -20,3 +20,6 @@ then
 else
   echo ". ~/.config/fish/config.fish.global" >> ~/.config/fish/config.fish
 fi
+
+mkdir -p ~/.config/zathura
+ln -s $DIR/zathurarc ~/.config/zathura/zathurarc

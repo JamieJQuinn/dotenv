@@ -1,9 +1,0 @@
----
-title: {{FILE}}
-date: {{YEAR}}-{{MONTH}}-{{DATE}}T{{TIME}}
-mentions:
-tags:
----
-
-# {{FILE}}
-{{CURSOR}}

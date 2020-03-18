@@ -63,9 +63,7 @@ Plug 'mhinz/vim-startify'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-
-""" Templates ###
-Plug 'tibabit/vim-templates'
+Plug 'michal-h21/vim-zettel'
 
 """ pandoc ###
 Plug 'vim-pandoc/vim-pandoc'
@@ -117,18 +115,6 @@ filetype plugin indent on
 
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-
-Plug 'rking/ag.vim', {'on': 'Ag'}
-if executable('pt')
-  " Tell unite to use ag for searching
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-  let g:unite_source_grep_encoding = 'utf-8'
-  " Tell ag.vim to use pt binary
-  let g:ag_prg="pt --nogroup --nocolor --column"
-  let g:ag_working_path_mode="r"
-endif
 
 """ Neomake ###
 if has('nvim')
@@ -210,58 +196,25 @@ map <C-\> :NERDTreeToggle<CR>
 
 """ Zettelkasten ###
 let g:vimwiki_list = [{'path': '~/zettelkasten',
-                     \ 'syntax': 'markdown', 'ext': '.md'}]
+                     \ 'syntax': 'markdown', 'index': 'readme', 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
+let g:zettel_format = "%Y-%m-%d-%H-%M"
 
+" Disable default keymappings
+let g:zettel_default_mappings = 0 
+" This is basically the same as the default configuration
 augroup zettelkasten
-  au!
-  au FileType vimwiki nnoremap <silent> <Plug>ZettelSearchMap :ZettelSearch<cr>
-  au FileType vimwiki imap <silent> [[ <esc><Plug>ZettelSearchMap
-  au FileType vimwiki cd %:p:h
+  autocmd!
+  autocmd FileType vimwiki imap <silent> [[ [[<esc><Plug>ZettelSearchMap
+  autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
+  autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
+  autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
+  autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
+  au FileType vimwiki cd %:p:h
   au! BufWritePost ~/zettelkasten/* !git add "%";git commit -m "Auto commit of %:t." "%"
-augroup end
-
-function! s:get_fzf_filename(line)
-  " the filename is separated by : from rest of the line
-  let parts =  split(a:line,":")
-  " we need to remove the extension
-  let filename = parts[0]
-  return filename
-endfunction
-
-function! s:wiki_search(line)
-  let filename = <sid>get_fzf_filename(a:line)
-  let parts = split(filename,'\.')
-  let filename_wo_ext = parts[0]
-  echo filename_wo_ext
-  "execute 'normal! a[['.filename_wo_ext.']]'
-  execute 'normal! a['.filename_wo_ext.']('.filename_wo_ext.')'
-endfunction
-
-" make fulltext search in all VimWiki files using FZF
-command! -bang -nargs=* ZettelSearch call fzf#vim#files(<q-args>, {
-      \'down': '~40%',
-      \'sink':function('<sid>wiki_search')})
-
-"command! -bang -nargs=* ZettelSearch call fzf#vim#ag(<q-args>,
-      "\'--skip-vcs-ignores', {
-      "\'down': '~40%',
-      "\'sink':function('<sid>wiki_search'),
-      "\'options':'--exact'})
-
-function! s:new_wiki_page(name)
-  echo a:name
-  execute "e ".fnameescape(a:name).".md"
-  :TemplateInit vimwiki
-endfunction
-
-command! -nargs=* Wnew call s:new_wiki_page(<q-args>)
-
-""" Templates ###
-let g:tmpl_auto_initialize=0
-let g:tmpl_search_paths = ['~/.vim/templates']
+augroup END
 
 """ Pandoc ###
 let g:pandoc#syntax#conceal#use = 0
@@ -440,7 +393,7 @@ function! ToggleBackground()
   else
     :let g:markdown_mode = "false"
     :set background=dark
-    :colorscheme two-firewatch
+    :colorscheme nord
     :let g:airline_theme = 'twofirewatch'
   endif
 endfunction

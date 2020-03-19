@@ -266,6 +266,7 @@ let g:neocomplete#enable_at_startup = 1
 
 " Spelling
 set spelllang=en_gb
+set spellfile=~/.vim/spell/en.utf-8.add
 au FileType markdown,text,tex,vimwiki,pandoc call EnableSpelling()
 
 function! FixSpellingHighlighting()
@@ -282,13 +283,13 @@ endfunction
 function! EnableSpelling()
   set spelllang=en_gb spell
   DittoOn
-  call FixSpellingHighlighting()
+  "call FixSpellingHighlighting()
 endfunction
 
 function! ToggleSpelling()
   set spelllang=en_gb invspell
   ToggleDitto
-  call FixSpellingHighlighting()
+  "call FixSpellingHighlighting()
 endfunction
 
 noremap <silent> <Leader>s :call ToggleSpelling()<CR>

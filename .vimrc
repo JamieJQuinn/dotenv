@@ -58,6 +58,9 @@ Plug 'godlygeek/tabular'
 """ Startify ###
 Plug 'mhinz/vim-startify'
 
+""" Proper Title Casing ###
+Plug 'christoomey/vim-titlecase'
+
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
@@ -70,6 +73,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 """ Markdown ###
 Plug 'jkramer/vim-checkbox' " Checkbox manipulation
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 """ Latex ###
 Plug 'lervag/vimtex'
@@ -253,6 +257,9 @@ augroup pandoc_syntax
   au!
   autocmd FileType pandoc set syntax=pandoc
 augroup END
+
+""" markdown-preview.nvim
+nnoremap <leader>p <Plug>MarkdownPreviewToggle
 
 """ Latex ###
 let g:tex_flavor='latex'

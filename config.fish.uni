@@ -41,4 +41,3 @@ alias vnc_4k 'vncserver -geometry 2350x1200 -depth 16'
 alias vnc_laptop 'vncserver -geometry 1500x750 -depth 16'
 setenv VISUAL /usr/bin/nvim
 setenv EDITOR "$VISUAL"
-. ~/.config/fish/config.fish.global

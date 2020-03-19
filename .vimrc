@@ -12,10 +12,12 @@ silent!call plug#begin()
 
 """ Theme ###
 Plug 'lifepillar/vim-solarized8'
-Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
-Plug 'rakr/vim-two-firewatch'
+Plug 'arcticicestudio/nord-vim'
 Plug 'reedes/vim-colors-pencil'
+
+""" Thematic ###
+Plug 'reedes/vim-thematic'
 
 """ Fuzzy Search ###
 Plug 'ctrlpvim/ctrlp.vim'
@@ -42,9 +44,6 @@ Plug 'junegunn/goyo.vim'
 
 """ Pencil ###
 Plug 'reedes/vim-pencil'
-
-""" Ditto ###
-Plug 'dbmrq/vim-ditto'
 
 """ Snippets ###
 Plug 'honza/vim-snippets'
@@ -91,20 +90,17 @@ endif
 call plug#end()
 
 """ Theme ###
-let g:two_firewatch_italics=1
 let g:pencil_terminal_italics = 1
+let g:pencil_spell_undercurl = 0
+
+let g:nord_bold = 1
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+let g:nord_underline = 1
 
 syntax enable
-set background=dark
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
-  "colorscheme solarized8
-  colorscheme nord
-  let g:airline_theme='twofirewatch'
-  "colorscheme pencil
-  "let g:airline_theme='pencil'
-else
-  colorscheme solarized
 endif
 
 let python_highlight_all=1
@@ -112,6 +108,22 @@ let python_highlight_all=1
 " Set detection, indentation & plugin load for filetypes
 " This has to be called early
 filetype plugin indent on
+
+""" Thematic ###
+let g:thematic#themes = {
+\ 'dark' :{'colorscheme': 'nord',
+\                 'background': 'dark',
+\                 'airline-theme': 'nord',
+\                 'ruler': 1,
+\                },
+\ 'light' :{'colorscheme': 'pencil',
+\                 'background': 'light',
+\                 'airline-theme': 'pencil',
+\                 'ruler': 0,
+\                },
+\ }
+
+let g:thematic#theme_name = 'dark'
 
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
@@ -228,6 +240,7 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
   autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
+  autocmd FileType vimwiki Thematic light
   au FileType vimwiki cd %:p:h
   au! BufWritePost ~/zettelkasten/* !git add "%";git commit -m "Auto commit of %:t." "%"
 augroup END
@@ -240,13 +253,6 @@ augroup pandoc_syntax
   au!
   autocmd FileType pandoc set syntax=pandoc
 augroup END
-
-""" Markdown ###
-let g:tex_conceal = ""
-let g:vim_markdown_math = 1
-let g:vim_markdown_folding_level = 2
-let g:vim_markdown_no_default_key_mappings = 1
-let g:vim_markdown_frontmatter = 1
 
 """ Latex ###
 let g:tex_flavor='latex'
@@ -267,32 +273,22 @@ let g:neocomplete#enable_at_startup = 1
 " Spelling
 set spelllang=en_gb
 set spellfile=~/.vim/spell/en.utf-8.add
-au FileType markdown,text,tex,vimwiki,pandoc call EnableSpelling()
+au FileType markdown,text,tex,vimwiki,pandoc set spell
+set syntax=pandoc
 
-function! FixSpellingHighlighting()
-  hi clear SpellBad
-  hi clear SpellLocal
-  hi clear SpellRare
-  hi clear SpellCap
-  hi link SpellRare ErrorMsg
-  hi SpellBad gui=underline
-  hi SpellLocal gui=underline
-  hi SpellCap gui=underline
-endfunction
+augroup CustomHighlights
+  autocmd!
+  autocmd colorscheme *
+  \ hi clear SpellLocal
+  \ hi clear SpellCap
+  \ hi link SpellLocal SpellBad
+  \ hi link SpellCap SpellBad
+augroup END
 
-function! EnableSpelling()
-  set spelllang=en_gb spell
-  DittoOn
-  "call FixSpellingHighlighting()
-endfunction
+noremap <silent> <Leader>s :set invspell<CR>
 
-function! ToggleSpelling()
-  set spelllang=en_gb invspell
-  ToggleDitto
-  "call FixSpellingHighlighting()
-endfunction
-
-noremap <silent> <Leader>s :call ToggleSpelling()<CR>
+""" Ditto ###
+let g:ditto_hlgroups = ['Todo', 'Todo', 'Todo', 'Todo', 'Todo']
 
 
 
@@ -312,6 +308,7 @@ set shell=/bin/bash
 set title
 " Current number tracking
 set ruler
+"set number
 " Can change buffer without saving current
 set hidden
 " Increase history limit
@@ -340,6 +337,8 @@ set clipboard^=unnamed,unnamedplus
 set laststatus=2
 " Disable autocommenting
 au FileType * set fo-=r fo-=o
+" Enable cursorline
+set cursorline
 
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!
@@ -404,14 +403,10 @@ let g:markdown_mode="false"
 function! ToggleBackground()
   if g:markdown_mode == "false"
     :let g:markdown_mode = "true"
-    :set background=light
-    :colorscheme pencil
-    :let g:airline_theme = 'pencil'
+    Thematic light
   else
     :let g:markdown_mode = "false"
-    :set background=dark
-    :colorscheme nord
-    :let g:airline_theme = 'twofirewatch'
+    Thematic dark
   endif
 endfunction
 

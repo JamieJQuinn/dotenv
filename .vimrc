@@ -245,9 +245,30 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
   autocmd FileType vimwiki Thematic light
+  autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
   au! BufWritePost ~/zettelkasten/* !git add "%";git commit -m "Auto commit of %:t." "%"
 augroup END
+
+function! ZettelNewBibtex_fn()
+  let bibtex = @+
+
+  let title_regex = 'title = {{\(\zs.\{-}\ze\)}}'
+  let title = matchstr(bibtex, title_regex)
+
+  let author_regex = 'author = {\zs.\{-}\ze}'
+  let author = matchstr(bibtex, author_regex)
+  let tagged_authors = substitute(author, '\(\w\{-}\),', '@\1,', 'g')
+
+  let url_regex = 'url = {\zs.\{-}\ze}'
+  let url = matchstr(bibtex, url_regex)
+
+  execute 'ZettelNew' title
+
+  call append('$', "#paper by " . tagged_authors)
+  call append('$', "")
+  call append('$', "> " . url)
+endfunction
 
 """ Pandoc ###
 let g:pandoc#syntax#conceal#use = 0

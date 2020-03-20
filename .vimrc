@@ -214,6 +214,7 @@ let g:vimwiki_list = [{'path': '~/zettelkasten',
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
+let g:zettel_dir = "~/zettelkasten"
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -245,7 +246,36 @@ augroup zettelkasten
   autocmd FileType vimwiki Thematic light
   autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
-  au! BufWritePost ~/zettelkasten/* !git add "%";git commit -m "Auto commit of %:t." "%"
+
+  if !exists('g:zettel_synced')
+    let g:zettel_synced = 0
+  else
+    finish
+  endif
+
+  " execute vim function. because vimwiki can be started from any directory,
+  " we must use pushd and popd commands to execute git commands in wiki root
+  " dir. silent is used to disable necessity to press <enter> after each
+  " command. the downside is that the command output is not displayed at all.
+  function! s:git_action(action)
+    execute ':!pushd ' . g:zettel_dir . "; ". a:action . "; popd"
+    " prevent screen artifacts
+    redraw!
+  endfunction
+
+  " pull changes from git origin using asynchronous jobs
+  " we should add some error handling
+  function! s:pull_changes()
+    if g:zettel_synced==0
+      let g:zettel_synced = 1
+      let gitjob = jobstart("git -C " . g:zettel_dir . " pull origin master", {"exit_cb": "My_exit_cb", "close_cb": "My_close_cb"})
+    endif
+  endfunction
+
+  " sync changes at the start
+  au! VimEnter ~/zettelkasten/*.md call <sid>pull_changes()
+  " commit and push changes only on at the end
+  au! VimLeave ~/zettelkasten/*.md call <sid>git_action("git add *.md; git commit -m \"Auto commit\"; git push origin master")
 augroup END
 
 function! ZettelNewBibtex_fn()

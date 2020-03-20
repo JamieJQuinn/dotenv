@@ -102,7 +102,6 @@ let g:nord_italic = 1
 let g:nord_italic_comments = 1
 let g:nord_underline = 1
 
-syntax enable
 if has("patch-7.4-1799") || has("nvim")
   set termguicolors
 endif
@@ -118,16 +117,15 @@ let g:thematic#themes = {
 \ 'dark' :{'colorscheme': 'nord',
 \                 'background': 'dark',
 \                 'airline-theme': 'nord',
-\                 'ruler': 1,
 \                },
 \ 'light' :{'colorscheme': 'pencil',
 \                 'background': 'light',
 \                 'airline-theme': 'pencil',
-\                 'ruler': 0,
 \                },
 \ }
 
-let g:thematic#theme_name = 'dark'
+colorscheme nord
+let g:airline_theme='nord'
 
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
@@ -302,7 +300,6 @@ let g:neocomplete#enable_at_startup = 1
 set spelllang=en_gb
 set spellfile=~/.vim/spell/en.utf-8.add
 au FileType markdown,text,tex,vimwiki,pandoc set spell
-set syntax=pandoc
 
 augroup CustomHighlights
   autocmd!
@@ -314,11 +311,6 @@ augroup CustomHighlights
 augroup END
 
 noremap <silent> <Leader>s :set invspell<CR>
-
-""" Ditto ###
-let g:ditto_hlgroups = ['Todo', 'Todo', 'Todo', 'Todo', 'Todo']
-
-
 
 " Fix sloppy linux
 set backspace=indent,eol,start

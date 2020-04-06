@@ -27,3 +27,6 @@ ln -s $DIR/zathurarc ~/.config/zathura/zathurarc
 
 mkdir -p ~/.config/kitty
 ln -s $DIR/kitty.conf ~/.config/kitty/kitty.conf
+
+mkdir -p ~/.config/ranger
+ln -s $DIR/rc.conf ~/.config/ranger/rc.conf

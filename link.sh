@@ -24,3 +24,6 @@ fi
 
 mkdir -p ~/.config/zathura
 ln -s $DIR/zathurarc ~/.config/zathura/zathurarc
+
+mkdir -p ~/.config/kitty
+ln -s $DIR/kitty.conf ~/.config/kitty/kitty.conf

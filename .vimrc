@@ -215,6 +215,7 @@ let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
 let g:zettel_dir = "~/zettelkasten"
+let g:zettel_options = [{"front_matter" : {"bibtex" : "%bibtex"}}]
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -292,6 +293,11 @@ function! ZettelNewBibtex_fn()
   let url = matchstr(bibtex, url_regex)
 
   execute 'ZettelNew' title
+
+  let bibtex = substitute(bibtex, "\n", "\r", "g")
+  let bibtex = escape(bibtex, "/\"")
+  echom bibtex
+  execute '%s/%bibtex/"' . bibtex . '"/'
 
   call append('$', "#paper by " . tagged_authors)
   call append('$', "")

@@ -282,15 +282,17 @@ augroup END
 function! ZettelNewBibtex_fn()
   let bibtex = @+
 
-  let title_regex = 'title = {{\(\zs.\{-}\ze\)}}'
+  let title_regex = 'title = {\(\zs.\{-}\ze\)},'
   let title = matchstr(bibtex, title_regex)
+  let title = escape(title, ":")
+  let title = substitute(title, "[{}]", "", "g")
 
   let author_regex = 'author = {\zs.\{-}\ze}'
   let author = matchstr(bibtex, author_regex)
   let tagged_authors = substitute(author, '\(\w\{-}\),', '@\1,', 'g')
 
-  let url_regex = 'url = {\zs.\{-}\ze}'
-  let url = matchstr(bibtex, url_regex)
+  "let url_regex = 'url = {\zs.\{-}\ze}'
+  "let url = matchstr(bibtex, url_regex)
 
   execute 'ZettelNew' title
 
@@ -300,8 +302,8 @@ function! ZettelNewBibtex_fn()
   execute '%s/%bibtex/"' . bibtex . '"/'
 
   call append('$', "#paper by " . tagged_authors)
-  call append('$', "")
-  call append('$', "> " . url)
+  "call append('$', "")
+  "call append('$', "> " . url)
 endfunction
 
 """ Pandoc ###

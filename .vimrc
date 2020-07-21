@@ -74,6 +74,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 """ Markdown ###
 Plug 'jkramer/vim-checkbox' " Checkbox manipulation
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'ferrine/md-img-paste.vim' " paste images into vim
 
 """ Latex ###
 Plug 'lervag/vimtex'
@@ -151,6 +152,12 @@ let g:neomake_python_enabled_makers = ['pylint']
 
 nmap ]w :lnext<CR>
 nmap [w :lprev<CR>
+
+""" md-img-paste ###
+autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+" there are some defaults for image directory and image name, you can change them
+let g:mdip_imgdir = 'img'
+let g:mdip_imgname = 'image'
 
 """ Airline ###
 let g:airline_powerline_fonts = 1
@@ -379,9 +386,9 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 let @/ = ""
 " disable folding
-"set nofoldenable
-set foldmethod=expr
-set foldlevel=2
+set nofoldenable
+"set foldmethod=expr
+"set foldlevel=2
 " gvim stuff
 set guifont=Cousine\ Regular\ 12
 set guioptions-=m  "remove menu bar
@@ -432,7 +439,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Insert date
-nnoremap <Leader>d "=strftime("%FT%T%z")<CR>P"
+nnoremap <Leader>d "=strftime("%FT%T%z")<CR>p"
 
 """ Mouse toggling ###
 function! ToggleMouse()

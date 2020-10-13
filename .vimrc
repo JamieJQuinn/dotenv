@@ -76,6 +76,9 @@ Plug 'jkramer/vim-checkbox' " Checkbox manipulation
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'ferrine/md-img-paste.vim' " paste images into vim
 
+""" Jekyll ###
+Plug 'parkr/vim-jekyll'
+
 """ Latex ###
 Plug 'lervag/vimtex'
 Plug 'hisaknown/deoplete-latex'
@@ -211,6 +214,10 @@ let g:pencil#textwidth = 74
 """ Snippets ###
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-s>"
+
+""" vim-jekyll ###
+let g:jekyll_post_extension = '.md'
 
 """ Nerdtree ###
 map <C-\> :NERDTreeToggle<CR>
@@ -340,6 +347,10 @@ endif
 """ Deo/Neocomplete ###
 let g:deoplete#enable_at_startup = 1
 let g:neocomplete#enable_at_startup = 1
+
+""" vim-checkbox ###
+
+map <silent> <leader>x :call checkbox#ToggleCB()<cr>
 
 " Spelling
 set spelllang=en_gb
@@ -483,3 +494,6 @@ nnoremap <Leader>h <C-W><C-S><C-W><C-J>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>e :e#<cr>
 nnoremap vv viw
+
+noremap! <C-BS> <C-w>
+noremap! <C-h> <C-w>

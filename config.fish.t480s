@@ -1,0 +1,18 @@
+. ~/.config/fish/config.fish.global
+
+alias vim nvim
+alias wiki "vim -c VimwikiIndex"
+alias wiki_new "vim -c ZettelNewBibtex"
+alias connect_to_office_vnc "ssh -C -L 5901:2016-f48e38d24a9e-lind.maths.gla.ac.uk:5901 -N maths-hop -v &; sleep 2; vncviewer localhost:1"
+
+eval (pipenv --completion)
+
+set PATH /opt/visit/bin $PATH
+set PATH ~/scripts $PATH
+# set PATH ~/anaconda3/bin $PATH
+set PATH /home/jamie/.gem/ruby/2.7.0/bin $PATH
+
+# Greeting
+function fish_greeting
+  bash ~/prog/motd.sh
+end

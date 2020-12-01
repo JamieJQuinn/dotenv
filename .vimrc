@@ -86,6 +86,9 @@ Plug 'hisaknown/deoplete-latex'
 """ Python ###
 Plug 'vim-scripts/indentpython.vim'
 
+""" Bracket autocomplete ###
+Plug 'jiangmiao/auto-pairs'
+
 " Neovim only plugins
 if has('nvim')
   """ deoplete ###
@@ -497,3 +500,9 @@ nnoremap vv viw
 
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
+
+" Fortran options
+let fortran_free_source=1
+let fortran_have_tabs=1
+let fortran_more_precise=1
+let fortran_do_enddo=1

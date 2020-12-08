@@ -79,6 +79,12 @@ Plug 'ferrine/md-img-paste.vim' " paste images into vim
 """ Jekyll ###
 Plug 'parkr/vim-jekyll'
 
+""" Zotero ###
+Plug 'jalvesaq/zotcite'
+
+""" Todo.txt """
+Plug 'freitass/todo.txt-vim'
+
 """ Latex ###
 Plug 'lervag/vimtex'
 Plug 'hisaknown/deoplete-latex'
@@ -232,7 +238,7 @@ let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
 let g:zettel_dir = "~/zettelkasten"
-let g:zettel_options = [{"front_matter" : {"bibtex" : "%bibtex"}}]
+let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -308,19 +314,25 @@ function! ZettelNewBibtex_fn()
   let author = matchstr(bibtex, author_regex)
   let tagged_authors = substitute(author, '\(\w\{-}\),', '@\1,', 'g')
 
-  "let url_regex = 'url = {\zs.\{-}\ze}'
-  "let url = matchstr(bibtex, url_regex)
+  let article_type_regex = '@\zs.\{-}\ze{'
+  let article_type = matchstr(bibtex, article_type_regex)
+  let tag = '#' . article_type
+
+  let url_regex = 'url = {\zs.\{-}\ze}'
+  let url = matchstr(bibtex, url_regex)
+
+  let doi_regex = 'doi = {\zs.\{-}\ze}'
+  let doi = matchstr(bibtex, doi_regex)
+
+  if doi
+    let url = "https://doi.org/" . doi
+  endif
+  let url = escape(url, "/\"")
 
   execute 'ZettelNew' title
 
-  let bibtex = substitute(bibtex, "\n", "\r", "g")
-  let bibtex = escape(bibtex, "/\"")
-  echom bibtex
-  execute '%s/%bibtex/"' . bibtex . '"/'
-
-  call append('$', "#paper by " . tagged_authors)
-  "call append('$', "")
-  "call append('$', "> " . url)
+  execute '%s/%source/' . url . '/'
+  call append('$', tag . " by " . tagged_authors)
 endfunction
 
 """ Pandoc ###
@@ -471,7 +483,7 @@ nmap <Leader>m :call ToggleMouse()<CR>
 
 """ Gutter toggling ###
 function! ToggleGutter()
-  :set invrelativenumber
+  ":set invrelativenumber
   :set invnumber
 endfunction
 

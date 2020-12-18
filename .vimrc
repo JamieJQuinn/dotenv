@@ -11,8 +11,6 @@ endif
 silent!call plug#begin()
 
 """ Theme ###
-Plug 'lifepillar/vim-solarized8'
-Plug 'altercation/vim-colors-solarized'
 Plug 'arcticicestudio/nord-vim'
 Plug 'reedes/vim-colors-pencil'
 
@@ -84,6 +82,9 @@ Plug 'jalvesaq/zotcite'
 
 """ Todo.txt """
 Plug 'freitass/todo.txt-vim'
+
+""" Org Mode """
+Plug 'jceb/vim-orgmode'
 
 """ Latex ###
 Plug 'lervag/vimtex'
@@ -165,6 +166,9 @@ let g:neomake_python_enabled_makers = ['pylint']
 nmap ]w :lnext<CR>
 nmap [w :lprev<CR>
 
+""" Org Mode ###
+let g:org_agenda_files = ['~/Dropbox/orgzly/todo.org']
+
 """ md-img-paste ###
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 " there are some defaults for image directory and image name, you can change them
@@ -233,7 +237,7 @@ map <C-\> :NERDTreeToggle<CR>
 
 """ Zettelkasten ###
 let g:vimwiki_list = [{'path': '~/zettelkasten',
-                     \ 'syntax': 'markdown', 'index': 'readme', 'ext': '.md'}]
+		     \ 'syntax': 'markdown', 'index': 'readme', 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
@@ -364,7 +368,6 @@ let g:deoplete#enable_at_startup = 1
 let g:neocomplete#enable_at_startup = 1
 
 """ vim-checkbox ###
-
 map <silent> <leader>x :call checkbox#ToggleCB()<cr>
 
 " Spelling
@@ -372,16 +375,31 @@ set spelllang=en_gb
 set spellfile=~/.vim/spell/en.utf-8.add
 au FileType markdown,text,tex,vimwiki,pandoc set spell
 
-augroup CustomHighlights
+fun s:customSpellingHighlight()
+  hi clear SpellLocal
+  hi clear SpellCap
+  hi link SpellLocal SpellBad
+  hi link SpellCap SpellBad
+endfun
+
+augroup spelling
   autocmd!
-  autocmd colorscheme *
-  \ hi clear SpellLocal
-  \ hi clear SpellCap
-  \ hi link SpellLocal SpellBad
-  \ hi link SpellCap SpellBad
+  autocmd colorscheme * call s:customSpellingHighlight()
 augroup END
 
 noremap <silent> <Leader>s :set invspell<CR>
+
+""" OrgMode syntax highlighting ###
+fun s:customOrgmodeHighlight()
+  hi link org_heading1 markdownH1
+  hi link org_todo_keyword_DONE Comment
+  hi link org_todo_keyword_TODO Todo
+endfun
+
+augroup ft_org
+  autocmd!
+  autocmd Syntax org call s:customOrgmodeHighlight()
+augroup END
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -471,11 +489,11 @@ nnoremap <Leader>d "=strftime("%FT%T%z")<CR>p"
 function! ToggleMouse()
     " check if mouse is enabled
     if &mouse == 'a'
-        " disable mouse
-        set mouse=
+      " disable mouse
+      set mouse=
     else
-        " enable mouse
-        set mouse=a
+      " enable mouse
+      set mouse=a
     endif
 endfunc
 

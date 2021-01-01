@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+file=~/pCloudDrive/notes/quicknote.md
+
+echo $(date) >> $file
+printf "\n" >> $file
+echo $* >> $file
+printf "\n" >> $file
+echo "---" >> $file
+printf "\n" >> $file

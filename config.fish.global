@@ -1,9 +1,0 @@
-# Nice git aliases
-abbr -a gc git checkout
-abbr -a gs git status
-abbr -a gd git diff
-abbr -a gb git branch
-abbr -a gl git log
-
-# easy open
-alias a 'xdg-open'

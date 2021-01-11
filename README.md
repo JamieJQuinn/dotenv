@@ -1,7 +1,7 @@
-# home
-Configuration files
+# dotenv
 
-To link vim and nvim to the same location, and to setup fish
-```
-  ./link.sh
-```
+This repo contains my configs for
+- bash
+- vim
+- xfce
+and a few miscellaneous scripts.

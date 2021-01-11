@@ -96,6 +96,9 @@ Plug 'vim-scripts/indentpython.vim'
 """ Bracket autocomplete ###
 Plug 'jiangmiao/auto-pairs'
 
+""" Terraform ###
+Plug 'hashivim/vim-terraform'
+
 " Neovim only plugins
 if has('nvim')
   """ deoplete ###
@@ -243,6 +246,7 @@ let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
 let g:zettel_dir = "~/zettelkasten"
 let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
+noremap <Leader>zb :ZettelNewBibtex<CR>
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],

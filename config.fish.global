@@ -1,0 +1,28 @@
+# Nice git aliases
+abbr -a gc git checkout
+abbr -a gs git status
+abbr -a gd git diff
+abbr -a gb git branch
+abbr -a gl git log
+
+# aliases
+alias a 'xdg-open'
+
+alias vim nvim
+
+alias todo "todotxt-machine"
+
+alias wiki "vim -c VimwikiIndex"
+alias wiki_new "vim -c ZettelNewBibtex"
+
+alias connect_to_office_vnc "ssh -C -L 5901:2016-f48e38d24a9e-lind.maths.gla.ac.uk:5901 -N maths-hop -v &; sleep 2; vncviewer localhost:1"
+alias connect_to_home_vnc "ssh -C -L 5901:home:5901 -N home-pi -v &; sleep 2; vncviewer localhost:1"
+
+eval (pipenv --completion)
+
+set PATH ~/scripts $PATH
+
+# Greeting
+function fish_greeting
+  bash ~/scripts/motd.sh
+end

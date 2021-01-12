@@ -12,10 +12,15 @@ mkdir -p ~/.vim/spell
 ln -s $DIR/spell_file ~/.vim/spell/en.utf-8.add
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 
-# Bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-rm ~/.bashrc
-ln -s $DIR/.bashrc ~/.bashrc
+# Fish
+mkdir -p ~/.config/fish
+ln -s $DIR/config.fish.global ~/.config/fish/config.fish.global
+if [ -e "~/.config/fish/config.fish" ]
+then
+  echo "Local fish config exists already"
+else
+  echo ". ~/.config/fish/config.fish.global" >> ~/.config/fish/config.fish
+fi
 
 mkdir -p ~/scripts
 cp scripts/* ~/scripts

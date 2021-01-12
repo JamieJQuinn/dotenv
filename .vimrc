@@ -99,6 +99,9 @@ Plug 'jiangmiao/auto-pairs'
 """ Terraform ###
 Plug 'hashivim/vim-terraform'
 
+""" Tmux """
+Plug 'christoomey/vim-tmux-navigator'
+
 " Neovim only plugins
 if has('nvim')
   """ deoplete ###

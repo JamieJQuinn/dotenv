@@ -15,11 +15,12 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 # Fish
 mkdir -p ~/.config/fish
 ln -s $DIR/config.fish.global ~/.config/fish/config.fish.global
-if [ -e "~/.config/fish/config.fish" ]
+FILE=~/.config/fish/config.fish
+if [[ -f $FILE ]]
 then
   echo "Local fish config exists already"
 else
-  echo ". ~/.config/fish/config.fish.global" >> ~/.config/fish/config.fish
+  echo ". config.fish.global" >> ~/.config/fish/config.fish
 fi
 
 mkdir -p ~/scripts

@@ -1,8 +1,9 @@
 # dotenv
 
 This repo contains my configs for
-- bash
+- fish
 - vim
 - xfce
+- todo.txt
 
 and a few miscellaneous scripts.

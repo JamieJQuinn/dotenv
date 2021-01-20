@@ -94,7 +94,7 @@ Plug 'hisaknown/deoplete-latex'
 Plug 'vim-scripts/indentpython.vim'
 
 """ Bracket autocomplete ###
-Plug 'jiangmiao/auto-pairs'
+Plug 'tmsvg/pear-tree'
 
 """ Terraform ###
 Plug 'hashivim/vim-terraform'

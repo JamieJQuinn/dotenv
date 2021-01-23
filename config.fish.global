@@ -7,11 +7,12 @@ abbr -a gl git log
 
 alias a 'xdg-open'
 
-set EDITOR nvim
+set -x EDITOR nvim
 alias vim nvim
 
 alias todo "todotxt-machine"
 
+alias notes "cd ~/notes; vim -c 'Files'"
 alias wiki "vim -c VimwikiIndex"
 alias wiki_new "vim -c ZettelNewBibtex"
 
@@ -23,6 +24,9 @@ eval (pipenv --completion)
 
 # Path
 set PATH ~/scripts $PATH
+
+# Notes
+set -x NOTES_DIR ~/notes
 
 # Greeting
 function fish_greeting

@@ -257,12 +257,42 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let g:fzf_preview_window = ['up:50%', 'ctrl-/']
 let g:fzf_layout = { 'down': '100%' }
-"grep title: *.md | fzf --preview="cat (echo {} | awk -F: '{print \$1}')" -d: --with-nth=3
+
 command! -bang -nargs=? -complete=dir WikiFiles
     \ call fzf#vim#ag("title:", {'options': ['-d:', '--with-nth=5']}, <bang>0)
-"ag -l '#paper' | xargs grep title: | cut -d: -f1,3- | fzf
+
+command! -bang -nargs=* WikiSearch
+    \ call fzf#vim#grep(
+    \ "ag -l -- ".shellescape(<q-args>)." | xargs ag --no-heading --no-break title:", 0, 
+    \ fzf#vim#with_preview({'options': ['-d:', '--with-nth=4..', '--preview-window', 'up:50%']}), <bang>0)
+
+command! -bang -nargs=* WikiTags
+    \ call fzf#run(
+    \ {'source':"ag -o --no-heading --no-filename '#[a-zA-Z0-9\-]+' | sort -uf", 
+    \ 'sink':function('DelayedWikiSearch_fn')})
+
+command! -bang -nargs=* WikiAuthors
+    \ call fzf#run(
+    \ {'source':"ag -o --no-heading --no-filename '@[a-zA-Z0-9\-]+' | sort -uf", 
+    \ 'sink':function('DelayedWikiSearch_fn')})
+
+fu WikiSearchCurrentWord()
+  let l:word = expand("<cword>")
+  call WikiSearch_fn(l:word, 0)
+endfu
+
+fu WikiSearch_fn(word, timer)
+  echom a:word
+  execute 'WikiSearch '.a:word
+endfu
+
+function DelayedWikiSearch_fn(word)
+    call timer_start(1, function('WikiSearch_fn', [a:word]))
+endfunction
+
+nnoremap <C-F> :call WikiSearchCurrentWord()<CR>
 
 " Disable default keymappings
 let g:zettel_default_mappings = 0 
@@ -273,7 +303,7 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
   autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
   autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
-  autocmd FileType vimwiki nmap <C-F> :Ag<CR>
+  "autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
   "autocmd FileType vimwiki Thematic light
   autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()

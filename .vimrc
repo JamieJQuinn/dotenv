@@ -11,8 +11,7 @@ endif
 silent!call plug#begin()
 
 """ Theme ###
-Plug 'arcticicestudio/nord-vim'
-Plug 'reedes/vim-colors-pencil'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 """ Thematic ###
 Plug 'reedes/vim-thematic'
@@ -114,15 +113,9 @@ endif
 call plug#end()
 
 """ Theme ###
-let g:pencil_terminal_italics = 1
-let g:pencil_spell_undercurl = 0
-
-let g:nord_bold = 1
-let g:nord_italic = 1
-let g:nord_italic_comments = 1
-let g:nord_underline = 1
-
-if has("patch-7.4-1799") || has("nvim")
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
@@ -134,18 +127,18 @@ filetype plugin indent on
 
 """ Thematic ###
 let g:thematic#themes = {
-\ 'dark' :{'colorscheme': 'nord',
+\ 'dark' :{'colorscheme': 'onehalfdark',
 \                 'background': 'dark',
-\                 'airline-theme': 'nord',
+\                 'airline-theme': 'onehalfdark',
 \                },
-\ 'light' :{'colorscheme': 'pencil',
+\ 'light' :{'colorscheme': 'onehalflight',
 \                 'background': 'light',
-\                 'airline-theme': 'pencil',
+\                 'airline-theme': 'onehalflight',
 \                },
 \ }
 
-colorscheme nord
-let g:airline_theme='nord'
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
@@ -171,9 +164,6 @@ let g:neomake_python_enabled_makers = ['pylint']
 
 nmap ]w :lnext<CR>
 nmap [w :lprev<CR>
-
-""" Org Mode ###
-let g:org_agenda_files = ['~/Dropbox/orgzly/todo.org']
 
 """ md-img-paste ###
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -251,6 +241,7 @@ let g:zettel_dir = "~/zettelkasten"
 let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
 noremap <Leader>zb :ZettelNewBibtex<CR>
 
+""" FZF ###
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -266,6 +257,12 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let g:fzf_layout = { 'down': '100%' }
+"grep title: *.md | fzf --preview="cat (echo {} | awk -F: '{print \$1}')" -d: --with-nth=3
+command! -bang -nargs=? -complete=dir WikiFiles
+    \ call fzf#vim#ag("title:", {'options': ['-d:', '--with-nth=5']}, <bang>0)
+"ag -l '#paper' | xargs grep title: | cut -d: -f1,3- | fzf
 
 " Disable default keymappings
 let g:zettel_default_mappings = 0 
@@ -278,7 +275,7 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
   autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
-  autocmd FileType vimwiki Thematic light
+  "autocmd FileType vimwiki Thematic light
   autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
 

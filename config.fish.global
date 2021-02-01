@@ -20,7 +20,9 @@ alias connect_to_office_vnc "ssh -C -L 5901:2016-f48e38d24a9e-lind.maths.gla.ac.
 alias connect_to_home_vnc "ssh -C -L 5901:home:5901 -N home-pi -v &; sleep 2; vncviewer localhost:1"
 
 # Pipenv
-eval (pipenv --completion)
+if type -q pipenv
+  eval (pipenv --completion)
+end
 
 # Path
 set PATH ~/scripts $PATH

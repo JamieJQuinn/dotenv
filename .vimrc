@@ -105,6 +105,8 @@ Plug 'christoomey/vim-tmux-navigator'
 if has('nvim')
   """ deoplete ###
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  """ debugging integration ###
+  Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 else
   """ Neocomplete ###
   Plug 'Shougo/neocomplete.vim'
@@ -143,6 +145,9 @@ let g:airline_theme='onehalfdark'
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
+""" pear-tree ###
+let g:pear_tree_repeatable_expand = 0
+
 """ Neomake ###
 if has('nvim')
   autocmd! BufWritePost * Neomake
@@ -160,7 +165,10 @@ let g:neomake_error_sign = {
   \ }
 
 let g:neomake_virtualtext_current_error = 0
-let g:neomake_python_enabled_makers = ['pylint']
+let g:neomake_python_enabled_makers = []
+if executable('pylint')
+  let g:neomake_python_enabled_makers = g:neomake_python_enabled_makers + ['pylint']
+endif
 
 nmap ]w :lnext<CR>
 nmap [w :lprev<CR>

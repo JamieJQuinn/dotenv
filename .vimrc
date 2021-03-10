@@ -19,9 +19,6 @@ Plug 'reedes/vim-thematic'
 """ Fuzzy Search ###
 Plug 'ctrlpvim/ctrlp.vim'
 
-""" Neomake ###
-Plug 'neomake/neomake'
-
 """ Vim Surround ###
 Plug 'tpope/vim-surround'
 
@@ -55,9 +52,6 @@ Plug 'godlygeek/tabular'
 """ Startify ###
 Plug 'mhinz/vim-startify'
 
-""" Proper Title Casing ###
-Plug 'christoomey/vim-titlecase'
-
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
@@ -70,24 +64,15 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 """ Markdown ###
 Plug 'jkramer/vim-checkbox' " Checkbox manipulation
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'ferrine/md-img-paste.vim' " paste images into vim
 
 """ Jekyll ###
 Plug 'parkr/vim-jekyll'
 
-""" Zotero ###
-Plug 'jalvesaq/zotcite'
-
 """ Todo.txt """
 Plug 'freitass/todo.txt-vim'
 
-""" Org Mode """
-Plug 'jceb/vim-orgmode'
-
 """ Latex ###
 Plug 'lervag/vimtex'
-Plug 'hisaknown/deoplete-latex'
 
 """ Python ###
 Plug 'vim-scripts/indentpython.vim'
@@ -99,17 +84,17 @@ Plug 'tmsvg/pear-tree'
 Plug 'hashivim/vim-terraform'
 
 """ Tmux """
-Plug 'christoomey/vim-tmux-navigator'
+"Plug 'christoomey/vim-tmux-navigator'
 
-" Neovim only plugins
+""" Save views of folds ###
+"Plug 'senderle/restoreview'
+
+""" LSP
+Plug 'natebosch/vim-lsc'
+Plug 'ajh17/VimCompletesMe'
+
 if has('nvim')
-  """ deoplete ###
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  """ debugging integration ###
   Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
-else
-  """ Neocomplete ###
-  Plug 'Shougo/neocomplete.vim'
 endif
 
 call plug#end()
@@ -148,36 +133,22 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 """ pear-tree ###
 let g:pear_tree_repeatable_expand = 0
 
-""" Neomake ###
-if has('nvim')
-  autocmd! BufWritePost * Neomake
-else
-  nmap <Leader>l :Neomake<CR>
-endif
-let g:neomake_virtualtext_current_error = 0 " turn off virtual text
-let g:neomake_warning_sign = {
-  \ 'text': 'W',
-  \ 'texthl': 'WarningMsg',
-  \ }
-let g:neomake_error_sign = {
-  \ 'text': 'E',
-  \ 'texthl': 'ErrorMsg',
-  \ }
-
-let g:neomake_virtualtext_current_error = 0
-let g:neomake_python_enabled_makers = []
-if executable('pylint')
-  let g:neomake_python_enabled_makers = g:neomake_python_enabled_makers + ['pylint']
-endif
-
-nmap ]w :lnext<CR>
-nmap [w :lprev<CR>
-
-""" md-img-paste ###
-autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
-" there are some defaults for image directory and image name, you can change them
-let g:mdip_imgdir = 'img'
-let g:mdip_imgname = 'image'
+""" LSP ###
+set shortmess-=F
+set completeopt=menu,menuone,noinsert,noselect
+let g:lsc_server_commands = {'python': 'pyls'}
+let g:lsc_auto_map = {
+ \  'GoToDefinition': 'gd',
+ \  'FindReferences': 'gr',
+ \  'Rename': 'gR',
+ \  'ShowHover': 'K',
+ \  'FindCodeActions': 'ga',
+ \  'Completion': 'omnifunc',
+ \}
+let g:lsc_enable_autocomplete  = v:true
+let g:lsc_enable_diagnostics   = v:true
+let g:lsc_reference_highlights = v:false
+let g:lsc_trace_level          = 'off'
 
 """ Airline ###
 let g:airline_powerline_fonts = 1
@@ -390,9 +361,6 @@ augroup pandoc_syntax
   autocmd FileType pandoc set syntax=pandoc
 augroup END
 
-""" markdown-preview.nvim
-nnoremap <leader>p <Plug>MarkdownPreviewToggle
-
 """ Latex ###
 let g:tex_flavor='latex'
 let g:vimtex_fold_enabled = 1
@@ -404,10 +372,6 @@ if exists(":Tabularize")
   nmap <Leader>t: :Tabularize /:\zs<CR>
   vmap <Leader>t: :Tabularize /:\zs<CR>
 endif
-
-""" Deo/Neocomplete ###
-let g:deoplete#enable_at_startup = 1
-let g:neocomplete#enable_at_startup = 1
 
 """ vim-checkbox ###
 map <silent> <leader>x :call checkbox#ToggleCB()<cr>
@@ -430,18 +394,6 @@ augroup spelling
 augroup END
 
 noremap <silent> <Leader>s :set invspell<CR>
-
-""" OrgMode syntax highlighting ###
-fun s:customOrgmodeHighlight()
-  hi link org_heading1 markdownH1
-  hi link org_todo_keyword_DONE Comment
-  hi link org_todo_keyword_TODO Todo
-endfun
-
-augroup ft_org
-  autocmd!
-  autocmd Syntax org call s:customOrgmodeHighlight()
-augroup END
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -472,9 +424,10 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 let @/ = ""
 " disable folding
-set nofoldenable
-"set foldmethod=expr
-"set foldlevel=2
+"set nofoldenable
+set foldmethod=syntax foldlevel=1
+let fortran_fold_conditionals=1
+let fortran_fold=1
 " gvim stuff
 set guifont=Cousine\ Regular\ 12
 set guioptions-=m  "remove menu bar

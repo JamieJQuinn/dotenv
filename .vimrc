@@ -40,8 +40,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 
 """ Snippets ###
-Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
+if has('python3')
+  Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips'
+endif
 
 """ Nerdtree ###
 Plug 'scrooloose/nerdtree'

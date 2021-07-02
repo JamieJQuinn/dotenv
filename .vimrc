@@ -147,10 +147,10 @@ let g:lsc_auto_map = {
  \  'FindCodeActions': 'ga',
  \  'Completion': 'omnifunc',
  \}
-let g:lsc_enable_autocomplete  = v:true
-let g:lsc_enable_diagnostics   = v:true
+let g:lsc_enable_autocomplete = v:true
+let g:lsc_enable_diagnostics = v:true
 let g:lsc_reference_highlights = v:false
-let g:lsc_trace_level          = 'off'
+let g:lsc_trace_level = 'off'
 
 """ Airline ###
 let g:airline_powerline_fonts = 1

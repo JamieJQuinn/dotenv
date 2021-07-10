@@ -70,7 +70,7 @@ Plug 'jkramer/vim-checkbox' " Checkbox manipulation
 """ Jekyll ###
 Plug 'parkr/vim-jekyll'
 
-""" Todo.txt """
+""" Todo.txt ###
 Plug 'freitass/todo.txt-vim'
 
 """ Latex ###
@@ -85,7 +85,10 @@ Plug 'tmsvg/pear-tree'
 """ Terraform ###
 Plug 'hashivim/vim-terraform'
 
-""" Tmux """
+""" Julia ###
+Plug 'JuliaEditorSupport/julia-vim'
+
+""" Tmux ###
 "Plug 'christoomey/vim-tmux-navigator'
 
 """ Save views of folds ###
@@ -533,3 +536,4 @@ let fortran_free_source=1
 let fortran_have_tabs=1
 let fortran_more_precise=1
 let fortran_do_enddo=1
+au BufNewFile,BufRead *.pf set filetype=fortran

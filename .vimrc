@@ -448,6 +448,8 @@ set laststatus=2
 au FileType * set fo-=r fo-=o
 " Enable cursorline
 set cursorline
+" Disable command preview
+set inccommand=
 
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!

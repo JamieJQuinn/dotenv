@@ -94,11 +94,11 @@ Plug 'JuliaEditorSupport/julia-vim'
 """ Save views of folds ###
 "Plug 'senderle/restoreview'
 
-""" LSP
-Plug 'natebosch/vim-lsc'
-Plug 'ajh17/VimCompletesMe'
-
 if has('nvim')
+""" LSP
+  Plug 'natebosch/vim-lsc'
+  Plug 'ajh17/VimCompletesMe'
+
   Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 endif
 
@@ -139,21 +139,23 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 let g:pear_tree_repeatable_expand = 0
 
 """ LSP ###
-set shortmess-=F
-set completeopt=menu,menuone,noinsert,noselect
-let g:lsc_server_commands = {'python': 'pyls'}
-let g:lsc_auto_map = {
- \  'GoToDefinition': 'gd',
- \  'FindReferences': 'gr',
- \  'Rename': 'gR',
- \  'ShowHover': 'K',
- \  'FindCodeActions': 'ga',
- \  'Completion': 'omnifunc',
- \}
-let g:lsc_enable_autocomplete = v:true
-let g:lsc_enable_diagnostics = v:true
-let g:lsc_reference_highlights = v:false
-let g:lsc_trace_level = 'off'
+if has('nvim')
+  set shortmess-=F
+  set completeopt=menu,menuone,noinsert,noselect
+  let g:lsc_server_commands = {'python': 'pyls'}
+  let g:lsc_auto_map = {
+   \  'GoToDefinition': 'gd',
+   \  'FindReferences': 'gr',
+   \  'Rename': 'gR',
+   \  'ShowHover': 'K',
+   \  'FindCodeActions': 'ga',
+   \  'Completion': 'omnifunc',
+   \}
+  let g:lsc_enable_autocomplete = v:true
+  let g:lsc_enable_diagnostics = v:true
+  let g:lsc_reference_highlights = v:false
+  let g:lsc_trace_level = 'off'
+endif
 
 """ Airline ###
 let g:airline_powerline_fonts = 1
@@ -458,7 +460,9 @@ au FileType * set fo-=r fo-=o
 " Enable cursorline
 set cursorline
 " Disable command preview
-set inccommand=
+if has('nvim')
+  set inccommand=
+endif
 
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!

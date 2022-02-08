@@ -181,6 +181,9 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
+""" todo.txt ###
+let g:todo_done_filename = 'done.txt'
+
 """ Nerd Commenter ###
 map <C-_> <Leader>c<space>
 
@@ -216,11 +219,15 @@ let g:jekyll_post_extension = '.md'
 map <C-\> :NERDTreeToggle<CR>
 
 """ Zettelkasten ###
-let g:vimwiki_list = [{'path': '~/zettelkasten',
-		     \ 'syntax': 'markdown', 'index': 'readme', 'ext': '.md'}]
+let g:vimwiki_list = [{
+         \ 'path': '~/zettelkasten',
+         \ 'syntax': 'markdown',
+         \ 'index': 'readme',
+         \ 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
+let g:zettel_link_format="[[%link]]"
 let g:zettel_dir = "~/zettelkasten"
 let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
 noremap <Leader>zb :ZettelNewBibtex<CR>
@@ -289,6 +296,7 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
   "autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
+  autocmd FileType vimwiki let b:pear_tree_pairs = {}
   "autocmd FileType vimwiki Thematic light
   autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
@@ -380,6 +388,7 @@ endif
 
 """ vim-checkbox ###
 map <silent> <leader>x :call checkbox#ToggleCB()<cr>
+let g:insert_checkbox_prefix = '- '
 
 " Spelling
 set spelllang=en_gb

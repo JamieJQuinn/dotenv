@@ -19,9 +19,6 @@ Plug 'reedes/vim-thematic'
 """ Fuzzy Search ###
 Plug 'ctrlpvim/ctrlp.vim'
 
-""" Neomake ###
-Plug 'neomake/neomake'
-
 """ Vim Surround ###
 Plug 'tpope/vim-surround'
 
@@ -43,8 +40,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 
 """ Snippets ###
-Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
+if has('python3')
+  Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips'
+endif
 
 """ Nerdtree ###
 Plug 'scrooloose/nerdtree'
@@ -54,9 +53,6 @@ Plug 'godlygeek/tabular'
 
 """ Startify ###
 Plug 'mhinz/vim-startify'
-
-""" Proper Title Casing ###
-Plug 'christoomey/vim-titlecase'
 
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
@@ -70,24 +66,15 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 """ Markdown ###
 Plug 'jkramer/vim-checkbox' " Checkbox manipulation
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'ferrine/md-img-paste.vim' " paste images into vim
 
 """ Jekyll ###
 Plug 'parkr/vim-jekyll'
 
-""" Zotero ###
-Plug 'jalvesaq/zotcite'
-
-""" Todo.txt """
+""" Todo.txt ###
 Plug 'freitass/todo.txt-vim'
-
-""" Org Mode """
-Plug 'jceb/vim-orgmode'
 
 """ Latex ###
 Plug 'lervag/vimtex'
-Plug 'hisaknown/deoplete-latex'
 
 """ Python ###
 Plug 'vim-scripts/indentpython.vim'
@@ -98,16 +85,21 @@ Plug 'tmsvg/pear-tree'
 """ Terraform ###
 Plug 'hashivim/vim-terraform'
 
-""" Tmux """
-Plug 'christoomey/vim-tmux-navigator'
+""" Julia ###
+Plug 'JuliaEditorSupport/julia-vim'
 
-" Neovim only plugins
+""" Tmux ###
+"Plug 'christoomey/vim-tmux-navigator'
+
+""" Save views of folds ###
+"Plug 'senderle/restoreview'
+
 if has('nvim')
-  """ deoplete ###
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  """ Neocomplete ###
-  Plug 'Shougo/neocomplete.vim'
+""" LSP
+  Plug 'natebosch/vim-lsc'
+  Plug 'ajh17/VimCompletesMe'
+
+  Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 endif
 
 call plug#end()
@@ -143,33 +135,27 @@ let g:airline_theme='onehalfdark'
 """ Ctrlp ###
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
-""" Neomake ###
+""" pear-tree ###
+let g:pear_tree_repeatable_expand = 0
+
+""" LSP ###
 if has('nvim')
-  autocmd! BufWritePost * Neomake
-else
-  nmap <Leader>l :Neomake<CR>
+  set shortmess-=F
+  set completeopt=menu,menuone,noinsert,noselect
+  let g:lsc_server_commands = {'python': 'pyls'}
+  let g:lsc_auto_map = {
+   \  'GoToDefinition': 'gd',
+   \  'FindReferences': 'gr',
+   \  'Rename': 'gR',
+   \  'ShowHover': 'K',
+   \  'FindCodeActions': 'ga',
+   \  'Completion': 'omnifunc',
+   \}
+  let g:lsc_enable_autocomplete = v:true
+  let g:lsc_enable_diagnostics = v:true
+  let g:lsc_reference_highlights = v:false
+  let g:lsc_trace_level = 'off'
 endif
-let g:neomake_virtualtext_current_error = 0 " turn off virtual text
-let g:neomake_warning_sign = {
-  \ 'text': 'W',
-  \ 'texthl': 'WarningMsg',
-  \ }
-let g:neomake_error_sign = {
-  \ 'text': 'E',
-  \ 'texthl': 'ErrorMsg',
-  \ }
-
-let g:neomake_virtualtext_current_error = 0
-let g:neomake_python_enabled_makers = ['pylint']
-
-nmap ]w :lnext<CR>
-nmap [w :lprev<CR>
-
-""" md-img-paste ###
-autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
-" there are some defaults for image directory and image name, you can change them
-let g:mdip_imgdir = 'img'
-let g:mdip_imgname = 'image'
 
 """ Airline ###
 let g:airline_powerline_fonts = 1
@@ -196,6 +182,9 @@ let g:airline_mode_map = {
     \ 'S'  : 'S',
     \ '' : 'S',
     \ }
+
+""" todo.txt ###
+let g:todo_done_filename = 'done.txt'
 
 """ Nerd Commenter ###
 map <C-_> <Leader>c<space>
@@ -232,11 +221,15 @@ let g:jekyll_post_extension = '.md'
 map <C-\> :NERDTreeToggle<CR>
 
 """ Zettelkasten ###
-let g:vimwiki_list = [{'path': '~/zettelkasten',
-		     \ 'syntax': 'markdown', 'index': 'readme', 'ext': '.md'}]
+let g:vimwiki_list = [{
+         \ 'path': '~/zettelkasten',
+         \ 'syntax': 'markdown',
+         \ 'index': 'readme',
+         \ 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
 let g:zettel_format = "%Y-%m-%d-%H-%M"
+let g:zettel_link_format="[[%link]]"
 let g:zettel_dir = "~/zettelkasten"
 let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
 noremap <Leader>zb :ZettelNewBibtex<CR>
@@ -305,6 +298,7 @@ augroup zettelkasten
   autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
   "autocmd FileType vimwiki nmap <C-F> :Ag<CR>
   autocmd FileType vimwiki set syntax=pandoc
+  autocmd FileType vimwiki let b:pear_tree_pairs = {}
   "autocmd FileType vimwiki Thematic light
   autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
@@ -382,9 +376,6 @@ augroup pandoc_syntax
   autocmd FileType pandoc set syntax=pandoc
 augroup END
 
-""" markdown-preview.nvim
-nnoremap <leader>p <Plug>MarkdownPreviewToggle
-
 """ Latex ###
 let g:tex_flavor='latex'
 let g:vimtex_fold_enabled = 1
@@ -397,12 +388,9 @@ if exists(":Tabularize")
   vmap <Leader>t: :Tabularize /:\zs<CR>
 endif
 
-""" Deo/Neocomplete ###
-let g:deoplete#enable_at_startup = 1
-let g:neocomplete#enable_at_startup = 1
-
 """ vim-checkbox ###
 map <silent> <leader>x :call checkbox#ToggleCB()<cr>
+let g:insert_checkbox_prefix = '- '
 
 " Spelling
 set spelllang=en_gb
@@ -422,18 +410,6 @@ augroup spelling
 augroup END
 
 noremap <silent> <Leader>s :set invspell<CR>
-
-""" OrgMode syntax highlighting ###
-fun s:customOrgmodeHighlight()
-  hi link org_heading1 markdownH1
-  hi link org_todo_keyword_DONE Comment
-  hi link org_todo_keyword_TODO Todo
-endfun
-
-augroup ft_org
-  autocmd!
-  autocmd Syntax org call s:customOrgmodeHighlight()
-augroup END
 
 " Fix sloppy linux
 set backspace=indent,eol,start
@@ -464,9 +440,10 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 let @/ = ""
 " disable folding
-set nofoldenable
-"set foldmethod=expr
-"set foldlevel=2
+"set nofoldenable
+set foldmethod=syntax foldlevel=1
+let fortran_fold_conditionals=1
+let fortran_fold=1
 " gvim stuff
 set guifont=Cousine\ Regular\ 12
 set guioptions-=m  "remove menu bar
@@ -482,6 +459,10 @@ set laststatus=2
 au FileType * set fo-=r fo-=o
 " Enable cursorline
 set cursorline
+" Disable command preview
+if has('nvim')
+  set inccommand=
+endif
 
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!
@@ -570,3 +551,4 @@ let fortran_free_source=1
 let fortran_have_tabs=1
 let fortran_more_precise=1
 let fortran_do_enddo=1
+au BufNewFile,BufRead *.pf set filetype=fortran

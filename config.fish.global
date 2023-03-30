@@ -10,14 +10,15 @@ alias a 'xdg-open'
 set -x EDITOR nvim
 alias vim nvim
 
-alias todo "vim ~/Syncthing/todo/todo.txt"
+alias todo "cd ~/notes/todo; vim todo.txt"
+alias todo-today "grep '(A)' ~/notes/todo/todo.txt"
+alias journal "vim ~/notes/journal/(date +\"%Y-%m\").md"
 
 alias notes "cd ~/notes; vim -c 'Files'"
 alias timesheet "vim ~/timesheet.md"
 alias wiki "vim -c VimwikiIndex"
 alias wiki_new "vim -c ZettelNewBibtex"
 
-alias connect_to_office_vnc "ssh -C -L 5901:2016-f48e38d24a9e-lind.maths.gla.ac.uk:5901 -N maths-hop -v &; sleep 2; vncviewer localhost:1"
 alias connect_to_home_vnc "ssh -C -L 5901:home:5901 -N home-pi -v &; sleep 2; vncviewer localhost:1"
 
 alias extract_todos "grep -P '\- \[.?\]'"

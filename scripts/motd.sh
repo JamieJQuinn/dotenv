@@ -61,7 +61,7 @@ dim="\e[2m"
 undim="\e[0m"
 
 # disk usage: ignore zfs, squashfs & tmpfs
-mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --output=target,pcent,size | tail -n+2)
+mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay --output=target,pcent,size | tail -n+2)
 printf "\ndisk usage:\n"
 
 for line in "${dfs[@]}"; do
@@ -89,5 +89,9 @@ for line in "${dfs[@]}"; do
     echo "${line}" | awk '{ printf("%-31s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
 done
+
+printf "\nTODO:\n"
+
+grep '(A)' ~/notes/todo/todo.txt
 
 echo

@@ -12,9 +12,6 @@ mkdir -p ~/.vim/spell
 ln -s $DIR/spell_file ~/.vim/spell/en.utf-8.add
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 
-# todo.txt
-ln -s $DIR/.todotxt-machinerc ~/.todotxt-machinerc
-
 # Fish
 mkdir -p ~/.config/fish
 ln -s $DIR/config.fish.global ~/.config/fish/config.fish.global

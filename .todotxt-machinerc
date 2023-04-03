@@ -1,8 +1,0 @@
-[settings]
-file = ~/Syncthing/todo/todo.txt
-archive = ~/Syncthing/todo/done.txt
-auto-save = True
-show-toolbar = True
-show-filter-panel = False
-enable-borders = False
-enable-word-wrap = True

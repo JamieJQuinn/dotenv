@@ -14,14 +14,7 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 # Fish
 mkdir -p ~/.config/fish
-ln -s $DIR/config.fish.global ~/.config/fish/config.fish.global
-FILE=~/.config/fish/config.fish
-if [[ -f $FILE ]]
-then
-  echo "Local fish config exists already"
-else
-  echo ". config.fish.global" >> ~/.config/fish/config.fish
-fi
+ln -s $DIR/global.fish ~/.config/fish/conf.d/global.fish
 
 mkdir -p ~/scripts
 cp scripts/* ~/scripts

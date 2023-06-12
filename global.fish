@@ -10,14 +10,14 @@ set -x EDITOR nvim
 alias vim nvim
 
 ## Todos
+set -x TODO_DIR ~/todo
 alias extract_todos "grep -P '\- \[.?\]'"
-alias todo "cd ~/notes/todo; vim todo.txt"
-alias todo-today "grep '(A)' ~/notes/todo/todo.txt"
-alias journal "vim ~/notes/journal/(date +\"%Y-%m\").md"
+alias todo "cd $TODO_DIR; vim todo.txt"
+alias todo-today "grep '(A)' $TODO_DIR/todo.txt"
 
 # Notes
 set -x NOTES_DIR ~/notes
-alias notes "cd ~/notes; vim -c 'Files'"
+alias notes "cd $NOTES_DIR; vim -c 'Files'"
 
 # Useful aliases
 alias timesheet "vim ~/timesheet.md"

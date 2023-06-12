@@ -16,5 +16,4 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 mkdir -p ~/.config/fish
 ln -s $DIR/global.fish ~/.config/fish/conf.d/global.fish
 
-mkdir -p ~/scripts
-cp scripts/* ~/scripts
+ln -s $DIR/scripts ~/scripts

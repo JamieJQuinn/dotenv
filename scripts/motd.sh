@@ -92,6 +92,6 @@ done
 
 printf "\nTODO:\n"
 
-grep '(A)' ~/notes/todo/todo.txt
+grep '(A)' $TODO_DIR/todo.txt
 
 echo

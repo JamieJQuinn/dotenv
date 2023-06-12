@@ -10,34 +10,36 @@ endif
 
 silent!call plug#begin()
 
-""" Theme ###
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-
-""" Thematic ###
-Plug 'reedes/vim-thematic'
-
-""" Fuzzy Search ###
-Plug 'ctrlpvim/ctrlp.vim'
-
-""" Vim Surround ###
-Plug 'tpope/vim-surround'
-
-""" Airline ###
-Plug 'bling/vim-airline'
+Plug 'sonph/onehalf', { 'rtp': 'vim' } " Main theme
+Plug 'reedes/vim-thematic' " Theme switcher
+Plug 'junegunn/fzf' " Fuzzy finding
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround' " Manually create parenthases
+Plug 'bling/vim-airline' " Info bar
 Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdcommenter' " Auto comments
+Plug 'airblade/vim-gitgutter' " Git in gutter
+Plug 'tpope/vim-fugitive' " Git commands
+Plug 'scrooloose/nerdtree' " Tree view
+Plug 'godlygeek/tabular' " Tabularise
+Plug 'jkramer/vim-checkbox' " Checkboxes
+Plug 'tmsvg/pear-tree' " Brackets completion
+Plug 'mhinz/vim-startify' " Start page
+Plug 'prabirshrestha/vim-lsp' " LSP
+Plug 'mattn/vim-lsp-settings'
 
-""" Nerd Commenter ###
-Plug 'scrooloose/nerdcommenter'
+Plug 'junegunn/goyo.vim' " Lovely centred view
+Plug 'junegunn/limelight.vim' " Nice highlighting for markdown
+Plug 'reedes/vim-pencil' " Better wrapping
 
-""" Git integration ###
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-
-""" Goyo ###
-Plug 'junegunn/goyo.vim'
-
-""" Pencil ###
-Plug 'reedes/vim-pencil'
+Plug 'vim-pandoc/vim-pandoc' " Pandoc
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'lervag/vimtex' " Latex
+Plug 'parkr/vim-jekyll' " Jekyll
+Plug 'freitass/todo.txt-vim' " Todo.txt
+Plug 'vim-scripts/indentpython.vim' " Python
+Plug 'hashivim/vim-terraform' " Terraform
+Plug 'JuliaEditorSupport/julia-vim' " Julia
 
 """ Snippets ###
 if has('python3')
@@ -45,61 +47,16 @@ if has('python3')
   Plug 'SirVer/ultisnips'
 endif
 
-""" Nerdtree ###
-Plug 'scrooloose/nerdtree'
-
-""" Tabularize ###
-Plug 'godlygeek/tabular'
-
-""" Startify ###
-Plug 'mhinz/vim-startify'
-
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
 Plug 'michal-h21/vim-zettel'
 
-""" pandoc ###
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
-""" Markdown ###
-Plug 'jkramer/vim-checkbox' " Checkbox manipulation
-
-""" Jekyll ###
-Plug 'parkr/vim-jekyll'
-
-""" Todo.txt ###
-Plug 'freitass/todo.txt-vim'
-
-""" Latex ###
-Plug 'lervag/vimtex'
-
-""" Python ###
-Plug 'vim-scripts/indentpython.vim'
-
-""" Bracket autocomplete ###
-Plug 'tmsvg/pear-tree'
-
-""" Terraform ###
-Plug 'hashivim/vim-terraform'
-
-""" Julia ###
-Plug 'JuliaEditorSupport/julia-vim'
-
-""" Tmux ###
-"Plug 'christoomey/vim-tmux-navigator'
-
-""" Save views of folds ###
-"Plug 'senderle/restoreview'
-
 if has('nvim')
-""" LSP
-  Plug 'natebosch/vim-lsc'
-  Plug 'ajh17/VimCompletesMe'
-
-  Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 call plug#end()
@@ -132,30 +89,45 @@ let g:thematic#themes = {
 colorscheme onehalfdark
 let g:airline_theme='onehalfdark'
 
-""" Ctrlp ###
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+""" Distraction-free writing ###
+function! DistractionFreeWriting()
+    Thematic light
+    Goyo
+endfunction
+
+""" FZF ###
+map <C-p> :Files<CR>
 
 """ pear-tree ###
 let g:pear_tree_repeatable_expand = 0
+let g:pear_tree_ft_disabled = ['markdown', 'pandoc']
+
+""" Deoplete ###
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('ignore_sources', {'_': ['around', 'buffer']})
 
 """ LSP ###
-if has('nvim')
-  set shortmess-=F
-  set completeopt=menu,menuone,noinsert,noselect
-  let g:lsc_server_commands = {'python': 'pyls'}
-  let g:lsc_auto_map = {
-   \  'GoToDefinition': 'gd',
-   \  'FindReferences': 'gr',
-   \  'Rename': 'gR',
-   \  'ShowHover': 'K',
-   \  'FindCodeActions': 'ga',
-   \  'Completion': 'omnifunc',
-   \}
-  let g:lsc_enable_autocomplete = v:true
-  let g:lsc_enable_diagnostics = v:true
-  let g:lsc_reference_highlights = v:false
-  let g:lsc_trace_level = 'off'
-endif
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 """ Airline ###
 let g:airline_powerline_fonts = 1
@@ -213,6 +185,7 @@ let g:pencil#textwidth = 74
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-s>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME.'/.vim/UltiSnips']
 
 """ vim-jekyll ###
 let g:jekyll_post_extension = '.md'
@@ -228,11 +201,11 @@ let g:vimwiki_list = [{
          \ 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
-let g:zettel_format = "%Y-%m-%d-%H-%M"
-let g:zettel_link_format="[[%link]]"
+"let g:zettel_format = "%Y-%m-%d-%H-%M"
+let g:zettel_link_format="[[%link.md]]"
 let g:zettel_dir = "~/zettelkasten"
 let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
-noremap <Leader>zb :ZettelNewBibtex<CR>
+"noremap <Leader>zb :ZettelNewBibtex<CR>
 
 """ FZF ###
 let g:fzf_colors =
@@ -271,21 +244,21 @@ command! -bang -nargs=* WikiAuthors
     \ {'source':"ag -o --no-heading --no-filename '@[a-zA-Z0-9\-]+' | sort -uf", 
     \ 'sink':function('DelayedWikiSearch_fn')})
 
-fu WikiSearchCurrentWord()
+fu! WikiSearchCurrentWord()
   let l:word = expand("<cword>")
   call WikiSearch_fn(l:word, 0)
 endfu
 
-fu WikiSearch_fn(word, timer)
+fu! WikiSearch_fn(word, timer)
   echom a:word
   execute 'WikiSearch '.a:word
 endfu
 
-function DelayedWikiSearch_fn(word)
+function! DelayedWikiSearch_fn(word)
     call timer_start(1, function('WikiSearch_fn', [a:word]))
 endfunction
 
-nnoremap <C-F> :call WikiSearchCurrentWord()<CR>
+nnoremap <C-F> :Ag<CR>
 
 " Disable default keymappings
 let g:zettel_default_mappings = 0 
@@ -300,72 +273,9 @@ augroup zettelkasten
   autocmd FileType vimwiki set syntax=pandoc
   autocmd FileType vimwiki let b:pear_tree_pairs = {}
   "autocmd FileType vimwiki Thematic light
-  autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
+  "autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
   au FileType vimwiki cd %:p:h
-
-  if !exists('g:zettel_synced')
-    let g:zettel_synced = 0
-  else
-    finish
-  endif
-
-  " execute vim function. because vimwiki can be started from any directory,
-  " we must use pushd and popd commands to execute git commands in wiki root
-  " dir. silent is used to disable necessity to press <enter> after each
-  " command. the downside is that the command output is not displayed at all.
-  function! s:git_action(action)
-    execute ':!pushd ' . g:zettel_dir . "; ". a:action . "; popd"
-    " prevent screen artifacts
-    redraw!
-  endfunction
-
-  " pull changes from git origin using asynchronous jobs
-  " we should add some error handling
-  function! s:pull_changes()
-    if g:zettel_synced==0
-      let g:zettel_synced = 1
-      let gitjob = jobstart("git -C " . g:zettel_dir . " pull origin master", {"exit_cb": "My_exit_cb", "close_cb": "My_close_cb"})
-    endif
-  endfunction
-
-  " sync changes at the start
-  au! VimEnter ~/zettelkasten/*.md call <sid>pull_changes()
-  " commit and push changes only on at the end
-  au! VimLeave ~/zettelkasten/*.md call <sid>git_action("git add *.md; git commit -m \"Auto commit\"; git push origin master")
 augroup END
-
-function! ZettelNewBibtex_fn()
-  let bibtex = @+
-
-  let title_regex = 'title = {\(\zs.\{-}\ze\)},'
-  let title = matchstr(bibtex, title_regex)
-  let title = escape(title, ":")
-  let title = substitute(title, "[{}]", "", "g")
-
-  let author_regex = 'author = {\zs.\{-}\ze}'
-  let author = matchstr(bibtex, author_regex)
-  let tagged_authors = substitute(author, '\(\w\{-}\),', '@\1,', 'g')
-
-  let article_type_regex = '@\zs.\{-}\ze{'
-  let article_type = matchstr(bibtex, article_type_regex)
-  let tag = '#' . article_type
-
-  let url_regex = 'url = {\zs.\{-}\ze}'
-  let url = matchstr(bibtex, url_regex)
-
-  let doi_regex = 'doi = {\zs.\{-}\ze}'
-  let doi = matchstr(bibtex, doi_regex)
-
-  if doi
-    let url = "https://doi.org/" . doi
-  endif
-  let url = escape(url, "/\"")
-
-  execute 'ZettelNew' title
-
-  execute '%s/%source/' . url . '/'
-  call append('$', tag . " by " . tagged_authors)
-endfunction
 
 """ Pandoc ###
 let g:pandoc#syntax#conceal#use = 0
@@ -384,8 +294,8 @@ let g:vimtex_fold_enabled = 1
 if exists(":Tabularize")
   nmap <Leader>t= :Tabularize /=<CR>
   vmap <Leader>t= :Tabularize /=<CR>
-  nmap <Leader>t: :Tabularize /:\zs<CR>
-  vmap <Leader>t: :Tabularize /:\zs<CR>
+  nmap <Leader>t| :Tabularize /|<CR>
+  vmap <Leader>t| :Tabularize /|<CR>
 endif
 
 """ vim-checkbox ###
@@ -440,10 +350,7 @@ set showmatch
 set ignorecase smartcase hlsearch incsearch
 let @/ = ""
 " disable folding
-"set nofoldenable
-set foldmethod=syntax foldlevel=1
-let fortran_fold_conditionals=1
-let fortran_fold=1
+set nofoldenable
 " gvim stuff
 set guifont=Cousine\ Regular\ 12
 set guioptions-=m  "remove menu bar
@@ -460,9 +367,9 @@ au FileType * set fo-=r fo-=o
 " Enable cursorline
 set cursorline
 " Disable command preview
-if has('nvim')
-  set inccommand=
-endif
+"if has('nvim')
+  "set inccommand=
+"endif
 
 " Show whitespace
 set listchars=tab:>-,trail:· nolist!
@@ -496,9 +403,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-" Insert date
-nnoremap <Leader>d "=strftime("%FT%T%z")<CR>p"
 
 """ Mouse toggling ###
 function! ToggleMouse()
@@ -538,10 +442,12 @@ nnoremap <Leader>b :call ToggleBackground()<CR>
 
 " Just easier commands
 nnoremap <Leader>v :vspl<cr><C-W><C-L>
-nnoremap <Leader>h <C-W><C-S><C-W><C-J>
+"nnoremap <Leader>h <C-W><C-S><C-W><C-J>
 nnoremap <Leader>q :q<cr>
+nnoremap <Leader>w :w<cr>
 nnoremap <Leader>e :e#<cr>
 nnoremap vv viw
+vnoremap <leader>p "_dP
 
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>

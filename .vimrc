@@ -50,6 +50,7 @@ endif
 """ Zettelkasten ###
 Plug 'vimwiki/vimwiki'
 Plug 'michal-h21/vim-zettel'
+"Plug 'lervag/wiki.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -182,7 +183,7 @@ let g:pencil#conceallevel = 0
 let g:pencil#textwidth = 74
 
 """ Snippets ###
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-s>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME.'/.vim/UltiSnips']
@@ -198,14 +199,20 @@ let g:vimwiki_list = [{
          \ 'path': '~/zettelkasten',
          \ 'syntax': 'markdown',
          \ 'index': 'readme',
+         \ 'auto_tags': 1,
          \ 'ext': '.md'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_conceallevel=0
+let g:vimwiki_markdown_link_ext = 1
 "let g:zettel_format = "%Y-%m-%d-%H-%M"
-let g:zettel_link_format="[[%link.md]]"
+let g:zettel_link_format="[[%link]]"
+let g:zettel_format="%title"
 let g:zettel_dir = "~/zettelkasten"
-let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
+"let g:zettel_options = [{"front_matter" : {"source" : "%source"}}]
 "noremap <Leader>zb :ZettelNewBibtex<CR>
+
+""" wiki.vim ###
+let g:wiki_root='~/zettelkasten'
 
 """ FZF ###
 let g:fzf_colors =
@@ -274,7 +281,7 @@ augroup zettelkasten
   autocmd FileType vimwiki let b:pear_tree_pairs = {}
   "autocmd FileType vimwiki Thematic light
   "autocmd FileType vimwiki command ZettelNewBibtex call ZettelNewBibtex_fn()
-  au FileType vimwiki cd %:p:h
+  "au FileType vimwiki cd %:p:h
 augroup END
 
 """ Pandoc ###
@@ -447,7 +454,6 @@ nnoremap <Leader>q :q<cr>
 nnoremap <Leader>w :w<cr>
 nnoremap <Leader>e :e#<cr>
 nnoremap vv viw
-vnoremap <leader>p "_dP
 
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>

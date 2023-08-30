@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+WINDOW_TITLE=$1
+COMMAND=$2
+
+wmctrl -a $WINDOW_TITLE || kitty -T "$WINDOW_TITLE" "$COMMAND" &

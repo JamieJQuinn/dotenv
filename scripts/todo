@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd $TODO_DIR
+$EDITOR todo.txt

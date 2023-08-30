@@ -80,7 +80,7 @@ return {
     'onsails/lspkind-nvim',
     lazy = true,
     config = function()
-      require "extensions.lspkind"
+      require('lspkind').init()
     end
   },
   -- }}}
@@ -90,7 +90,15 @@ return {
     'lewis6991/gitsigns.nvim',
     lazy = false,
     config = function()
-      require "extensions.gitsigns"
+      require('gitsigns').setup({
+        current_line_blame = false,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'right_align',
+          delay = 1000,
+          ignore_whitespace = false,
+        },
+      })
     end
   },
   -- }}}
@@ -100,7 +108,7 @@ return {
     "folke/trouble.nvim",
     lazy = true,
     config = function()
-      require "extensions.trouble"
+      require("trouble").setup()
     end,
     dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },

@@ -3,7 +3,6 @@
 This repo contains my configs for
 - fish
 - neovim
-- xfce
-- todo.txt
+- kitty
 
 and a few miscellaneous scripts.

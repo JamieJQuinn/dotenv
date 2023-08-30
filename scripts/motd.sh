@@ -61,7 +61,7 @@ dim="\e[2m"
 undim="\e[0m"
 
 # disk usage: ignore zfs, squashfs & tmpfs
-mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay --output=target,pcent,size | tail -n+2)
+mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay --output=target,pcent,size | tail -2)
 printf "\ndisk usage:\n"
 
 for line in "${dfs[@]}"; do

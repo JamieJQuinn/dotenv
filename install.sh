@@ -4,13 +4,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Vim/Nvim
-mkdir -p ~/.vim
 mkdir -p ~/.config
-ln -s ~/.vim ~/.config/nvim
-ln -s $DIR/.vimrc ~/.vimrc
-mkdir -p ~/.vim/spell
-ln -s $DIR/spell_file ~/.vim/spell/en.utf-8.add
-ln -s ~/.vimrc ~/.config/nvim/init.vim
+ln -s $DIR/nvim ~/.config/nvim
 
 # Fish
 mkdir -p ~/.config/fish

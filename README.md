@@ -2,7 +2,7 @@
 
 This repo contains my configs for
 - fish
-- vim
+- neovim
 - xfce
 - todo.txt
 

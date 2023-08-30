@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if wmctrl -l | grep xfce-main-terminal -q; then
-  xfce4-terminal --tab --initial-title=xfce-main-terminal
-else
-  xfce4-terminal --initial-title=xfce-main-terminal
-fi

@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-
-xclip -o -sel clip > ~/Tresors/main/clipboard.txt

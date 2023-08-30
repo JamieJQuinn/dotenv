@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-
-cat ~/Tresors/main/clipboard.txt | xclip -sel clip

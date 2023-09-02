@@ -42,7 +42,7 @@ nm('gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')                              
 nm('gd', '<cmd>Telescope lsp_definitions<CR>')                            -- Goto declaration
 nm('<leader>O', '<cmd>Telescope oldfiles<CR>')                                   -- Show recent files
 nm('<leader>o', '<cmd>Telescope git_files<CR>')                                  -- Search for a file in project
-nm('<leader>p', '<cmd>Telescope find_files<CR>')                                 -- Search for a file (ignoring git-ignore)
+nm('<leader>pp', '<cmd>Telescope find_files<CR>')                                 -- Search for a file (ignoring git-ignore)
 -- nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                   -- Show jumplist (previous locations)
 -- nm('<leader>b', '<cmd>Telescope git_branches<CR>')                               -- Show git branches
 nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                  -- Find a string in project

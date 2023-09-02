@@ -164,6 +164,14 @@ return {
     init = function()
       g.wiki_root = '~/notes/wiki'
       g.wiki_index_name = 'readme.md'
+
+      g.wiki_link_creation = {
+        md =  {
+          link_type =  'wiki',
+          url_extension = '',
+        },
+      }
+
     end,
   },
 
@@ -218,14 +226,4 @@ return {
   },
 
   "tpope/vim-fugitive",
-
-  -- {
-  -- "lervag/lists.vim",
-  -- init = function()
-  --   g.lists_filetypes = {'markdown'}
-  --   g.lists_maps_default_override = {
-  --     {'<plug>(lists-toggle-checkbox)', '<c-s>'}
-  --   }
-  -- end,
-  -- },
 }

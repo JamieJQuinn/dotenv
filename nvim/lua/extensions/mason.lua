@@ -11,17 +11,7 @@ local lspconfig = require("lspconfig")
 mason.setup()
 mason_lspconfig.setup(
 {
-  ensure_installed = {
-    "lua_ls",
-    "pyright",
-    "bashls",
-    "clangd",
-    "cmake",
-    "fortls",
-    "julials",
-    "opencl_ls",
-    "terraformls",
-  }
+  ensure_installed = {}
 }
 );
 

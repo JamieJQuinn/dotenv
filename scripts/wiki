@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-cd $NOTES_DIR/wiki
-nvim +WikiIndex
+set -e
+
+wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" --override font_family=ProFontIIxNerdFontMono nvim +WikiIndex +ZenMode "+set bg=light" &

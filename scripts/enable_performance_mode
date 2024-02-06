@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 asusctl profile -P balanced
-supergfxctl -m hybrid
+supergfxctl -m Hybrid

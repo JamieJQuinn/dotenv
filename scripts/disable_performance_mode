@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 asusctl profile -P quiet
-supergfxctl -m integrated
+supergfxctl -m Integrated

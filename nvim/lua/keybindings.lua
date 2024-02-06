@@ -48,6 +48,11 @@ nm('<leader>b', '<cmd>Telescope buffers<CR>')                                   
 nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
 -- }}}
 
+-- ZenMode
+nm('zz', '<cmd>set bg=light<CR><cmd>ZenMode<CR>')
+
+nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
+
 -- Trouble {{{
 nm('<c-x>', '<cmd>TroubleToggle<CR>')                                         -- Show all problems in project (with help of LSP)
 nm('gr', '<cmd>Trouble lsp_references<CR>')                                       -- Show use of object in project

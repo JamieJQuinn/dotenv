@@ -90,8 +90,14 @@ for line in "${dfs[@]}"; do
     echo -e "${bar}" | sed -e 's/^/  /'
 done
 
-printf "\nTODO:\n"
+printf "ToDay:\n"
 
 grep '(A)' $TODO_DIR/todo.txt
+
+echo
+
+printf "ToMorrow:\n"
+
+grep '(B)' $TODO_DIR/todo.txt
 
 echo

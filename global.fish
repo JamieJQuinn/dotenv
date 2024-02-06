@@ -24,6 +24,7 @@ alias kittycfg "cd ~/.config/kitty; nvim kitty.conf"
 
 # Useful aliases
 alias timesheet "vim ~/timesheet.md"
+alias kssh "kitty +kitten ssh"
 
 alias a 'xdg-open'
 alias connect_to_home_vnc "ssh -C -L 5901:home:5901 -N home-pi -v &; sleep 2; vncviewer localhost:1"

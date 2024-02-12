@@ -61,12 +61,12 @@ dim="\e[2m"
 undim="\e[0m"
 
 # disk usage: ignore zfs, squashfs & tmpfs
-mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay --output=target,pcent,size | tail -n +2 | sort | uniq -w 10)
+mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay -x efivarfs --output=source,target,pcent,size | tail -n +2 | sort | uniq -w 10)
 printf "\ndisk usage:\n"
 
 for line in "${dfs[@]}"; do
     # get disk usage
-    usage=$(echo "$line" | awk '{print $2}' | sed 's/%//')
+    usage=$(echo "$line" | awk '{print $3}' | sed 's/%//')
     used_width=$((($usage*$bar_width)/100))
     # color is green if usage < max_usage, else red
     if [ "${usage}" -ge "${max_usage}" ]; then
@@ -86,7 +86,7 @@ for line in "${dfs[@]}"; do
     done
     bar+="${undim}]"
     # print usage line & bar
-    echo "${line}" | awk '{ printf("%-31s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
+    echo "${line}" | awk '{ printf("%-31s%+3s used out of %+4s\n", $2, $3, $4); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
 done
 

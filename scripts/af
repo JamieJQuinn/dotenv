@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+SEARCH_VAL=$(fzf)
+
+if [[ ! -z $SEARCH_VAL ]]; then
+  xdg-open "$SEARCH_VAL"
+fi

@@ -138,14 +138,14 @@ return {
   -- }}}
 
   -- Dashboard {{{
-  {
-    'glepnir/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require "extensions.dashboard"
-    end,
-    dependencies = {{'nvim-tree/nvim-web-devicons'}}
-  },
+  -- {
+  --   'glepnir/dashboard-nvim',
+  --   event = 'VimEnter',
+  --   config = function()
+  --     require "extensions.dashboard"
+  --   end,
+  --   dependencies = {{'nvim-tree/nvim-web-devicons'}}
+  -- },
   -- }}}
   {
     'renerocksai/telekasten.nvim',
@@ -206,7 +206,8 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    lazy = false,
+    lazy = true,
+    ft = "markdown",
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -286,5 +287,14 @@ return {
       g.vim_markdown_no_default_key_mappings = 1
       g.vim_markdown_conceal = 0
     end,
-  }
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    config = true
+  },
 }

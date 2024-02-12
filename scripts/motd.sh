@@ -92,12 +92,12 @@ done
 
 printf "ToDay:\n"
 
-grep '(A)' $TODO_DIR/todo.txt
+grep '(A)' $TODO_DIR/todo.txt | grep -v '^x'
 
 echo
 
 printf "ToMorrow:\n"
 
-grep '(B)' $TODO_DIR/todo.txt
+grep '(B)' $TODO_DIR/todo.txt | grep -v '^x'
 
 echo

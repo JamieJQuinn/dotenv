@@ -206,7 +206,6 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    lazy = true,
     ft = "markdown",
     opts = {},
     -- Optional dependencies
@@ -287,14 +286,5 @@ return {
       g.vim_markdown_no_default_key_mappings = 1
       g.vim_markdown_conceal = 0
     end,
-  },
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
-      "nvim-telescope/telescope.nvim", -- optional
-    },
-    config = true
   },
 }

@@ -90,14 +90,16 @@ for line in "${dfs[@]}"; do
     echo -e "${bar}" | sed -e 's/^/  /'
 done
 
-printf "ToDay:\n"
+echo
 
-grep '(A)' $TODO_DIR/todo.txt | grep -v '^x'
+printf "ToDo:\n"
 
 echo
 
-printf "ToMorrow:\n"
+grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /'
 
-grep '(B)' $TODO_DIR/todo.txt | grep -v '^x'
+echo
+
+grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /'
 
 echo

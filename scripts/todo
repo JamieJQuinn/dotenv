@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd $TODO_DIR
-$EDITOR todo.txt
+cd $NOTES_DIR
+$EDITOR todo/todo.md

@@ -10,9 +10,7 @@ set -x EDITOR nvim
 alias vim nvim
 
 ## Todos
-set -x TODO_DIR ~/todo
-alias extract_todos "grep -P '\- \[.?\]'"
-alias todo-today "grep '(A)' $TODO_DIR/todo.txt"
+set -x TODO_DIR ~/notes/todo
 
 # Notes
 set -x NOTES_DIR ~/notes

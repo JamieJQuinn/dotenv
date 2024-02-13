@@ -40,11 +40,13 @@ nm(']j', '<cmd>ObsidianTomorrow<CR>')
 -- quick links --
 nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
 nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
-nm('<leader>t', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
 nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
 nm('<bs>', '<c-o>')
 
--- TODO jumping --
+-- TODOs --
+nm('<leader>tt', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
+nm('<leader>tp', '<cmd>TodoTelescope keywords=NOW,TODAY,SOON cwd=' .. os.getenv("NOTES_DIR") .. '/todo<CR>')
+
 vim.keymap.set("n", "]t", function()
   require("todo-comments").jump_next({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
 end, { desc = "Next todo comment" })
@@ -52,6 +54,7 @@ end, { desc = "Next todo comment" })
 vim.keymap.set("n", "[t", function()
   require("todo-comments").jump_prev({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
 end, { desc = "Prev todo comment" })
+
 
 -- LSP {{{
 nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object
@@ -68,7 +71,7 @@ nm('<leader>p', '<cmd>Telescope find_files<CR>')                                
 -- nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                   -- Show jumplist (previous locations)
 -- nm('<leader>b', '<cmd>Telescope git_branches<CR>')                               -- Show git branches
 nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                  -- Find a string in project
-nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
+-- nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
 -- nm('<leader>a', '<cmd>Telescope<CR>')                                            -- Show all commands
 -- nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
 -- }}}
@@ -76,7 +79,7 @@ nm('<leader>b', '<cmd>Telescope buffers<CR>')                                   
 -- ZenMode
 nm('zz', '<cmd>set bg=light<CR><cmd>ZenMode<CR>')
 
--- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
+nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
 nm('<c-x>', '<cmd>TroubleToggle<CR>')                                         -- Show all problems in project (with help of LSP)

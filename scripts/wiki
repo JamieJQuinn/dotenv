@@ -3,4 +3,4 @@
 set -e
 
 cd $NOTES_DIR
-wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" --override font_family=ProFontIIxNerdFontMono nvim +WikiIndex +ZenMode "+set bg=light" &
+wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" --override font_family=ProFontIIxNerdFontMono nvim +ZenMode "+set bg=light" wiki/readme.md &

@@ -96,10 +96,12 @@ printf "ToDo:\n"
 
 echo
 
+tput setaf 1
 grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /'
 
-echo
-
+tput setaf 3
 grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /'
 
 echo
+
+tput sgr0

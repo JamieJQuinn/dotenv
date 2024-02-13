@@ -6,7 +6,13 @@
 require'nvim-treesitter.configs'.setup {
 
   -- Needed parsers
-  ensure_installed = {},
+  ensure_installed = {
+    "markdown",
+    "cpp",
+    "fortran",
+    "python",
+    "zig",
+  },
 
   -- Install all parsers synchronously
   sync_install = false,

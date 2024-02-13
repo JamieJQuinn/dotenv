@@ -22,11 +22,36 @@ nm('<c-/>', '<Plug>(comment_toggle_linewise_current)')
 vm('<c-/>', '<Plug>(comment_toggle_linewise_visual)')
 
 -- Telekasten {{{
-im('[[', '<cmd>Telekasten insert_link<CR>')
-im('[#', '<cmd>Telekasten show_tags<CR>')
-nm('[#', '<cmd>Telekasten show_tags<CR>')
-nm('<leader>wb', '<cmd>Telekasten show_backlinks<CR>')
+-- im('[[', '<cmd>Telekasten insert_link<CR>')
+-- im('[#', '<cmd>Telekasten show_tags<CR>')
+-- nm('[#', '<cmd>Telekasten show_tags<CR>')
+-- nm('<leader>wb', '<cmd>Telekasten show_backlinks<CR>')
 --- }}}
+
+-- Obsidian.nvim --
+nm('<leader>wp', '<cmd>ObsidianQuickSwitch<CR>')
+nm('<leader>wf', '<cmd>ObsidianSearch<CR>')
+nm('<leader>wt', '<cmd>ObsidianTags<CR>')
+nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
+nm('[j', '<cmd>ObsidianYesterday<CR>')
+nm('<leader>j', '<cmd>ObsidianToday<CR>')
+nm(']j', '<cmd>ObsidianTomorrow<CR>')
+
+-- quick links --
+nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
+nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
+nm('<leader>t', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
+nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
+nm('<bs>', '<c-o>')
+
+-- TODO jumping --
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
+end, { desc = "Prev todo comment" })
 
 -- LSP {{{
 nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object
@@ -45,13 +70,13 @@ nm('<leader>p', '<cmd>Telescope find_files<CR>')                                
 nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                  -- Find a string in project
 nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
 -- nm('<leader>a', '<cmd>Telescope<CR>')                                            -- Show all commands
-nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
+-- nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
 -- }}}
 
 -- ZenMode
 nm('zz', '<cmd>set bg=light<CR><cmd>ZenMode<CR>')
 
-nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
+-- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
 nm('<c-x>', '<cmd>TroubleToggle<CR>')                                         -- Show all problems in project (with help of LSP)

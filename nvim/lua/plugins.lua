@@ -118,7 +118,6 @@ return {
   -- TreeSitter {{{
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
@@ -147,33 +146,101 @@ return {
   --   dependencies = {{'nvim-tree/nvim-web-devicons'}}
   -- },
   -- }}}
-  {
-    'renerocksai/telekasten.nvim',
-    lazy = true,
-    cmd = "Telekasten",
-    dependencies = {'nvim-telescope/telescope.nvim'},
-    config = function()
-      require('telekasten').setup({
-        home = fn.expand("~/notes/wiki"),
-      })
-    end,
-  },
-  {
-    'lervag/wiki.vim',
-    ft="markdown",
-    lazy = false,
-    init = function()
-      g.wiki_root = '~/notes/wiki'
-      g.wiki_index_name = 'readme.md'
+  -- {
+  --   'renerocksai/telekasten.nvim',
+  --   lazy = true,
+  --   cmd = "Telekasten",
+  --   dependencies = {'nvim-telescope/telescope.nvim'},
+  --   config = function()
+  --     require('telekasten').setup({
+  --       home = fn.expand("~/notes/wiki"),
+  --     })
+  --   end,
+  -- },
+  -- {
+  --   'lervag/wiki.vim',
+  --   ft="markdown",
+  --   lazy = false,
+  --   init = function()
+  --     g.wiki_root = '~/notes/wiki'
+  --     g.wiki_index_name = 'readme.md'
+  --
+  --     g.wiki_link_creation = {
+  --       md =  {
+  --         link_type =  'wiki',
+  --         url_extension = '',
+  --       },
+  --     }
+  --
+  --   end,
+  -- },
 
-      g.wiki_link_creation = {
-        md =  {
-          link_type =  'wiki',
-          url_extension = '',
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",  -- recommended, use latest release instead of latest commit
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    event = {
+      -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+      -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+      "BufReadPre ~/notes/**.md",
+      "BufNewFile ~/notes/**.md",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "notes",
+          path = "~/notes",
         },
-      }
+      },
 
-    end,
+      disable_frontmatter = true,
+      ui = {
+        enable = false,
+      },
+
+      completion = {
+        nvim_cmp = true,
+        min_chars = 1,
+        -- prepend_note_id = false,
+        -- use_path_only = true,
+      },
+
+      mappings = {
+        -- follow links --
+        ["<cr>"] = {
+          action = function()
+            return require("obsidian").util.gf_passthrough()
+          end,
+          opts = { noremap = false, expr = true, buffer = true },
+        },
+        -- Toggle check-boxes.
+        -- ["<leader>x"] = {
+        --   action = function()
+        --     return require("obsidian").util.toggle_checkbox()
+        --   end,
+        --   opts = { buffer = true },
+        -- },
+      },
+
+      daily_notes = {
+        folder = "notes/journal",
+        date_format = "%Y-%m-%d",
+      },
+
+      note_id_func = function(title)
+        return title:gsub(" ", "_"):gsub("[^A-Za-z0-9_]", ""):lower()
+      end,
+
+      follow_url_func = function(url)
+        -- Open the URL in the default web browser.
+        -- vim.fn.jobstart({"open", url})  -- Mac OS
+        vim.fn.jobstart({"xdg-open", url})  -- linux
+      end,
+    },
   },
 
   {
@@ -184,17 +251,17 @@ return {
     end,
   },
 
-  {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup({
-          mappings = {
-            basic=false,
-            extra=false
-          },
-        })
-    end
-  },
+    {
+      'numToStr/Comment.nvim',
+      config = function()
+          require('Comment').setup({
+            mappings = {
+              basic=false,
+              extra=false
+            },
+          })
+      end
+    },
 
   {
     "iamcco/markdown-preview.nvim",
@@ -277,14 +344,55 @@ return {
       on_close = function()
         vim.diagnostic.enable()
       end,
-}  },
+    }
+  },
 
   "tpope/vim-fugitive",
   {
-    "ixru/nvim-markdown",
+    "AndrewRadev/switch.vim",
+    ft = "markdown",
     init = function()
-      g.vim_markdown_no_default_key_mappings = 1
-      g.vim_markdown_conceal = 0
+      vim.g.switch_mapping = "-"
+      vim.g.switch_definitions = {}
+      vim.b.switch_definitions = {}
+      vim.g.switch_custom_definitions = {
+        {"TODO", "SOON", "TODAY", "NOW", "DONE"},
+      }
     end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    lazy = true,
+    ft = "markdown",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      signs = true,
+      keywords = {
+        TODO = { icon = "✗ ", color = "todo" },
+        NOW = { icon = "! ", color = "now" },
+        TODAY = { icon = " ", color = "today" },
+        SOON = { icon = "➔ ", color = "soon" },
+        DONE = { icon = "✔ ", color = "done" },
+      },
+      highlight = {
+        pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
+        keyword = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+        after = "",
+        comments_only = false, -- uses treesitter to match keywords in comments only
+        max_line_len = 400, -- ignore lines longer than this
+        exclude = {}, -- list of file types to exclude highlighting
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)]], -- ripgrep regex
+      },
+      colors = {
+        -- todo = { "DiagnosticInfo" },
+        todo = { "Comment" },
+        now = { "DiagnosticError" },
+        today = { "Character" },
+        soon = { "NvimNumberPrefix" },
+        done = { "String" },
+      },
+    }
   },
 }

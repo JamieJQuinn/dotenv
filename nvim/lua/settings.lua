@@ -25,9 +25,15 @@ opt.fixeol = false -- Turn off appending new line in the end of a file
 -- }}}
 
 -- Folding {{{
-opt.foldmethod = 'syntax'
-opt.foldenable = false
+opt.foldenable = true
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldminlines = 4
+opt.foldlevel = 2
+-- opt.foldnestmax = 4
 -- }}}
+
+opt.conceallevel = 0
 
 -- Search {{{
 opt.ignorecase = true               -- Ignore case if all characters in lower case

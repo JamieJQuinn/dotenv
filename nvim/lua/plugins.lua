@@ -136,45 +136,6 @@ return {
   },
   -- }}}
 
-  -- Dashboard {{{
-  -- {
-  --   'glepnir/dashboard-nvim',
-  --   event = 'VimEnter',
-  --   config = function()
-  --     require "extensions.dashboard"
-  --   end,
-  --   dependencies = {{'nvim-tree/nvim-web-devicons'}}
-  -- },
-  -- }}}
-  -- {
-  --   'renerocksai/telekasten.nvim',
-  --   lazy = true,
-  --   cmd = "Telekasten",
-  --   dependencies = {'nvim-telescope/telescope.nvim'},
-  --   config = function()
-  --     require('telekasten').setup({
-  --       home = fn.expand("~/notes/wiki"),
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   'lervag/wiki.vim',
-  --   ft="markdown",
-  --   lazy = false,
-  --   init = function()
-  --     g.wiki_root = '~/notes/wiki'
-  --     g.wiki_index_name = 'readme.md'
-  --
-  --     g.wiki_link_creation = {
-  --       md =  {
-  --         link_type =  'wiki',
-  --         url_extension = '',
-  --       },
-  --     }
-  --
-  --   end,
-  -- },
-
   {
     "epwalsh/obsidian.nvim",
     version = "*",  -- recommended, use latest release instead of latest commit
@@ -247,7 +208,12 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = {{'nvim-tree/nvim-web-devicons'}},
     config = function()
-      require('lualine').setup()
+      require('lualine').setup {
+        options = {
+          component_separators = { left = '\\', right = '/'},
+          section_separators = { left = '', right = ''},
+        },
+      }
     end,
   },
 

@@ -369,9 +369,10 @@ return {
       signs = true,
       keywords = {
         TODO = { icon = "✗ ", color = "todo" },
-        NOW = { icon = "! ", color = "now" },
-        TODAY = { icon = " ", color = "today" },
-        SOON = { icon = "➔ ", color = "soon" },
+        NOW = { icon = "‼ ", color = "now" },
+        TODAY = { icon = "! ", color = "today" },
+        SOON = { icon = " ", color = "soon" },
+        TINY = { icon = "ε ", color = "tiny" },
         DONE = { icon = "✔ ", color = "done" },
       },
       highlight = {
@@ -392,6 +393,7 @@ return {
         today = { "Character" },
         soon = { "NvimNumberPrefix" },
         done = { "String" },
+        tiny = { "Title" },
       },
     }
   },

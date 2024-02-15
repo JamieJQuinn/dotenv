@@ -179,12 +179,12 @@ return {
           opts = { noremap = false, expr = true, buffer = true },
         },
         -- Toggle check-boxes.
-        -- ["<leader>x"] = {
-        --   action = function()
-        --     return require("obsidian").util.toggle_checkbox()
-        --   end,
-        --   opts = { buffer = true },
-        -- },
+        ["<leader>x"] = {
+          action = function()
+            return require("obsidian").util.toggle_checkbox()
+          end,
+          opts = { buffer = true },
+        },
       },
 
       daily_notes = {
@@ -323,6 +323,7 @@ return {
       vim.b.switch_definitions = {}
       vim.g.switch_custom_definitions = {
         {"TODO", "SOON", "TODAY", "NOW", "DONE"},
+        {"TINY", "DONE"},
       }
     end,
   },

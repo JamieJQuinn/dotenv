@@ -35,27 +35,33 @@ cmp.setup{
       c = cmp.mapping.close(), -- Close completion window
     }),
 
-    -- Use <C-p> and <C-n> to navigate through completion variants
-    ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
-    ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable() then
-        luasnip.jump(1)
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+    ['<C-j>'] = cmp.mapping(
+      function(fallback)
+        if luasnip.jumpable() then
+          luasnip.jump(1)
+        end
       end
-    end, { "i", "s" }),
+      , { 'i', 's' }),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+    -- ["<Tab>"] = cmp.mapping(function(fallback)
+    --   if luasnip.jumpable() then
+    --     luasnip.jump(1)
+    --   elseif has_words_before() then
+    --     cmp.complete()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
+    --
+    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --   if luasnip.jumpable(-1) then
+    --     luasnip.jump(-1)
+    --   else
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
   },
 
   sources = cmp.config.sources({
@@ -83,7 +89,11 @@ local ls = require("luasnip")
 local t = ls.text_node
 local i = ls.insert_node
 local s = ls.snippet
+local rep = require("luasnip.extras").rep
 
 ls.add_snippets(nil, {
-  zig = {s("hello_world", {t({"const std = @import(\"std\");", "", "pub fn main() void {", "    "}), i(1), t({"", "}"})})}
+  zig = {
+    s("hello_world", {t({"const std = @import(\"std\");", "", "pub fn main() void {", "    "}), i(1), t({"", "}"})}),
+    s("init", {t("var "), i(1), t" = ", i(2), t".init(", i(3), t{");", ""}, rep(1), t".deinit();"}),
+  }
 })

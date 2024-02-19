@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-file=~/pCloudDrive/notes/quicknote.md
+set -e
 
-echo $(date) >> $file
-printf "\n" >> $file
-echo $* >> $file
-printf "\n" >> $file
-echo "---" >> $file
-printf "\n" >> $file
+cd $NOTES_DIR
+wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" --override font_family=ProFontIIxNerdFontMono nvim +ZenMode "+set bg=light" quicknote.md &

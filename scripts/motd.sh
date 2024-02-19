@@ -99,8 +99,15 @@ echo
 tput setaf 1
 grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /'
 
+echo
+
 tput setaf 3
 grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /'
+
+echo
+
+tput setaf 4
+grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | sed 's/ *TINY /ε /'
 
 echo
 

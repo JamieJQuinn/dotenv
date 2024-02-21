@@ -11,6 +11,7 @@ cmd[[filetype plugin on]]
 
 -- Disable comments on pressing Enter
 cmd[[autocmd FileType * setlocal formatoptions-=cro]]
+cmd[[autocmd FileType markdown set spell]]
 
 -- Tabs {{{
 opt.expandtab = true                -- Use spaces by default
@@ -25,7 +26,7 @@ opt.fixeol = false -- Turn off appending new line in the end of a file
 -- }}}
 
 -- Folding {{{
-opt.foldenable = true
+opt.foldenable = false
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldminlines = 4

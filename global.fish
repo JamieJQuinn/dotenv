@@ -1,9 +1,11 @@
 # Nice git aliases
-abbr -a gc git checkout
+abbr -a gc git commit
 abbr -a gs git status
 abbr -a gd git diff
+abbr -a gdh git diff HEAD~1
 abbr -a gb git branch
 abbr -a gl git log
+abbr -a ga git add
 
 # Vim
 set -x EDITOR nvim

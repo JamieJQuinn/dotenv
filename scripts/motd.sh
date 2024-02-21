@@ -97,7 +97,9 @@ printf "ToDo:\n"
 echo
 
 tput setaf 1
+tput bold
 grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /'
+tput sgr0
 
 echo
 

@@ -208,12 +208,7 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = {{'nvim-tree/nvim-web-devicons'}},
     config = function()
-      require('lualine').setup {
-        options = {
-          component_separators = { left = '\\', right = '/'},
-          section_separators = { left = '', right = ''},
-        },
-      }
+      require "extensions.lualine"
     end,
   },
 
@@ -363,5 +358,12 @@ return {
         tiny = { "Title" },
       },
     }
+  },
+  {
+    "brenoprata10/nvim-highlight-colors",
+    lazy = false,
+    config = function()
+      require('nvim-highlight-colors').setup{}
+    end,
   },
 }

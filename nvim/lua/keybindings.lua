@@ -40,14 +40,16 @@ nm('<leader>j', '<cmd>ObsidianToday<CR>')
 nm(']j', '<cmd>ObsidianTomorrow<CR>')
 
 -- quick links --
-nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
-nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
-nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
-nm('<bs>', '<c-o>')
+if os.getenv("NOTES_DIR") then
+	nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
+	nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
+	nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
+	nm('<bs>', '<c-o>')
 
--- TODOs --
-nm('<leader>tt', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
-nm('<leader>tp', '<cmd>TodoTelescope keywords=NOW,TODAY,SOON cwd=' .. os.getenv("NOTES_DIR") .. '/todo<CR>')
+	-- TODOs --
+	nm('<leader>tt', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
+	nm('<leader>tp', '<cmd>TodoTelescope keywords=NOW,TODAY,SOON cwd=' .. os.getenv("NOTES_DIR") .. '/todo<CR>')
+end
 
 vim.keymap.set("n", "]t", function()
   require("todo-comments").jump_next({keywords = { "TODO", "SOON", "TODAY", "NOW" }})

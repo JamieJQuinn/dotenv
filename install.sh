@@ -33,3 +33,6 @@ if [ ! -d "$KITTY_CONFIG_DIR" ]; then
 else
   echo "$KITTY_CONFIG_DIR already exists. Skipping."
 fi
+
+# Tmux
+ln -s "$DIR/tmux.conf" ~/.tmux.conf

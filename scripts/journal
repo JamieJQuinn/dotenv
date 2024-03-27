@@ -2,13 +2,4 @@
 
 set -e
 
-JOURNAL_FOLDER=~/journal
-DATE=$(date +%F)
-CURR_FILE=$JOURNAL_FOLDER/$DATE.md
-#PRETTY_DATE=$(date "+%A %d %B, %Y" | sed 's/1 /1st,/;s/2 /2nd/;s/3 /3rd/;s/\([0-9]\) /\1th /')
-
-if [[ ! -f $CURR_FILE ]]; then
-  echo \# $DATE >> $CURR_FILE
-fi
-
-$EDITOR $CURR_FILE
+nvim +ObsidianToday +ZenMode /tmp/temp.md

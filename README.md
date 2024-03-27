@@ -4,6 +4,7 @@ This repo contains my configs for
 - fish
 - neovim
 - kitty
+- tmux
 
 and a few miscellaneous scripts.
 

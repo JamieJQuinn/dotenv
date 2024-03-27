@@ -7,6 +7,10 @@ abbr -a gb git branch
 abbr -a gl git log
 abbr -a ga git add
 
+abbr -a cmB cmake -B build
+abbr -a cmb cmake --build build
+abbr -a cmt ctest --test-dir build/tests/ --rerun-failed --output-on-failure
+
 # Vim
 set -x EDITOR nvim
 alias vim nvim
@@ -21,6 +25,10 @@ set -x NOTES_DIR ~/notes
 alias vimcfg "cd ~/.config/nvim; nvim +'Telescope find_files' ."
 alias fishcfg "cd ~/.config/fish; nvim +'Telescope find_files' ."
 alias kittycfg "cd ~/.config/kitty; nvim kitty.conf"
+
+function cheatsh --description "Streamline cheat.sh call"
+    curl cheat.sh/$argv
+end
 
 # Useful aliases
 alias timesheet "vim ~/timesheet.md"

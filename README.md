@@ -10,6 +10,8 @@ and a few miscellaneous scripts.
 
 ## Tricks
 
+### `ssh-agent`
+
 Enable ssh-agent (from <https://wiki.archlinux.org/title/SSH_keys#SSH_agents>):
 
 - in config.fish:
@@ -22,4 +24,11 @@ set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 
 ```bash
 systemctl --user enable --now ssh-agent.service
+```
+
+### `syncthing`
+
+```
+sudo pacman -S syncthing
+systemctl --user enable --now syncthing.service
 ```

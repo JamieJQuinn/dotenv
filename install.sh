@@ -36,3 +36,6 @@ fi
 
 # Tmux
 ln -s "$DIR/tmux.conf" ~/.tmux.conf
+
+# Bash aliases
+ln -s "$DIR/.bash_aliases" ~/.bash_aliases

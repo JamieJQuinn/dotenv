@@ -20,8 +20,8 @@ nm('<F5>', '<cmd>make<CR>')
 nm('<leader>gg', '<cmd>LazyGit<cr>')
 
 -- Commenting
-nm('<c-/>', '<Plug>(comment_toggle_linewise_current)')
-vm('<c-/>', '<Plug>(comment_toggle_linewise_visual)')
+nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
+vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
 
 -- Telekasten {{{
 -- im('[[', '<cmd>Telekasten insert_link<CR>')

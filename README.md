@@ -41,3 +41,6 @@ From <https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Speeding_up_LUKS_dec
 ```
 cryptsetup luksChangeKey --pbkdf-force-iterations 1000 /dev/sda3
 ```
+### Finding fonts
+
+`fc-list`

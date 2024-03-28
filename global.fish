@@ -26,9 +26,10 @@ set -x TODO_DIR ~/notes/todo
 set -x NOTES_DIR ~/notes
 
 # Configs
-alias vimcfg "cd ~/.config/nvim; nvim +'Telescope find_files' ."
-alias fishcfg "cd ~/.config/fish; nvim +'Telescope find_files' ."
-alias kittycfg "cd ~/.config/kitty; nvim kitty.conf"
+alias vimcfg "cd ~/.config/nvim; $EDITOR +'Telescope find_files' ."
+alias fishcfg "cd ~/.config/fish; $EDITOR +'Telescope find_files' ."
+alias kittycfg "cd ~/.config/kitty; $EDITOR kitty.conf"
+alias i3cfg "cd ~/.config/i3; $EDITOR config"
 
 function cheatsh --description "Streamline cheat.sh call"
     curl cheat.sh/$argv

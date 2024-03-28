@@ -5,6 +5,7 @@ This repo contains my configs for
 - neovim
 - kitty
 - tmux
+- i3
 
 and a few miscellaneous scripts.
 

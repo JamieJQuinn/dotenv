@@ -32,3 +32,11 @@ systemctl --user enable --now ssh-agent.service
 sudo pacman -S syncthing
 systemctl --user enable --now syncthing.service
 ```
+
+### Improving GRUB LUKS speed
+
+From <https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Speeding_up_LUKS_decryption_in_GRUB>
+
+```
+cryptsetup luksChangeKey --pbkdf-force-iterations 1000 /dev/sda3
+```

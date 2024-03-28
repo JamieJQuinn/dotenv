@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ $(nordvpn status | grep -c "Connected") -eq 1 ]
+then
+    nordvpn d
+else
+    nordvpn c
+fi

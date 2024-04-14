@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+find . -type f | grep -vE '.git|.stversions|.trash' | shuf -n1

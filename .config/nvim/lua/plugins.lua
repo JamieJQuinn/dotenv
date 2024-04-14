@@ -22,6 +22,15 @@ return {
   },
   -- }}}
 
+  -- Mason {{{
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require('lspconfig').zls.setup{}
+    end
+  },
+  -- }}}
+
   -- Neo Tree {{{
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -348,7 +357,7 @@ return {
     }
   },
 
-  -- "tpope/vim-fugitive",
+  "tpope/vim-fugitive",
   {
       "kdheepak/lazygit.nvim",
     cmd = {

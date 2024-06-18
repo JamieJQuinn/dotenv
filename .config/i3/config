@@ -185,6 +185,7 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 #bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
 # lock by blurring the screen:
 bindsym $mod+ctrl+s exec --no-startup-id ~/.config/i3/scripts/blur-lock && systemctl suspend
+bindsym $mod+ctrl+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -207,8 +208,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/scripts/volume_b
 
 # change focus
 bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
+# bindsym $mod+j focus down
+# bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
@@ -219,8 +220,8 @@ bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
+# bindsym $mod+Shift+j move down
+# bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
@@ -235,7 +236,7 @@ bindsym $mod+v split v
 bindsym $mod+Shift+v split h
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -246,7 +247,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -283,11 +284,12 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Redirect sound to headphones
-bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
+# bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
-bindsym $mod+n exec --no-startup-id /usr/bin/thunar
+bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
+bindsym $mod+f exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # Power Profiles menu switcher (rofi)
@@ -299,11 +301,11 @@ bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
-set $ws4 "4:"
-set $ws5 "5:"
+set $ws1 "1:♫"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4"
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -320,14 +322,14 @@ set $ws10 "10"
 #workspace $ws5 output HDMI-0
 
 # bind program to workspace and focus to them on startup:
-# assign [class="Xfce4-terminal"] $ws1
-# assign [class="(?i)firefox"] $ws2
-# assign [class="Thunar"] $ws3
+# assign [class="WIKI_WINDOW"] $ws1
+# assign [class="kitty"] $ws2
+# assign [class="(?i)firefox"] $ws3
 # assign [class="thunderbird"] $ws4
 # assign [class="TelegramDesktop"] $ws5
 
 # automatic set focus new window if it opens on another workspace than the current:
-# for_window [class=Xfce4-terminal] focus
+# for_window [class="WIKI_WINDOW"] focus
 # for_window [class=(?i)firefox] focus
 # for_window [class=Thunar] focus
 # for_window [class=Thunderbird] focus
@@ -428,7 +430,10 @@ exec --no-startup-id /usr/bin/dunst
 #exec_always --no-startup-id autotiling
 
 # Autostart apps as you like
-exec --no-startup-id sleep 2 && wiki
+# exec --no-startup-id sleep 2 && wiki
+exec --no-startup-id sleep 1 && i3-msg "workspace 3:" && firefox
+exec --no-startup-id sleep 2 && i3-msg "workspace 2:" && kitty
+exec --no-startup-id sleep 3 && i3-msg "workspace 1:♫" && wiki
 # exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 
@@ -507,7 +512,7 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 # (plus the system information i3status finds out, if available)
 bar {
 		# font pango: Hack Mono Nerd 12
-		font pango: ProFont IIx Nerd Font Mono 12
+		font pango: ProFont IIx Nerd Font Mono 10
     mode hide
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	    	position bottom

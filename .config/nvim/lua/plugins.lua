@@ -209,7 +209,7 @@ return {
 
       disable_frontmatter = true,
       ui = {
-        enable = true,
+        enable = false,
       },
 
       completion = {

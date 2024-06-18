@@ -35,6 +35,10 @@ function cheatsh --description "Streamline cheat.sh call"
     curl cheat.sh/$argv
 end
 
+if test -n "$SSH_AUTH_SOCK";
+  ssh-add 2> /dev/null
+end
+
 # Useful aliases
 alias kssh "kitty +kitten ssh"
 

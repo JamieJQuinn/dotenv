@@ -283,7 +283,7 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    ft = "markdown",
+    cmd = "AerialToggle",
     opts = {},
     -- Optional dependencies
     dependencies = {

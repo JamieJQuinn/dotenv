@@ -98,18 +98,18 @@ echo
 
 tput setaf 1
 tput bold
-grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /'
+grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /' | sed 's/- \[ *\] //'
 tput sgr0
 
 echo
 
 tput setaf 3
-grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /'
+grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /' | sed 's/- \[ *\] //'
 
 echo
 
 tput setaf 4
-grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | sed 's/ *TINY /ε /'
+grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | sed 's/ *TINY /ε /' | sed 's/- \[ *\] //'
 
 echo
 

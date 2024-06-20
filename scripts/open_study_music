@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd ~/Downloads/study_music_yt_dl/audio/
+
+mpv (find . -printf "%p\n")

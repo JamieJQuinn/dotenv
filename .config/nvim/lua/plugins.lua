@@ -189,13 +189,6 @@ return {
     "epwalsh/obsidian.nvim",
     version = "*",  -- recommended, use latest release instead of latest commit
     ft = "markdown",
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    event = {
-      -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-      -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-      "BufReadPre ~/notes/**.md",
-      "BufNewFile ~/notes/**.md",
-    },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -210,6 +203,18 @@ return {
       disable_frontmatter = true,
       ui = {
         enable = false,
+        checkboxes = {
+          -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
+          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+          ["x"] = { char = "", hl_group = "ObsidianDone" },
+          ["/"] = { char = "", hl_group = "ObsidianDone" },
+          ["*"] = { char = "", hl_group = "ObsidianImportant" },
+          -- Replace the above with this if you don't have a patched font:
+          -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
+          -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
+
+          -- You can also add more custom ones...
+        },
       },
 
       completion = {
@@ -220,20 +225,13 @@ return {
       },
 
       mappings = {
-        -- follow links --
+        -- Smart action depending on context, either follow link or toggle checkbox.
         ["<cr>"] = {
           action = function()
-            return require("obsidian").util.gf_passthrough()
+            return require("obsidian").util.smart_action()
           end,
-          opts = { noremap = false, expr = true, buffer = true },
-        },
-        -- Toggle check-boxes.
-        ["<leader>x"] = {
-          action = function()
-            return require("obsidian").util.toggle_checkbox()
-          end,
-          opts = { buffer = true },
-        },
+          opts = { buffer = true, expr = true },
+        }
       },
 
       daily_notes = {

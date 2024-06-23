@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-nvim +ObsidianToday +ZenMode /tmp/temp.md

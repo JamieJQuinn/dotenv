@@ -14,6 +14,9 @@ cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 cmd[[autocmd FileType markdown set spell]]
 -- cmd[[autocmd FileType markdown set conceallevel=1]]
 
+-- Zig autofmt
+g["zig_fmt_autosave"] = false
+
 -- Tabs {{{
 opt.expandtab = true                -- Use spaces by default
 opt.shiftwidth = 2                  -- Set amount of space characters, when we press "<" or ">"

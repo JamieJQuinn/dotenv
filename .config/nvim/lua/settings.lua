@@ -12,6 +12,8 @@ cmd[[filetype plugin on]]
 -- Disable comments on pressing Enter
 cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 cmd[[autocmd FileType markdown set spell]]
+cmd[[autocmd FileType zig map <F6> <cmd>!zig build run<CR>]]
+cmd[[autocmd FileType zig map <F7> <cmd>!zig fmt %<CR>]]
 -- cmd[[autocmd FileType markdown set conceallevel=1]]
 
 -- Zig autofmt

@@ -61,7 +61,7 @@ dim="\e[2m"
 undim="\e[0m"
 
 # disk usage: ignore zfs, squashfs & tmpfs
-mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x nfs -x overlay -x efivarfs --output=source,target,pcent,size | tail -n +2 | sort | uniq -w 10)
+mapfile -t dfs < <(df -H / --output=source,target,pcent,size | tail -n +2 | sort | uniq -w 10)
 printf "\ndisk usage:\n"
 
 for line in "${dfs[@]}"; do
@@ -90,6 +90,10 @@ for line in "${dfs[@]}"; do
     echo -e "${bar}" | sed -e 's/^/  /'
 done
 
+##############################################################################
+##    TODOs
+################################################################################
+
 echo
 
 printf "ToDo:\n"
@@ -98,18 +102,14 @@ echo
 
 tput setaf 1
 tput bold
-grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | sed 's/ *NOW /! /' | sed 's/- \[ *\] //'
+grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | grep -v '[x]' | sed 's/ *NOW /! /' | sed 's/- \[ *\] //'
 tput sgr0
 
-echo
-
 tput setaf 3
-grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | sed 's/ *TODAY / /' | sed 's/- \[ *\] //'
-
-echo
+grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | grep -v '[x]' | sed 's/ *TODAY / /' | sed 's/- \[ *\] //'
 
 tput setaf 4
-grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | sed 's/ *TINY /ε /' | sed 's/- \[ *\] //'
+grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | grep -v '[x]' | sed 's/ *TINY /ε /' | sed 's/- \[ *\] //'
 
 echo
 

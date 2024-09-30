@@ -17,6 +17,7 @@ nm('<c-k>', '<c-w><c-k>' )
 nm('<leader>a', '<cmd>AerialToggle!<CR>')
 nm('vv', 'viw')
 nm('<F5>', '<cmd>make<CR>')
+-- nm('<F6>', '<cmd>make<CR>')
 nm('<leader>gg', '<cmd>LazyGit<cr>')
 
 -- Commenting

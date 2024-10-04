@@ -37,7 +37,7 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldminlines = 4
 opt.foldlevel = 2
--- opt.foldnestmax = 4
+-- opt.foldnestmax = 1
 -- }}}
 
 opt.conceallevel = 0

@@ -51,7 +51,7 @@ return {
   -- Telescope {{{
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.3',
+    tag = '0.1.8',
     lazy = true,
     cmd = "Telescope",
     dependencies = {
@@ -206,9 +206,8 @@ return {
         checkboxes = {
           -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
           [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+          ["o"] = { char = "", hl_group = "ObsidianTodo" },
           ["x"] = { char = "", hl_group = "ObsidianDone" },
-          ["/"] = { char = "", hl_group = "ObsidianDone" },
-          ["*"] = { char = "", hl_group = "ObsidianImportant" },
           -- Replace the above with this if you don't have a patched font:
           -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
           -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
@@ -258,19 +257,17 @@ return {
       require "extensions.lualine"
     end,
   },
-
-    {
-      'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup({
-            mappings = {
-              basic=false,
-              extra=false
-            },
-          })
-      end
-    },
-
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup({
+          mappings = {
+            basic=false,
+            extra=false
+          },
+        })
+    end
+  },
   {
     "iamcco/markdown-preview.nvim",
     ft = "markdown",
@@ -332,7 +329,7 @@ return {
           ruler = false, -- disables the ruler text in the cmd line area
           showcmd = false, -- disables the command in the last line of the screen
         },
-        twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+        -- twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
         gitsigns = { enabled = true }, -- disables git signs
         tmux = { enabled = false }, -- disables the tmux statusline
         -- this will change the font size on kitty when in zen mode
@@ -378,7 +375,7 @@ return {
       vim.g.switch_definitions = {}
       vim.b.switch_definitions = {}
       vim.g.switch_custom_definitions = {
-        {"TODO", "SOON", "TODAY", "NOW", "DONE"},
+        {"TODO", "DONE", "DOING", "ASAP"},
         {"TINY", "DONE"},
       }
     end,
@@ -391,13 +388,17 @@ return {
     opts = {
       signs = true,
       keywords = {
-        ASAP = { icon = "‼ ", color = "now" },
-        TODO = { icon = "✗ ", color = "todo" },
-        NOW = { icon = "‼ ", color = "now" },
-        TODAY = { icon = "! ", color = "today" },
-        SOON = { icon = " ", color = "soon" },
-        TINY = { icon = "ε ", color = "tiny" },
-        DONE = { icon = "✔ ", color = "done" },
+        TODO = { icon = "✗ ", color = "yellow" },
+        DONE = { icon = "✔ ", color = "green" },
+
+        ASAP = { icon = "‼ ", color = "red" },
+        DOING = { icon = "✗ ", color = "blue" },
+        WAITING = { icon = " ", color = "grey" },
+
+        -- NOW = { icon = "‼ ", color = "now" },
+        -- TODAY = { icon = "! ", color = "today" },
+        -- SOON = { icon = " ", color = "soon" },
+        -- TINY = { icon = "ε ", color = "tiny" },
       },
       highlight = {
         pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
@@ -413,12 +414,12 @@ return {
       },
       colors = {
         -- todo = { "DiagnosticInfo" },
-        todo = { "Comment" },
-        now = { "DiagnosticError" },
-        today = { "Character" },
-        soon = { "NvimNumberPrefix" },
-        done = { "String" },
-        tiny = { "Title" },
+        grey = { "Comment" },
+        red = { "DiagnosticError" },
+        orange = { "Character" },
+        yellow = { "NvimNumberPrefix" },
+        green = { "String" },
+        blue = { "Title" },
       },
     }
   },
@@ -429,6 +430,6 @@ return {
       require('nvim-highlight-colors').setup{}
     end,
   },
-  "folke/twilight.nvim",
+  { "folke/twilight.nvim", opts = {context = 20},},
   { "typicode/bg.nvim", lazy = false },
 }

@@ -26,7 +26,7 @@ require'nvim-treesitter.configs'.setup {
 
   indent = {
     -- Disabling indentation for all files
-    enable = false,
+    enable = true,
     disable = {},
   }
 }

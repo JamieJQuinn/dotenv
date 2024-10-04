@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+FNAME=$(ls ~/.local/share/brogue-ce | grep "broguesave" | head -n 1)
+
+if [[ -z "$FNAME" ]]; then
+  brogue-ce -S --full-screen -n
+else
+  echo Loading $FNAME
+  brogue-ce -S --full-screen -o "$FNAME"
+fi

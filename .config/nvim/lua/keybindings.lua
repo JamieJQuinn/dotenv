@@ -7,6 +7,7 @@ g.mapleader = ' '                                                               
 nm('<leader>e', '<cmd>e#<CR>' )
 nm('<bs>', '<c-o>')
 nm('<leader>v', '<cmd>vsplit<CR>' )
+nm('<leader>`', 'i```<CR>```<esc>O<esc>p' )
 nm('<leader>q', '<cmd>q<CR>' )
 nm('j', 'gj' )
 nm('k', 'gk' )

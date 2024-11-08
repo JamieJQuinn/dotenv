@@ -2,7 +2,7 @@
 
 set -e
 
-NEOVIM_VERSION=0.9.5
+NEOVIM_VERSION=0.10.2
 
 mkdir -p ~/.bin
 wget "https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/nvim.appimage" -O ~/.bin/nvim.appimage.$NEOVIM_VERSION

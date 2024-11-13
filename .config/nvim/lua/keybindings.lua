@@ -88,8 +88,9 @@ nm('zz', '<cmd>set bg=light<CR><cmd>ZenMode<CR>')
 -- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
-nm('<c-x>', '<cmd>TroubleToggle<CR>')                                         -- Show all problems in project (with help of LSP)
-nm('gr', '<cmd>Trouble lsp_references<CR>')                                       -- Show use of object in project
+nm('<c-x>', '<cmd>Trouble diagnostics toggle<CR>')                                         -- Show all problems in project (with help of LSP)
+nm('gr', '<cmd>Trouble lsp_references focus=true win.position=right<CR>')                                       -- Show use of object in project
+nm('<c-s>', '<cmd>Trouble symbols toggle focus=false<CR>')                                         -- Show all problems in project (with help of LSP)
 -- }}}
 
 -- Neo Tree {{{

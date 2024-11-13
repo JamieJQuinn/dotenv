@@ -156,7 +156,8 @@ return {
   {
     "folke/trouble.nvim",
     lazy = true,
-    cmd = "TroubleToggle",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
     config = function()
       require("trouble").setup()
     end,
@@ -329,7 +330,7 @@ return {
           ruler = false, -- disables the ruler text in the cmd line area
           showcmd = false, -- disables the command in the last line of the screen
         },
-        -- twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+        twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
         gitsigns = { enabled = true }, -- disables git signs
         tmux = { enabled = false }, -- disables the tmux statusline
         -- this will change the font size on kitty when in zen mode
@@ -347,6 +348,16 @@ return {
       end,
       -- callback where you can add custom code when the Zen window closes
       on_close = function()
+        local zen_buf = vim.api.nvim_get_current_buf()
+
+        local current_buf = vim.api.nvim_get_current_buf()
+
+        if current_buf == zen_buf then
+            return
+        end
+
+        vim.api.nvim_set_current_buf(zen_buf)
+
         vim.diagnostic.enable()
       end,
     }
@@ -375,7 +386,7 @@ return {
       vim.g.switch_definitions = {}
       vim.b.switch_definitions = {}
       vim.g.switch_custom_definitions = {
-        {"TODO", "DONE", "DOING", "ASAP"},
+        {"TODO", "DONE", "DOING", "ASAP", "NOTTODO"},
         {"TINY", "DONE"},
       }
     end,
@@ -394,6 +405,7 @@ return {
         ASAP = { icon = "‼ ", color = "red" },
         DOING = { icon = "✗ ", color = "blue" },
         WAITING = { icon = " ", color = "grey" },
+        NOTTODO = { icon = "✔ ", color = "grey" },
 
         -- NOW = { icon = "‼ ", color = "now" },
         -- TODAY = { icon = "! ", color = "today" },

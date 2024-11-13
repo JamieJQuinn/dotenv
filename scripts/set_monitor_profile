@@ -4,6 +4,6 @@ set -e
 
 profile_name=$1
 
-if [ -f ~/.screenlayout/monitor.sh ]; then rm ~/.screenlayout/monitor.sh; fi
+if [ -f ~/.screenlayout/monitor.sh ]; then rm -f ~/.screenlayout/monitor.sh; fi
 ln -s ~/.screenlayout/$profile_name.sh ~/.screenlayout/monitor.sh
 ~/.screenlayout/monitor.sh

@@ -17,9 +17,12 @@ nm('<c-j>', '<c-w><c-j>' )
 nm('<c-k>', '<c-w><c-k>' )
 nm('<leader>a', '<cmd>AerialToggle!<CR>')
 nm('vv', 'viw')
+vm('p', 'P')
 nm('<F5>', '<cmd>make<CR>')
 -- nm('<F6>', '<cmd>make<CR>')
 nm('<leader>gg', '<cmd>LazyGit<cr>')
+nm(']e', '<cmd>cn<cr>')
+nm('[e', '<cmd>cp<cr>')
 
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')

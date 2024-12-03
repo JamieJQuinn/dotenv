@@ -14,6 +14,7 @@ abbr -a cmt ctest --test-dir build/tests/ --rerun-failed --output-on-failure
 
 # Zig
 alias zbr "zig build run"
+alias zbd "zig build debug"
 
 # Vim
 set -x EDITOR nvim

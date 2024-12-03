@@ -444,4 +444,14 @@ return {
   },
   { "folke/twilight.nvim", opts = {context = 20},},
   { "typicode/bg.nvim", lazy = false },
+  {
+    "preservim/vim-pencil",
+    lazy = true,
+    ft = {"markdown", "text"},
+    cmd = "Pencil",
+    init = function()
+      vim.g["pencil#wrapModeDefault"] = "soft"
+    end,
+  },
+  "godlygeek/tabular",
 }

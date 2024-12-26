@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+mpv (find ~/Music/study_music_yt_dl/audio/ -printf '%p\n' | shuf)

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd $NOTES_DIR/cr0ft_roguelike_wiki
+wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" --override font_family=ProFontIIxNerdFontMono nvim +ZenMode "+set bg=light" index.md &

@@ -234,9 +234,9 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in vertical orientation
-bindsym $mod+v split v
+# bindsym $mod+v split v
 # split in horizontal orientation
-bindsym $mod+Shift+v split h
+# bindsym $mod+Shift+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+space fullscreen toggle
@@ -296,6 +296,7 @@ bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
 bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id /usr/bin/thunar
 bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load
+bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
 bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # Power Profiles menu switcher (rofi)
@@ -390,6 +391,8 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
 
+exec --no-startup-id picom -b
+
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
 
@@ -418,7 +421,7 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
-#exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
+exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
 
 
 # xscreensaver
@@ -434,6 +437,9 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 exec --no-startup-id /usr/bin/dunst
 # alternative if you installed aside with XFCE4:
 # exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+
+# Polybar (alternative to i3bar)
+exec polybar --config=~/.config/polybar/config.ini
 
 # autotiling script
 # https://github.com/nwg-piotr/autotiling
@@ -500,15 +506,18 @@ for_window [class="urxvt"] border pixel 1
 # Define colors variables:
 set $darkbluetrans	#08052be6
 set $darkblue		#08052b
-set $lightblue		#5294e2
+set $lightblue		#5e81ac
+set $orange       #DC672C
 set $urgentred		#e53935
-set $white		#ffffff
+set $white		#FAFAFA
 set $black		#000000
 set $purple		#e345ff
-set $darkgrey		#383c4a
+set $darkgrey		#383A42
 set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
+set $clear #00000000
+set $bar_background #383A42
 
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
@@ -525,32 +534,33 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 # (plus the system information i3status finds out, if available)
 bar {
 		# font pango: Hack Mono Nerd 12
-		font pango: ProFont IIx Nerd Font Mono 10
+		font pango: ProFont IIx Nerd Font Mono 12
     mode hide
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position bottom
-#	    	i3bar_command i3bar --transparency
+    position bottom
+    # i3bar_command i3bar --transparency
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 # reference: https://i3wm.org/docs/userguide.html#_tray_output
-		    #tray_output primary
-		    tray_padding 0
+    # tray_output primary
+    tray_padding 0
 
 # When strip_workspace_numbers is set to yes,
 # any workspace that has a name of the form
 # “[n][:][NAME]” will display only the name.
-strip_workspace_numbers yes
+    strip_workspace_numbers yes
 ##strip_workspace_name no
 
-		    colors {
-		    separator          $purple
-		    background         $darkgrey
-		    statusline         $white
+    # separator_symbol   ":|:"
+    colors {
+        separator          $purple
+        background         $bar_background
+        statusline         $white
 #                          		border 		        bg		txt		indicator
-		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-	}
+        focused_workspace	  $bar_background     $bar_background		#FE9E33	$purple
+        active_workspace	  $bar_background     $bar_background	$grey	$purple
+        inactive_workspace	$bar_background   	 $bar_background	  $mediumgrey		$purple
+        urgent_workspace	  $bar_background	   $bar_background	  $urgentred		$purple
+    }
 }
 
 # you can add different bars for multidisplay setups on each display:
@@ -560,29 +570,29 @@ strip_workspace_numbers yes
 # #08052be6 --> e6=90%
 
 # bar {
-#	font pango: Noto Sans Regular 10
-#	status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
-#	i3bar_command i3bar --transparency
-#	output HDMI-0
-#	position bottom
+#   font pango: Noto Sans Regular 10
+#   status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
+#   i3bar_command i3bar --transparency
+#   output HDMI-0
+#   position bottom
 #
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-#strip_workspace_numbers yes
-##strip_workspace_name no
+#   # When strip_workspace_numbers is set to yes,
+#   # any workspace that has a name of the form
+#   # “[n][:][NAME]” will display only the name.
+#   strip_workspace_numbers yes
+#   #strip_workspace_name no
 #
-#	colors {
-#		separator          $purple
-#		background         $darkbluetrans
-#        	statusline         $white
-#					border		bg		txt		indicator
-#		focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
-#		active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
-#		inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
-#		urgent_workspace	$urgentred	$urgentred	$white		$purple
-#	}
-#}
+#   colors {
+#     separator          $purple
+#     background         $darkbluetrans
+#           statusline         $white
+#           border		bg		txt		indicator
+#     focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
+#     active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
+#     inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
+#     urgent_workspace	$urgentred	$urgentred	$white		$purple
+#   }
+# }
 
 #####################################
 # Application menu handled by rofi: #
@@ -591,6 +601,9 @@ strip_workspace_numbers yes
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
+		-config ~/.config/rofi/rofidmenu.rasi
+
+bindsym $mod+shift+d exec --no-startup-id rofi -modi run -show run \
 		-config ~/.config/rofi/rofidmenu.rasi
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun \

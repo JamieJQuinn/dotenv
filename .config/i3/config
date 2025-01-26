@@ -439,7 +439,7 @@ exec --no-startup-id /usr/bin/dunst
 # exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
 # Polybar (alternative to i3bar)
-exec polybar --config=~/.config/polybar/config.ini
+# exec polybar --config=~/.config/polybar/config.ini
 
 # autotiling script
 # https://github.com/nwg-piotr/autotiling
@@ -534,7 +534,7 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 # (plus the system information i3status finds out, if available)
 bar {
 		# font pango: Hack Mono Nerd 12
-		font pango: ProFont IIx Nerd Font Mono 12
+		font pango: ProFont IIx Nerd Font Mono 9
     mode hide
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
     position bottom

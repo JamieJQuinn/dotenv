@@ -12,13 +12,13 @@ back=$5
 str=""
 
 if [[ "$front" != "off" ]]; then
-  str+="<span foreground='$bg' background='$fg' size='x-large'></span>"
+  str+="<span foreground='$bg' background='$fg'></span>"
 fi
 
-str+="<span background='$bg' size='x-large'>$icon$in</span>"
+str+="<span background='$bg'>$icon$in</span>"
 
 if [[ "$back" != "off" ]]; then
-  str+="<span background='$bg' foreground='$fg' size='x-large'></span>"
+  str+="<span background='$bg' foreground='$fg'></span>"
 fi
 
 echo $str

@@ -27,3 +27,5 @@ actions.do_stuff = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
   print(entry)
 end
+
+-- builtin.lsp_workspace_symbols

@@ -16,6 +16,7 @@ nm('<c-l>', '<c-w><c-l>' )
 nm('<c-j>', '<c-w><c-j>' )
 nm('<c-k>', '<c-w><c-k>' )
 nm('<leader>a', '<cmd>AerialToggle!<CR>')
+nm('<leader>#', '<cmd>Telescope aerial<CR>')
 nm('vv', 'viw')
 vm('p', 'P')
 nm('<F5>', '<cmd>make<CR>')
@@ -48,6 +49,7 @@ nm(']j', '<cmd>ObsidianTomorrow<CR>')
 -- quick links --
 if os.getenv("NOTES_DIR") then
 	nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
+	nm('<leader>wc', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/cr0ft_roguelike_wiki/index.md<CR>')
 	nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
 	nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
 
@@ -64,6 +66,8 @@ end
 --   require("todo-comments").jump_prev({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
 -- end, { desc = "Prev todo comment" })
 
+nm('<leader>dd', '<cmd>lua require("dapui").toggle()<CR>' )
+nm('<leader>ds', '<cmd>lua require("dap").continue()<CR>' )
 
 -- LSP {{{
 nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object

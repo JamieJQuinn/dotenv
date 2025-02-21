@@ -362,22 +362,21 @@ return {
       end,
     }
   },
-
   "tpope/vim-fugitive",
-  {
-      "kdheepak/lazygit.nvim",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-      -- optional for floating window border decoration
-      dependencies = {
-          "nvim-lua/plenary.nvim",
-      },
-  },
+  -- {
+  --     "kdheepak/lazygit.nvim",
+  --   cmd = {
+  --     "LazyGit",
+  --     "LazyGitConfig",
+  --     "LazyGitCurrentFile",
+  --     "LazyGitFilter",
+  --     "LazyGitFilterCurrentFile",
+  --   },
+  --     -- optional for floating window border decoration
+  --     dependencies = {
+  --         "nvim-lua/plenary.nvim",
+  --     },
+  -- },
   {
     "AndrewRadev/switch.vim",
     ft = "markdown",
@@ -451,7 +450,27 @@ return {
     cmd = "Pencil",
     init = function()
       vim.g["pencil#wrapModeDefault"] = "soft"
+      vim.g["pencil#autoformat"] = 0
+      vim.g["pencil#conceallevel"] = 0
     end,
   },
   "godlygeek/tabular",
+  -- {
+  --     "OXY2DEV/markview.nvim",
+  --     lazy = false
+  -- },
+  { 
+    "rcarriga/nvim-dap-ui",
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+    config = function()
+      require("dapui").setup()
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    event = "InsertEnter",
+    config = function()
+      require "extensions.dap"
+    end
+  },
 }

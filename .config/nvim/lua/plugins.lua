@@ -17,7 +17,21 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require "extensions.mason"
+      local mason = require("mason")
+      local mason_lspconfig = require("mason-lspconfig")
+      local lspconfig = require("lspconfig")
+
+      mason.setup()
+      mason_lspconfig.setup {
+        ensure_installed = {}
+      }
+
+      -- Setup every needed language server in lspconfig
+      mason_lspconfig.setup_handlers {
+        function (server_name)
+          lspconfig[server_name].setup {}
+        end,
+      }
     end
   },
   -- }}}
@@ -26,7 +40,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require('lspconfig').zls.setup{}
+      local lspconfig = require('lspconfig')
+      lspconfig['zls'].setup{capabilities = capabilities}
     end
   },
   -- }}}
@@ -82,7 +97,62 @@ return {
       require "extensions.cmp"
     end
   },
+  {
+    'L3MON4D3/LuaSnip',
+    event = "InsertEnter",
+    config = function()
+      -- Add snippets from Friendly Snippets
+
+      local ls = require("luasnip")
+      local t = ls.text_node
+      local i = ls.insert_node
+      local s = ls.snippet
+      local rep = require("luasnip.extras").rep
+
+      ls.add_snippets(nil, {
+        zig = {
+          s("hello_world", {t({"const std = @import(\"std\");", "", "pub fn main() void {", "    "}), i(1), t({"", "}"})}),
+          s("init", {t("var "), i(1), t" = ", i(2), t".init(", i(3), t{");", ""}, rep(1), t".deinit();"}),
+        },
+      })
+    end
+  },
   -- }}}
+  -- Alternative CMP
+  -- {
+  --   'Saghen/blink.cmp',
+  --   event = "InsertEnter",
+  --   version = '*',
+  --   dependencies = 'rafamadriz/friendly-snippets',
+  --   opts = {
+  --       -- 'default' for mappings similar to built-in completion
+  --       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+  --       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+  --       -- See the full "keymap" documentation for information on defining your own keymap.
+  --       keymap = { 
+  --         preset = 'super-tab',
+  --       },
+  --
+  --       appearance = {
+  --         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+  --         -- Useful for when your theme doesn't support blink.cmp
+  --         -- Will be removed in a future release
+  --         use_nvim_cmp_as_default = true,
+  --         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+  --         -- Adjusts spacing to ensure icons are aligned
+  --         nerd_font_variant = 'mono'
+  --       },
+  --
+  --       signature = { enabled = true },
+  --
+  --       -- Default list of enabled providers defined so that you can extend it
+  --       -- elsewhere in your config, without redefining it, due to `opts_extend`
+  --       sources = {
+  --         default = { 'lsp', 'path', 'snippets', 'buffer' },
+  --       },
+  --     },
+  --     opts_extend = { "sources.default" }
+  -- },
 
   -- LSP Kind {{{
   {
@@ -218,7 +288,7 @@ return {
       },
 
       completion = {
-        nvim_cmp = true,
+        nvim_cmp = false,
         min_chars = 1,
         -- prepend_note_id = false,
         -- use_path_only = true,
@@ -279,7 +349,8 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    cmd = "AerialToggle",
+    -- cmd = "AerialToggle",
+    lazy = false,
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -294,7 +365,7 @@ return {
           vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
           vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
         end,
-        default_direction = "prefer_left",
+        default_direction = "prefer_right",
       })
     end,
   },

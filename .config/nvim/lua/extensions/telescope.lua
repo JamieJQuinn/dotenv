@@ -15,7 +15,12 @@ telescope.setup{
         ["<c-k>"] = actions.move_selection_previous,
       },
     },
-  }
+  },
+  pickers = {
+    find_files = {
+      find_command = { "rg", "--files", "--color", "never", "--sortr=modified" },
+    },
+  },
 }
 
 local action_state = require "telescope.actions.state"

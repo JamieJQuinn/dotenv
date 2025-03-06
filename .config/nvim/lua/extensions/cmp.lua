@@ -21,6 +21,11 @@ cmp.setup{
     end,
   },
 
+  -- window = {
+  --   -- completion = cmp.config.window.bordered(),
+  --   -- documentation = cmp.config.window.bordered(),
+  -- },
+
   -- Mappings for cmp
   mapping = {
 
@@ -45,15 +50,15 @@ cmp.setup{
       end
       , { 'i', 's' }),
 
-    -- ["<Tab>"] = cmp.mapping(function(fallback)
-    --   if luasnip.jumpable() then
-    --     luasnip.jump(1)
-    --   elseif has_words_before() then
-    --     cmp.complete()
-    --   else
-    --     fallback()
-    --   end
-    -- end, { "i", "s" }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable() then
+        luasnip.jump(1)
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     --
     -- ["<S-Tab>"] = cmp.mapping(function(fallback)
     --   if luasnip.jumpable(-1) then
@@ -82,18 +87,5 @@ cmp.setup{
   }
 }
 
--- Add snippets from Friendly Snippets
 require("luasnip/loaders/from_vscode").lazy_load()
 
-local ls = require("luasnip")
-local t = ls.text_node
-local i = ls.insert_node
-local s = ls.snippet
-local rep = require("luasnip.extras").rep
-
-ls.add_snippets(nil, {
-  zig = {
-    s("hello_world", {t({"const std = @import(\"std\");", "", "pub fn main() void {", "    "}), i(1), t({"", "}"})}),
-    s("init", {t("var "), i(1), t" = ", i(2), t".init(", i(3), t{");", ""}, rep(1), t".deinit();"}),
-  }
-})

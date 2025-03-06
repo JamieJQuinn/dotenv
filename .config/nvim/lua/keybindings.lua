@@ -25,6 +25,8 @@ nm('<leader>gg', '<cmd>LazyGit<cr>')
 nm(']e', '<cmd>cn<cr>')
 nm('[e', '<cmd>cp<cr>')
 
+im('p`', '`<esc>pa`')
+
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
 vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')

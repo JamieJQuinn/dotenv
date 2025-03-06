@@ -46,6 +46,9 @@ nm('[j', '<cmd>ObsidianYesterday<CR>')
 nm('<leader>j', '<cmd>ObsidianToday<CR>')
 nm(']j', '<cmd>ObsidianTomorrow<CR>')
 
+nm(']e', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+nm('[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+
 -- quick links --
 if os.getenv("NOTES_DIR") then
 	nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')

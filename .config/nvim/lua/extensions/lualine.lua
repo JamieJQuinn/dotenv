@@ -7,6 +7,7 @@ require('lualine').setup {
   options = {
     component_separators = '',
     section_separators = { left = '', right = '' },
+    theme = 'onedark',
   },
   sections = {
     lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },

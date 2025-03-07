@@ -27,6 +27,8 @@ nm('[e', '<cmd>cp<cr>')
 
 im('p`', '`<esc>pa`')
 
+nm('<leader>n', '<cmd>noh<cr>)')
+
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
 vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
@@ -95,7 +97,7 @@ nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')             
 -- }}}
 
 -- ZenMode
-nm('zz', '<cmd>set bg=light<CR><cmd>ZenMode<CR>')
+nm('zz', '<cmd>ZenMode<CR>')
 
 -- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 

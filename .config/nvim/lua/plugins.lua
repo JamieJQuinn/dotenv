@@ -9,36 +9,37 @@ require "helpers/globals"
 
 return {
   -- Mason {{{
-  {
-    "williamboman/mason.nvim",
-    build = ":MasonUpdate",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      local mason = require("mason")
-      local mason_lspconfig = require("mason-lspconfig")
-      local lspconfig = require("lspconfig")
-
-      mason.setup()
-      mason_lspconfig.setup {
-        ensure_installed = {}
-      }
-
-      -- Setup every needed language server in lspconfig
-      mason_lspconfig.setup_handlers {
-        function (server_name)
-          lspconfig[server_name].setup {}
-        end,
-      }
-    end
-  },
+  -- {
+  --   "williamboman/mason.nvim",
+  --   build = ":MasonUpdate",
+  --   dependencies = {
+  --     "williamboman/mason-lspconfig.nvim",
+  --     "neovim/nvim-lspconfig",
+  --   },
+  --   config = function()
+  --     local mason = require("mason")
+  --     local mason_lspconfig = require("mason-lspconfig")
+  --     local lspconfig = require("lspconfig")
+  --
+  --     mason.setup()
+  --     mason_lspconfig.setup {
+  --       ensure_installed = {}
+  --     }
+  --
+  --     -- Setup every needed language server in lspconfig
+  --     mason_lspconfig.setup_handlers {
+  --       function (server_name)
+  --         lspconfig[server_name].setup {}
+  --       end,
+  --     }
+  --   end
+  -- },
   -- }}}
 
   -- Mason {{{
   {
     "neovim/nvim-lspconfig",
+    event = "InsertEnter",
     config = function()
       local lspconfig = require('lspconfig')
       lspconfig['zls'].setup{capabilities = capabilities}
@@ -102,6 +103,7 @@ return {
     event = "InsertEnter",
     config = function()
       -- Add snippets from Friendly Snippets
+      require("luasnip/loaders/from_vscode").lazy_load()
 
       local ls = require("luasnip")
       local t = ls.text_node
@@ -130,17 +132,27 @@ return {
   --       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
   --       -- See the full "keymap" documentation for information on defining your own keymap.
   --       keymap = { 
-  --         preset = 'super-tab',
+  --         preset = 'default',
+  --         ['<C-l>'] = { 'select_and_accept' },
   --       },
   --
   --       appearance = {
   --         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
   --         -- Useful for when your theme doesn't support blink.cmp
   --         -- Will be removed in a future release
-  --         use_nvim_cmp_as_default = true,
+  --         -- use_nvim_cmp_as_default = true,
   --         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
   --         -- Adjusts spacing to ensure icons are aligned
   --         nerd_font_variant = 'mono'
+  --       },
+  --
+  --       completion = {
+  --         list = {
+  --           selection = { preselect = false, auto_insert = true },
+  --         },
+  --         ghost_text = {
+  --           enabled = true,
+  --         },
   --       },
   --
   --       signature = { enabled = true },
@@ -149,6 +161,9 @@ return {
   --       -- elsewhere in your config, without redefining it, due to `opts_extend`
   --       sources = {
   --         default = { 'lsp', 'path', 'snippets', 'buffer' },
+  --         per_filetype = { 
+  --           markdown = { 'snippets' },
+  --         },
   --       },
   --     },
   --     opts_extend = { "sources.default" }
@@ -167,57 +182,9 @@ return {
   -- Git Signs{{{
   {
     'lewis6991/gitsigns.nvim',
-    lazy = false,
+    event = "InsertEnter",
     config = function()
-      require('gitsigns').setup({
-        current_line_blame = false,
-        current_line_blame_opts = {
-          virt_text = true,
-          virt_text_pos = 'right_align',
-          delay = 1000,
-          ignore_whitespace = false,
-        },
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
-
-          -- Navigation
-          map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-          end, {expr=true})
-
-          map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-          end, {expr=true})
-
-          -- Actions
-          map('n', '<leader>hs', gs.stage_hunk)
-          map('n', '<leader>hr', gs.reset_hunk)
-          map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-          map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-          map('n', '<leader>hS', gs.stage_buffer)
-          map('n', '<leader>hu', gs.undo_stage_hunk)
-          map('n', '<leader>hR', gs.reset_buffer)
-          map('n', '<leader>hp', gs.preview_hunk)
-          map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-          map('n', '<leader>tb', gs.toggle_current_line_blame)
-          map('n', '<leader>hd', gs.diffthis)
-          map('n', '<leader>hD', function() gs.diffthis('~') end)
-          map('n', '<leader>td', gs.toggle_deleted)
-
-          -- Text object
-          map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-        end
-      })
+      require "extensions.gitsigns"
     end
   },
   -- }}}
@@ -241,7 +208,33 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require "extensions.treesitter"
+    require'nvim-treesitter.configs'.setup {
+
+      -- Needed parsers
+      ensure_installed = {
+        "markdown",
+        "cpp",
+        "fortran",
+        "python",
+        "zig",
+      },
+
+      -- Install all parsers synchronously
+      sync_install = false,
+
+      -- Подсветка
+      highlight = {
+        -- Enabling highlight for all files
+        enable = true,
+        disable = {},
+      },
+
+      indent = {
+        -- Disabling indentation for all files
+        enable = { "markdown" },
+        disable = {},
+      }
+    }
     end
   },
   -- }}}
@@ -251,7 +244,10 @@ return {
     "navarasu/onedark.nvim",
     lazy = false,
     config = function ()
-      cmd("colorscheme onedark")
+      require('onedark').setup {
+          style = 'dark'
+      }
+      require('onedark').load()
     end
   },
   -- }}}
@@ -330,6 +326,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
+    event = "InsertEnter",
     config = function()
         require('Comment').setup({
           mappings = {
@@ -349,8 +346,7 @@ return {
 
   {
     "stevearc/aerial.nvim",
-    -- cmd = "AerialToggle",
-    lazy = false,
+    event = "InsertEnter",
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -372,6 +368,7 @@ return {
 
   {
     "folke/zen-mode.nvim",
+    cmd = "ZenMode",
     opts = {
       window = {
         backdrop = 1, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
@@ -416,38 +413,21 @@ return {
       -- callback where you can add custom code when the Zen window opens
       on_open = function(win)
         vim.diagnostic.disable()
+        require('onedark').setup {style = 'light'}
+        require('onedark').load()
       end,
       -- callback where you can add custom code when the Zen window closes
       on_close = function()
-        local zen_buf = vim.api.nvim_get_current_buf()
-
-        local current_buf = vim.api.nvim_get_current_buf()
-
-        if current_buf == zen_buf then
-            return
-        end
-
-        vim.api.nvim_set_current_buf(zen_buf)
-
+        require('onedark').setup {style = 'dark'}
+        require('onedark').load()
         vim.diagnostic.enable()
       end,
     }
   },
-  "tpope/vim-fugitive",
-  -- {
-  --     "kdheepak/lazygit.nvim",
-  --   cmd = {
-  --     "LazyGit",
-  --     "LazyGitConfig",
-  --     "LazyGitCurrentFile",
-  --     "LazyGitFilter",
-  --     "LazyGitFilterCurrentFile",
-  --   },
-  --     -- optional for floating window border decoration
-  --     dependencies = {
-  --         "nvim-lua/plenary.nvim",
-  --     },
-  -- },
+  {
+    "tpope/vim-fugitive",
+    event = "InsertEnter",
+  },
   {
     "AndrewRadev/switch.vim",
     ft = "markdown",
@@ -506,14 +486,18 @@ return {
     }
   },
   {
+    -- Highlight colours like #AABBCC
     "brenoprata10/nvim-highlight-colors",
     lazy = false,
     config = function()
       require('nvim-highlight-colors').setup{}
     end,
   },
-  { "folke/twilight.nvim", opts = {context = 20},},
-  { "typicode/bg.nvim", lazy = false },
+  { 
+    -- Change terminal background to match vim
+    "typicode/bg.nvim",
+    lazy = false
+  },
   {
     "preservim/vim-pencil",
     lazy = true,
@@ -525,23 +509,22 @@ return {
       vim.g["pencil#conceallevel"] = 0
     end,
   },
-  "godlygeek/tabular",
-  -- {
-  --     "OXY2DEV/markview.nvim",
-  --     lazy = false
-  -- },
-  { 
-    "rcarriga/nvim-dap-ui",
-    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
-    config = function()
-      require("dapui").setup()
-    end,
-  },
   {
-    "mfussenegger/nvim-dap",
+    "godlygeek/tabular",
     event = "InsertEnter",
-    config = function()
-      require "extensions.dap"
-    end
   },
+  -- { 
+  --   "rcarriga/nvim-dap-ui",
+  --   dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+  --   config = function()
+  --     require("dapui").setup()
+  --   end,
+  -- },
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require "extensions.dap"
+  --   end
+  -- },
 }

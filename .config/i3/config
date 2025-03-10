@@ -28,6 +28,10 @@ font pango: ProFont IIx Nerd Font Mono 12
 # set the mod key to the winkey:
 set $mod Mod4
 
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $sg i3wm.color3 #f0f0f0
+set_from_resource $bg i3wm.color1 #f0f0f0
+
 #####################
 # workspace layout: #
 #####################
@@ -173,6 +177,7 @@ bindcode $mod+Shift+90 	 move container to workspace  $ws10
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+shift+Return exec --no-startup-id wiki
 
 # kill focused window
 bindsym $mod+q kill
@@ -225,7 +230,8 @@ bindsym $mod+Shift+h move left
 # bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-bindsym $mod+j move workspace to output right
+# bindsym $mod+j workspace $ws1; move workspace to output primary
+# bindsym $mod+k move workspace to output primary
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -291,6 +297,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 # bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
+bindsym $mod+ctrl+w exec --no-startup-id /usr/bin/wal -i ~/Pictures/Wallpapers/current -s
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
 bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
@@ -371,7 +378,7 @@ workspace $ws10 output eDP
 # For modifications, it can be copied to ~/.config/picom/picom.conf or ~/.config/picom.conf
 # install picom package (yay -S picom)
 # start using default config 
-#exec_always --no-startup-id picom -b
+# exec_always --no-startup-id picom -b
 #
 # for custom config:
 #exec_always --no-startup-id picom --config  ~/.config/picom.conf
@@ -390,8 +397,6 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # https://github.com/jceb/dex
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
-
-exec --no-startup-id picom -b
 
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
@@ -517,7 +522,8 @@ set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
 set $clear #00000000
-set $bar_background #DC672C
+# set $bar_background #DC672C
+set $bar_background #bg
 
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
@@ -541,7 +547,7 @@ bar {
     # i3bar_command i3bar --transparency
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 # reference: https://i3wm.org/docs/userguide.html#_tray_output
-    # tray_output primary
+    # tray_output none
     tray_padding 0
 
 # When strip_workspace_numbers is set to yes,
@@ -550,16 +556,16 @@ bar {
     strip_workspace_numbers yes
 ##strip_workspace_name no
 
-    # separator_symbol   "/"
+    separator_symbol   "/"
     colors {
-        separator          $white
-        background         $bar_background
-        statusline         $white
+        separator          $sg
+        background         $bg
+        statusline         $fg
 #                          		border 		        bg		txt		indicator
-        focused_workspace	  $bar_background     $bar_background		$white	$purple
-        active_workspace	  $bar_background     $bar_background	$grey	$purple
-        inactive_workspace	$bar_background   	 $bar_background	  $grey		$purple
-        urgent_workspace	  $bar_background	   $bar_background	  $urgentred		$purple
+        focused_workspace	  $fg     $fg		$bg	  $purple
+        active_workspace	  $fg     $fg	  $bg	  $purple
+        inactive_workspace	$bg   	$bg	  $fg		$purple
+        urgent_workspace	  $bg	    $bg	  $urgentred		$purple
     }
 }
 

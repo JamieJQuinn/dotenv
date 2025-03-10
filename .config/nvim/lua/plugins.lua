@@ -310,7 +310,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    event = "InsertEnter",
+    event = "BufEnter",
     opts = {
       mappings = {
         basic=false,

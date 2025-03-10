@@ -51,7 +51,6 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
-    lazy = true,
     cmd = "NeoTreeFocusToggle",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -68,7 +67,6 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
-    lazy = true,
     cmd = "Telescope",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -92,6 +90,7 @@ return {
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lua',
+      'onsails/lspkind-nvim',
       'rafamadriz/friendly-snippets',
     },
     config = function()
@@ -169,20 +168,10 @@ return {
   --     opts_extend = { "sources.default" }
   -- },
 
-  -- LSP Kind {{{
-  {
-    'onsails/lspkind-nvim',
-    lazy = true,
-    config = function()
-      require('lspkind').init()
-    end
-  },
-  -- }}}
-
   -- Git Signs{{{
   {
     'lewis6991/gitsigns.nvim',
-    event = "InsertEnter",
+    event = "BufEnter",
     config = function()
       require "extensions.gitsigns"
     end
@@ -195,9 +184,6 @@ return {
     lazy = true,
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
-    config = function()
-      require("trouble").setup()
-    end,
     dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
   -- }}}
@@ -244,9 +230,7 @@ return {
     "navarasu/onedark.nvim",
     lazy = false,
     config = function ()
-      require('onedark').setup {
-          style = 'dark'
-      }
+      require('onedark').setup {style = 'dark'}
       require('onedark').load()
     end
   },
@@ -327,43 +311,37 @@ return {
   {
     'numToStr/Comment.nvim',
     event = "InsertEnter",
-    config = function()
-        require('Comment').setup({
-          mappings = {
-            basic=false,
-            extra=false
-          },
-        })
-    end
+    opts = {
+      mappings = {
+        basic=false,
+        extra=false
+      },
+    }
   },
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = "markdown",
-    build = function()
-      fn["mkdp#util#install"]()
-    end,
-  },
-
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   ft = "markdown",
+  --   build = function()
+  --     fn["mkdp#util#install"]()
+  --   end,
+  -- },
   {
     "stevearc/aerial.nvim",
-    event = "InsertEnter",
-    opts = {},
+    event = "BufEnter",
     -- Optional dependencies
     dependencies = {
        "nvim-treesitter/nvim-treesitter",
        "nvim-tree/nvim-web-devicons"
     },
-    config = function()
-      require('aerial').setup({
-        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-        on_attach = function(bufnr)
-        -- Jump forwards/backwards with '{' and '}'
-          vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
-          vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
-        end,
-        default_direction = "prefer_right",
-      })
-    end,
+    opts = {
+      -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+      on_attach = function(bufnr)
+      -- Jump forwards/backwards with '{' and '}'
+        vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+        vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+      end,
+      default_direction = "prefer_right",
+    }
   },
 
   {
@@ -413,13 +391,13 @@ return {
       -- callback where you can add custom code when the Zen window opens
       on_open = function(win)
         vim.diagnostic.disable()
-        require('onedark').setup {style = 'light'}
-        require('onedark').load()
+        -- require('onedark').setup {style = 'light'}
+        -- require('onedark').load()
       end,
       -- callback where you can add custom code when the Zen window closes
       on_close = function()
-        require('onedark').setup {style = 'dark'}
-        require('onedark').load()
+        -- require('onedark').setup {style = 'dark'}
+        -- require('onedark').load()
         vim.diagnostic.enable()
       end,
     }
@@ -428,19 +406,19 @@ return {
     "tpope/vim-fugitive",
     event = "InsertEnter",
   },
-  {
-    "AndrewRadev/switch.vim",
-    ft = "markdown",
-    init = function()
-      vim.g.switch_mapping = "-"
-      vim.g.switch_definitions = {}
-      vim.b.switch_definitions = {}
-      vim.g.switch_custom_definitions = {
-        {"TODO", "DONE", "DOING", "ASAP", "NOTTODO"},
-        {"TINY", "DONE"},
-      }
-    end,
-  },
+  -- {
+  --   "AndrewRadev/switch.vim",
+  --   ft = "markdown",
+  --   init = function()
+  --     vim.g.switch_mapping = "-"
+  --     vim.g.switch_definitions = {}
+  --     vim.b.switch_definitions = {}
+  --     vim.g.switch_custom_definitions = {
+  --       {"TODO", "DONE", "DOING", "ASAP", "NOTTODO"},
+  --       {"TINY", "DONE"},
+  --     }
+  --   end,
+  -- },
   {
     "folke/todo-comments.nvim",
     lazy = true,
@@ -489,9 +467,7 @@ return {
     -- Highlight colours like #AABBCC
     "brenoprata10/nvim-highlight-colors",
     lazy = false,
-    config = function()
-      require('nvim-highlight-colors').setup{}
-    end,
+    opts = {},
   },
   { 
     -- Change terminal background to match vim
@@ -500,7 +476,6 @@ return {
   },
   {
     "preservim/vim-pencil",
-    lazy = true,
     ft = {"markdown", "text"},
     cmd = "Pencil",
     init = function()

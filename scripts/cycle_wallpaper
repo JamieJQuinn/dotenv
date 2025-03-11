@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+set -e
+
+/usr/bin/wal -i ~/Pictures/Wallpapers/current -s

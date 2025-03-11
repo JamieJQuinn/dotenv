@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+set -e
+
+FNAME=~/Pictures/$(date +"%Y-%m-%d-%T")-screenshot.png
+
+scrot $FNAME && notify-send "Screenshot saved to $FNAME"

@@ -28,6 +28,7 @@ font pango: ProFont IIx Nerd Font Mono 12
 # set the mod key to the winkey:
 set $mod Mod4
 
+# Set colours from pywal
 set_from_resource $fg i3wm.color7 #f0f0f0
 set_from_resource $sg i3wm.color3 #f0f0f0
 set_from_resource $bg i3wm.color1 #f0f0f0
@@ -294,17 +295,17 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Redirect sound to headphones
-# bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
+bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+ctrl+w exec --no-startup-id /usr/bin/wal -i ~/Pictures/Wallpapers/current -s
+bindsym $mod+ctrl+w exec --no-startup-id ~/scripts/cycle_wallpaper
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
 bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id ~/scripts/run_in_new_terminal /usr/bin/yazi
 bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load
 bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
-bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
+bindsym Print exec --no-startup-id ~/scripts/screenshot
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -378,7 +379,7 @@ workspace $ws10 output eDP
 # For modifications, it can be copied to ~/.config/picom/picom.conf or ~/.config/picom.conf
 # install picom package (yay -S picom)
 # start using default config 
-# exec_always --no-startup-id picom -b
+exec_always --no-startup-id picom -b
 #
 # for custom config:
 #exec_always --no-startup-id picom --config  ~/.config/picom.conf
@@ -415,7 +416,8 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
-exec --no-startup-id sleep 2 && nitrogen --restore
+# exec --no-startup-id sleep 2 && nitrogen --restore
+exec --no-startup-id /usr/bin/wal -i ~/Pictures/Wallpapers/current -s
 # exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:

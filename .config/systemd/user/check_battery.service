@@ -1,0 +1,6 @@
+[Unit]
+Description=Check battery & show notification
+
+[Service]
+Type=oneshot
+ExecStart=/home/jamie/scripts/check_battery.sh

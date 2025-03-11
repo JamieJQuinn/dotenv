@@ -15,6 +15,11 @@ for item in .config/nvim .config/kitty .config/i3 .config/picom.conf scripts .tm
   fi
 done
 
+# Systemd
+for item in $(ls $DIR/.config/systemd/user); do
+  ln -s "$DIR/.config/systemd/user/$item" "$HOME/.config/systemd/user"
+done
+
 # Fish
 mkdir -p ~/.config/fish/conf.d
 ln -s "$DIR/global.fish" ~/.config/fish/conf.d/global.fish

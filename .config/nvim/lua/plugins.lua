@@ -9,31 +9,14 @@ require "helpers/globals"
 
 return {
   -- Mason {{{
-  -- {
-  --   "williamboman/mason.nvim",
-  --   build = ":MasonUpdate",
-  --   dependencies = {
-  --     "williamboman/mason-lspconfig.nvim",
-  --     "neovim/nvim-lspconfig",
-  --   },
-  --   config = function()
-  --     local mason = require("mason")
-  --     local mason_lspconfig = require("mason-lspconfig")
-  --     local lspconfig = require("lspconfig")
-  --
-  --     mason.setup()
-  --     mason_lspconfig.setup {
-  --       ensure_installed = {}
-  --     }
-  --
-  --     -- Setup every needed language server in lspconfig
-  --     mason_lspconfig.setup_handlers {
-  --       function (server_name)
-  --         lspconfig[server_name].setup {}
-  --       end,
-  --     }
-  --   end
-  -- },
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    opts = {},
+  },
   -- }}}
 
   -- Mason {{{

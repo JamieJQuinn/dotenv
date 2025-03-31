@@ -7,4 +7,4 @@ wmctrl -a WIKI_WINDOW || kitty -T "WIKI_WINDOW" \
   --override font_family=ProFontIIxNerdFontMono \
   --override font_size=12.0 \
   --override background_opacity=1.0 \
-  nvim +ZenMode "+set bg=light" wiki/readme.md &
+  nvim "+set bg=light" wiki/readme.md &

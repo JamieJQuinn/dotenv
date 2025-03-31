@@ -2,4 +2,6 @@
 
 set -e
 
-/usr/bin/wal -i ~/Pictures/Wallpapers/current -s
+/usr/bin/wal -i ~/Pictures/Wallpapers/current -s --backend colorthief
+
+cp ~/.cache/wal/colors.Xresources ~/.Xresources.colors.pywal

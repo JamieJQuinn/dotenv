@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd $NOTES_DIR
+nvim +ZenMode "+set bg=light" wiki/readme.md

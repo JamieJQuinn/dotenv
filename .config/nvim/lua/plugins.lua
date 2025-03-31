@@ -488,6 +488,12 @@ return {
     }
   },
   {
+      "lukas-reineke/indent-blankline.nvim",
+      lazy = false,
+      main = "ibl",
+      opts = {},
+  },
+  {
     -- Highlight colours like #AABBCC
     "brenoprata10/nvim-highlight-colors",
     lazy = false,

@@ -37,12 +37,13 @@ opt.fixeol = false -- Turn off appending new line in the end of a file
 opt.foldenable = false
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldminlines = 4
+opt.foldminlines = 10
 opt.foldlevel = 2
 -- opt.foldnestmax = 1
 cmd[[autocmd FileType markdown set foldenable]]
 cmd[[autocmd FileType markdown set foldlevel=1]]
 cmd[[autocmd FileType markdown set foldnestmax=2]]
+cmd[[autocmd FileType markdown set foldminlines=1]]
 cmd[[autocmd FileType zig set foldlevel=3]]
 cmd[[autocmd FileType zig set foldnestmax=4]]
 -- }}}

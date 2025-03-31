@@ -215,11 +215,11 @@ return {
   -- TreeSitter {{{
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
     require'nvim-treesitter.configs'.setup {
-
       -- Needed parsers
       ensure_installed = {
         "markdown",
@@ -227,25 +227,74 @@ return {
         "fortran",
         "python",
         "zig",
+        "lua",
       },
 
       -- Install all parsers synchronously
       sync_install = false,
 
-      -- Подсветка
       highlight = {
-        -- Enabling highlight for all files
         enable = true,
         disable = {},
       },
 
       indent = {
-        -- Disabling indentation for all files
         enable = { "markdown" },
         disable = {},
-      }
+      },
+
+      textobjects = {
+        move = {
+          -- enable = true,
+          enable = { "markdown", "markdown-inline" },
+          set_jumps = true, -- whether to set jumps in the jumplist
+          lookahead = true,
+          goto_next_start = {
+            -- ["]m"] = "@function.outer",
+            -- ["]]"] = { query = "@class.outer", desc = "Next class start" },
+            --
+            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+            -- ["]o"] = "@loop.inner",
+            -- ["]o"] = { query = "@loop.outer" },
+            -- ["]l"] = { query = "@markup.link.label", query_group = "highlights"},
+            ["]l"] = { query = "@markup.link"},
+            -- ["]h"] = { query = "@markup.heading.1" },
+            ["]h"] = { query = "@markup.heading.*" },
+            -- ["]h"] = { query = "@markup.heading.1" },
+            --
+            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+            -- ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+            -- ["]f"] = { query = "@local.definition.function", query_group = "locals", desc = "Next scope" },
+            -- ["]h"] = { query = "@markup.header.1", query_group = "highlights", desc = "Next header 1" },
+            -- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+          },
+          -- goto_next_end = {
+          --   ["]M"] = "@function.outer",
+          --   ["]["] = "@class.outer",
+          -- },
+          goto_previous_start = {
+            ["[h"] = { query = "@markup.heading.*" },
+            -- ["[m"] = "@function.outer",
+            -- ["[["] = "@class.outer",
+          },
+          -- goto_previous_end = {
+          --   ["[M"] = "@function.outer",
+          --   ["[]"] = "@class.outer",
+          -- },
+          -- Below will go to either the start or the end, whichever is closer.
+          -- Use if you want more granular movements
+          -- Make it even more gradual by adding multiple queries and regex.
+          -- goto_next = {
+          --   ["]d"] = "@conditional.outer",
+          -- },
+          -- goto_previous = {
+          --   ["[d"] = "@conditional.outer",
+          -- }
+        },
+      },
     }
-    end
+    end,
   },
   -- }}}
 
@@ -253,6 +302,7 @@ return {
   {
     "navarasu/onedark.nvim",
     lazy = false,
+    priority=1000,
     config = function ()
       require('onedark').setup {style = 'dark'}
       require('onedark').load()
@@ -260,10 +310,35 @@ return {
   },
   -- }}}
 
+  -- {
+  -- "serenevoid/kiwi.nvim",
+  --   ft = "markdown",
+  --   opts = {
+  --       {
+  --           name = "cr0ft",
+  --           path = "~/notes/cr0ft_roguelike_wiki/"
+  --       },
+  --       {
+  --           name = "notes",
+  --           path = "~/notes"
+  --       },
+  --       {
+  --           name = "wiki",
+  --           path = "~/notes/wiki"
+  --       }
+  --   },
+  --   keys = {
+  --       { "<leader>ww", ":lua require(\"kiwi\").open_wiki_index(\"wiki\")<cr>", desc = "Open Wiki index" },
+  --       { "<leader>wc", ":lua require(\"kiwi\").open_wiki_index(\"cr0ft\")<cr>", desc = "Open index of personal wiki" },
+  --       { "<cr>", ":lua require(\"kiwi\").todo.toggle()<cr>", desc = "Toggle Markdown Task" }
+  --   },
+  -- },
+
   {
     "epwalsh/obsidian.nvim",
     version = "*",  -- recommended, use latest release instead of latest commit
-    ft = "markdown",
+    -- ft = "markdown",
+    -- lazy = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -271,7 +346,15 @@ return {
       workspaces = {
         {
           name = "notes",
-          path = "~/notes",
+          path = os.getenv("NOTES_DIR"),
+        },
+        {
+          name = "wiki",
+          path = os.getenv("NOTES_DIR") .. "/wiki",
+        },
+        {
+          name = "cr0ft",
+          path = os.getenv("NOTES_DIR") .. "/cr0ft_roguelike_wiki",
         },
       },
 
@@ -292,7 +375,7 @@ return {
       },
 
       completion = {
-        nvim_cmp = false,
+        nvim_cmp = true,
         min_chars = 1,
         -- prepend_note_id = false,
         -- use_path_only = true,
@@ -307,6 +390,13 @@ return {
           opts = { buffer = true, expr = true },
         }
       },
+
+      -- callbacks = {
+      --   post_set_workspace = function(client, workspace)
+      --     -- local root = require("obsidian").find_vault_root()
+      --     vim.api.nvim_set_current_dir(workspace.path.filename)
+      --   end,
+      -- },
 
       daily_notes = {
         folder = "journal",
@@ -332,16 +422,16 @@ return {
       require "extensions.lualine"
     end,
   },
-  {
-    'numToStr/Comment.nvim',
-    event = "BufEnter",
-    opts = {
-      mappings = {
-        basic=false,
-        extra=false
-      },
-    }
-  },
+  -- {
+  --   'numToStr/Comment.nvim',
+  --   event = "BufEnter",
+  --   opts = {
+  --     mappings = {
+  --       basic=false,
+  --       extra=false
+  --     },
+  --   }
+  -- },
   -- {
   --   "iamcco/markdown-preview.nvim",
   --   ft = "markdown",
@@ -413,8 +503,8 @@ return {
         },
       },
       -- callback where you can add custom code when the Zen window opens
-      on_open = function(win)
-        vim.diagnostic.disable()
+      on_open = function()
+        vim.diagnostic.enable(false)
         -- require('onedark').setup {style = 'light'}
         -- require('onedark').load()
       end,
@@ -445,45 +535,54 @@ return {
   -- },
   {
     "folke/todo-comments.nvim",
-    lazy = true,
-    ft = "markdown",
+    lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       signs = true,
+      sign_priority = 8,
       keywords = {
-        TODO = { icon = "✗ ", color = "yellow" },
-        DONE = { icon = "✔ ", color = "green" },
+        FIX = {
+          icon = " ", -- icon used for the sign, and in search results
+          color = "error", -- can be a hex color, or a named color (see below)
+          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+          -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = "✗ ", color = "error" },
+        HACK = { icon = "‼ ", color = "warning" },
+        DEBUG = { icon = "! ", color = "debug" },
+        PERF = { icon = " ", color = "perf" },
 
-        ASAP = { icon = "‼ ", color = "red" },
-        DOING = { icon = "✗ ", color = "blue" },
-        WAITING = { icon = " ", color = "grey" },
-        NOTTODO = { icon = "✔ ", color = "grey" },
-
-        -- NOW = { icon = "‼ ", color = "now" },
-        -- TODAY = { icon = "! ", color = "today" },
-        -- SOON = { icon = " ", color = "soon" },
-        -- TINY = { icon = "ε ", color = "tiny" },
+        WARN = { icon = " ", color = "warning" },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
+      merge_keywords = false,
+
       highlight = {
+        multiline = false, -- enable multine todo comments
+        before = "", -- "fg" or "bg" or empty
+        keyword = "bg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+        after = "fg", -- "fg" or "bg" or empty
         pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
-        keyword = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
-        after = "fg",
-        before = "",
-        comments_only = false, -- uses treesitter to match keywords in comments only
+        comments_only = true, -- uses treesitter to match keywords in comments only
         max_line_len = 400, -- ignore lines longer than this
         exclude = {}, -- list of file types to exclude highlighting
       },
+      -- list of named colors where we try to extract the guifg from the
+      -- list of highlight groups or use the hex color if hl not found as a fallback
+      colors = {
+        error = { "SpellBad", "ErrorMsg", "#DC2626" },
+        warning = { "SpellCap", "WarningMsg", "#FBBF24" },
+        debug = { "SpellCap", "WarningMsg", "#FBBF24" },
+        perf = { "SpellRare", "#7C3AED" },
+
+        info = { "DiagnosticInfo", "#2563EB" },
+        hint = { "DiagnosticHint", "#10B981" },
+        default = { "Identifier", "#7C3AED" },
+        test = { "Identifier", "#FF00FF" }
+      },
       search = {
         pattern = [[\b(KEYWORDS)]], -- ripgrep regex
-      },
-      colors = {
-        -- todo = { "DiagnosticInfo" },
-        grey = { "Comment" },
-        red = { "DiagnosticError" },
-        orange = { "Character" },
-        yellow = { "NvimNumberPrefix" },
-        green = { "String" },
-        blue = { "Title" },
       },
     }
   },
@@ -499,7 +598,7 @@ return {
     lazy = false,
     opts = {},
   },
-  { 
+  {
     -- Change terminal background to match vim
     "typicode/bg.nvim",
     lazy = false

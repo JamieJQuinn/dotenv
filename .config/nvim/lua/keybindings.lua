@@ -1,6 +1,8 @@
 require "helpers/globals"
 require "helpers/keyboard"
 
+local map = vim.keymap.set
+
 g.mapleader = ' '                                                                 -- Use Space, like key for alternative hotkeys
 
 -- MINE
@@ -16,22 +18,48 @@ nm('<c-l>', '<c-w><c-l>' )
 nm('<c-j>', '<c-w><c-j>' )
 nm('<c-k>', '<c-w><c-k>' )
 nm('<leader>a', '<cmd>AerialToggle!<CR>')
-nm('<leader>#', '<cmd>Telescope aerial<CR>')
+-- nm('<leader>#', '<cmd>Telescope aerial<CR>')
 nm('vv', 'viw')
 vm('p', 'P')
 nm('<F5>', '<cmd>make<CR>')
 -- nm('<F6>', '<cmd>make<CR>')
-nm('<leader>gg', '<cmd>LazyGit<cr>')
+-- nm('<leader>gg', '<cmd>LazyGit<cr>')
 nm(']e', '<cmd>cn<cr>')
 nm('[e', '<cmd>cp<cr>')
 
-im('p`', '`<esc>pa`')
+-- im('p`', '`<esc>pa`')
+
+-- TODOs in code
+map("n", "<leader>t", function()
+  vim.cmd("TodoTelescope keywords=HACK,TODO")
+end)
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev({keywords = { "TODO", "HACK" }})
+end, { desc = "Prev todo comment" })
+
 
 nm('<leader>n', '<cmd>noh<cr>)')
 
 -- Commenting
-nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
-vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
+-- nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
+-- vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
+
+map("v", "<leader>/", "gc", { desc = "sargas/ux: toggle comment", remap = true })
+map("n", "<leader>/", "gcc", { desc = "sargas/ux: toggle comment", remap = true })
+
+-- local query=vim.treesitter.query.parse('markdown_inline','[[ (link_text) ]]')
+-- vim.keymap.set('n','<TAB>',function ()
+--     vim.cmd("/[[.\\{-}\\]\\]")
+--     vim.cmd("noh")
+--     -- local root=vim.treesitter.get_parser():parse()[1]:root()
+--     -- local _,node,_=query:iter_captures(root,0,vim.fn.line'.',-1)()
+--     -- if not node then return end
+--     -- require'nvim-treesitter.ts_utils'.goto_node(node)
+-- end)
 
 -- Telekasten {{{
 -- im('[[', '<cmd>Telekasten insert_link<CR>')
@@ -40,47 +68,55 @@ vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
 -- nm('<leader>wb', '<cmd>Telekasten show_backlinks<CR>')
 --- }}}
 
--- Obsidian.nvim --
-nm('<leader>wp', '<cmd>ObsidianQuickSwitch<CR>')
-nm('<leader>wf', '<cmd>ObsidianSearch<CR>')
-nm('<leader>wt', '<cmd>ObsidianTags<CR>')
-nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
-nm('<leader>x', '<cmd>lua require("obsidian").util.toggle_checkbox({" ", "x", "o"})<CR>')
-nm('[j', '<cmd>ObsidianYesterday<CR>')
-nm('<leader>j', '<cmd>ObsidianToday<CR>')
-nm(']j', '<cmd>ObsidianTomorrow<CR>')
+map("n", "]e", function() vim.diagnostic.goto_next() end)
+map("n", "[e", function() vim.diagnostic.goto_prev() end)
 
-nm(']e', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-nm('[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-
--- quick links --
+-- WIKI --
 if os.getenv("NOTES_DIR") then
-	nm('<leader>ww', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/wiki/readme.md<CR>')
-	nm('<leader>wc', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/cr0ft_roguelike_wiki/index.md<CR>')
-	nm('<leader>wq', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/quicknote.md<CR>')
-	nm('<leader>wn', '<cmd>cd ' .. os.getenv("NOTES_DIR") .. '<CR><cmd>Telescope find_files<CR>')
+  -- Obsidian.nvim --
+  nm('<leader>wp', '<cmd>ObsidianQuickSwitch<CR>')
+  nm('<leader>wf', '<cmd>ObsidianSearch<CR>')
+  nm('<leader>w#', '<cmd>ObsidianTags<CR>')
+  nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
+  -- map("n", "<leader>x", function() require("obsidian").util.toggle_checkbox({" ", "x", "o"}) end)
+  -- nm('[j', '<cmd>ObsidianYesterday<CR>')
+  nm('<leader>wj', '<cmd>ObsidianToday<CR>')
+  -- nm(']j', '<cmd>ObsidianTomorrow<CR>')
 
-	-- TODOs --
-	nm('<leader>tt', '<cmd>e ' .. os.getenv("NOTES_DIR") .. '/todo/todo.md<CR>')
-	nm('<leader>tp', '<cmd>TodoTelescope keywords=NOW,TODAY,SOON cwd=' .. os.getenv("NOTES_DIR") .. '/todo<CR>')
+  map("n", "<leader>ww", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
+    vim.cmd("e ./wiki/readme.md")
+  end)
+  map("n", "<leader>wq", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
+    vim.cmd("e ./quicknote.md")
+  end)
+  map("n", "<leader>wn", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
+    vim.cmd("Telescope find_files")
+  end)
+  map("n", "<leader>wt", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
+    vim.cmd("e todo/todo.md")
+  end)
+
+  map("n", "<leader>wc", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR") .. "/cr0ft_roguelike_wiki")
+    vim.cmd("e ./index.md")
+  end)
 end
 
--- vim.keymap.set("n", "]t", function()
---   require("todo-comments").jump_next({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
--- end, { desc = "Next todo comment" })
---
--- vim.keymap.set("n", "[t", function()
---   require("todo-comments").jump_prev({keywords = { "TODO", "SOON", "TODAY", "NOW" }})
--- end, { desc = "Prev todo comment" })
+map("n", "<leader>dd", function() require("dapui").toggle() end)
+map("n", "<leader>ds", function() require("dap").continue() end)
 
-nm('<leader>dd', '<cmd>lua require("dapui").toggle()<CR>' )
-nm('<leader>ds', '<cmd>lua require("dap").continue()<CR>' )
+map("i", "<C-BS>", "<C-W>")
 
 -- LSP {{{
-nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object
-nm('ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')                                -- Code actions
-nm('gR', '<cmd>lua vim.lsp.buf.rename()<CR>')                                     -- Rename an object
-nm('gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')                                -- Go to declaration
+-- map("n", "K", function() vim.lsp.buf.hover() end)
+map("n", "ga", function() vim.lsp.buf.code_action() end)
+map("n", "gR", function() vim.lsp.buf.rename() end)
+map("n", "gD", function() vim.lsp.buf.declaration() end)
+map("n", "gds", function() vim.cmd("Telescope aerial") end)
  -- }}}
 
 -- Telescope {{{
@@ -93,7 +129,7 @@ nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                  
 nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                  -- Find a string in project
 nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
 -- nm('<leader>a', '<cmd>Telescope<CR>')                                            -- Show all commands
-nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
+-- nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
 -- }}}
 
 -- ZenMode

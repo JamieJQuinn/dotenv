@@ -1,0 +1,6 @@
+[Unit]
+Description=Run rclone mirror
+
+[Service]
+Type=oneshot
+ExecStart=/home/jamie/scripts/run_rclone_mirror.sh

@@ -2,7 +2,7 @@
 Description=Check battery
 
 [Timer]
-OnCalendar=*-*-* *:0,10:00
+OnCalendar=*-*-* *:*:00
 Persistent=true
 
 [Install]

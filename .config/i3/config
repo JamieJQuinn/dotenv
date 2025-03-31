@@ -30,8 +30,12 @@ set $mod Mod4
 
 # Set colours from pywal
 set_from_resource $fg i3wm.color7 #f0f0f0
-set_from_resource $sg i3wm.color3 #f0f0f0
+set_from_resource $sg i3wm.color6 #f0f0f0
 set_from_resource $bg i3wm.color1 #f0f0f0
+
+set_from_resource $bar_fg i3wm.color7 #f0f0f0
+set_from_resource $bar_sg i3wm.color6 #f0f0f0
+set_from_resource $bar_bg i3wm.color1 #f0f0f0
 
 #####################
 # workspace layout: #
@@ -300,6 +304,8 @@ bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 ## App shortcuts
 bindsym $mod+ctrl+w exec --no-startup-id ~/scripts/cycle_wallpaper
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
+bindsym $mod+shift+w exec --no-startup-id ~/scripts/wiki
+bindsym $mod+c exec --no-startup-id ~/scripts/cwiki
 bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
 bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id ~/scripts/run_in_new_terminal /usr/bin/yazi
@@ -308,7 +314,11 @@ bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
 bindsym Print exec --no-startup-id ~/scripts/screenshot
 
 # Power Profiles menu switcher (rofi)
-bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
+bindsym $mod+ctrl+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
+
+# Polybar show/hide
+bindcode 133 exec --no-startup-id "polybar-msg cmd show"
+bindcode --release 133 exec --no-startup-id "polybar-msg cmd hide"
 
 ##########################################
 # configuration for workspace behaviour: #
@@ -524,8 +534,6 @@ set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
 set $clear #00000000
-# set $bar_background #DC672C
-set $bar_background #bg
 
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
@@ -550,7 +558,7 @@ bar {
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 # reference: https://i3wm.org/docs/userguide.html#_tray_output
     # tray_output none
-    tray_padding 0
+    # tray_padding 0
 
 # When strip_workspace_numbers is set to yes,
 # any workspace that has a name of the form
@@ -560,14 +568,14 @@ bar {
 
     separator_symbol   "/"
     colors {
-        separator          $sg
-        background         $bg
-        statusline         $fg
+        separator          $bar_sg
+        background         $bar_bg
+        statusline         $bar_fg
 #                          		border 		        bg		txt		indicator
-        focused_workspace	  $fg     $fg		$bg	  $purple
-        active_workspace	  $fg     $fg	  $bg	  $purple
-        inactive_workspace	$bg   	$bg	  $fg		$purple
-        urgent_workspace	  $bg	    $bg	  $urgentred		$purple
+        focused_workspace	  $bar_fg     $bar_fg		$bar_bg	  $purple
+        active_workspace	  $bar_fg     $bar_fg	  $bar_bg	  $purple
+        inactive_workspace	$bar_bg   	$bar_bg	  $bar_fg		$purple
+        urgent_workspace	  $bar_bg	    $bar_bg	  $urgentred		$purple
     }
 }
 

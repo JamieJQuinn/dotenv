@@ -8,7 +8,8 @@
 vpnstatus="📢"
 nordvpn_output=$(nordvpn status | cat -v | head -1 | sed -e 's/\^M-^M  ^M//g' )
 if [ "${nordvpn_output}" = "Status: Connected" ]; then
-    vpnstatus="🥸"
+    server=$(nordvpn status | grep Server | awk -F' ' '{print $2" "$3}')
+    vpnstatus="🥸 $server"
 elif [ "${nordvpn_output}" = "A new version of NordVPN is available! Please update the application." ]; then
     nordvpn_output=$(nordvpn status | cat -v | head -2 | tail -1 | sed -e 's/\^M-^M  ^M//g' )
     if [ "${nordvpn_output}" = "Status: Connected" ]; then

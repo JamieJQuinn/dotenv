@@ -1,0 +1,6 @@
+[Unit]
+Description=Take screenshot for diary
+
+[Service]
+Type=oneshot
+ExecStart=/home/jamie/scripts/take_screenshot_diary.sh

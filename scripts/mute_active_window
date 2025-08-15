@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -ex
+
+echo "WIP. Exiting."
+exit
+
+CURRENT_WINDOW_PID=$(xdotool getactivewindow getwindowpid)
+AUDIO_SOURCE_ID=$(pactl --format=json list clients | jq ". | map(select(.properties.\"application.process.id\" == \"$CURRENT_WINDOW_PID\"))[0].index")
+
+echo $CURRENT_WINDOW_PID >> /tmp/TEST_OUT.txt
+echo $AUDIO_SOURCE_ID >> /tmp/TEST_OUT.txt

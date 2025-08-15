@@ -6,7 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CONFIG_DIR=~/.config
 mkdir -p "$CONFIG_DIR"
 
-for item in .config/nvim .config/kitty .config/i3 .config/picom.conf scripts .tmux.conf .gitconfig; do
+for item in .config/nvim .config/kitty .config/fish .config/i3 .config/picom.conf .config/mpv .config/yazi scripts .tmux.conf .gitconfig; do
   if [ ! -e ~/"$item" ]; then
     ln -s "$DIR/$item" ~/"$item"
     echo "ln "$DIR/$item" => ~/$item"
@@ -21,10 +21,15 @@ for item in $(ls $DIR/.config/systemd/user); do
 done
 
 # Fish
-mkdir -p ~/.config/fish/conf.d
-ln -s "$DIR/global.fish" ~/.config/fish/conf.d/global.fish
+# mkdir -p ~/.config/fish/conf.d
+# ln -s "$DIR/global.fish" ~/.config/fish/conf.d/global.fish
 
 # Kitty
 LOCAL_CFG="$DIR/.config/kitty/kitty_$(hostname).conf"
 touch $LOCAL_CFG
 ln -s $LOCAL_CFG "$DIR/.config/kitty/kitty-local.conf"
+
+# Fish
+LOCAL_CFG="$DIR/.config/fish/config_$(hostname).fish"
+touch $LOCAL_CFG
+ln -s $LOCAL_CFG "$DIR/.config/fish/config.fish"

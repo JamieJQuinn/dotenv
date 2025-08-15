@@ -1,0 +1,1 @@
+/home/jamie/dotenv/.config/fish/config_g14.fish

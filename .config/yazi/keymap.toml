@@ -1,0 +1,7 @@
+[[mgr.prepend_keymap]]
+on  = "<C-n>"
+run = 'shell -- dragon-drop -x -i -T "$1"'
+
+[[mgr.prepend_keymap]]
+on  = "<C-g>"
+run = 'shell -- upscayl -i "$1" -o "$1_upscaled.jpg" -s 1'

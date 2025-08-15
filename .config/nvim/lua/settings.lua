@@ -14,12 +14,16 @@ cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 cmd[[autocmd FileType markdown set spell]]
 cmd[[autocmd FileType text Pencil]]
 cmd[[autocmd FileType markdown Pencil]]
+-- cmd[[autocmd FileType zig map <F5> <cmd>!zig build<CR>]]
 cmd[[autocmd FileType zig map <F6> <cmd>!zig build run<CR>]]
 cmd[[autocmd FileType zig map <F7> <cmd>!zig fmt %<CR>]]
 -- cmd[[autocmd FileType markdown set conceallevel=1]]
 
 -- Zig autofmt
 g["zig_fmt_autosave"] = false
+
+-- Swap (recovery)
+opt.directory = "."                -- Set swap file location
 
 -- Tabs {{{
 opt.expandtab = true                -- Use spaces by default
@@ -41,8 +45,8 @@ opt.foldminlines = 10
 opt.foldlevel = 2
 -- opt.foldnestmax = 1
 cmd[[autocmd FileType markdown set foldenable]]
-cmd[[autocmd FileType markdown set foldlevel=1]]
-cmd[[autocmd FileType markdown set foldnestmax=2]]
+cmd[[autocmd FileType markdown set foldlevel=2]]
+-- cmd[[autocmd FileType markdown set foldnestmax=2]]
 cmd[[autocmd FileType markdown set foldminlines=1]]
 cmd[[autocmd FileType zig set foldlevel=3]]
 cmd[[autocmd FileType zig set foldnestmax=4]]

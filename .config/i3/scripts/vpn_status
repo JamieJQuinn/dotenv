@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+nordvpn status | grep Server | awk -F' ' '{print $2" "$3}'

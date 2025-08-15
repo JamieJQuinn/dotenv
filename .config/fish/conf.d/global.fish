@@ -1,4 +1,4 @@
-# Nice git aliases
+# Git
 abbr -a gc git commit
 abbr -a gs git status
 abbr -a gd git diff
@@ -13,12 +13,30 @@ abbr -a cmb cmake --build build
 abbr -a cmt ctest --test-dir build/tests/ --rerun-failed --output-on-failure
 
 # Zig
-alias zbr "zig build run"
-alias zbd "zig build debug"
+abbr -a zbr "zig build run"
+abbr -a zbd "zig build debug"
 
 # Vim
 set -x EDITOR nvim
 alias vim nvim
+
+# FZF
+if type -q fzf
+  fzf --fish | source
+  set -x FZF_DEFAULT_COMMAND "fd ."
+  set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND $HOME"
+  set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
+end
+
+# Yazi
+function y
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
 
 ## Todos
 set -x TODO_DIR ~/notes/todo
@@ -27,7 +45,7 @@ set -x TODO_DIR ~/notes/todo
 set -x NOTES_DIR ~/notes
 
 # Configs
-alias vimcfg "cd ~/.config/nvim; nvim +'Telescope find_files' ."
+alias vimcfg "cd ~/.config/nvim; nvim +'Telescope find_files'"
 alias fishcfg "cd ~/.config/fish; nvim +'Telescope find_files' ."
 alias kittycfg "cd ~/.config/kitty; $EDITOR kitty.conf"
 alias i3cfg "cd ~/.config/i3; $EDITOR config"

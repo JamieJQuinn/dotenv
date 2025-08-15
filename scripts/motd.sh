@@ -94,23 +94,30 @@ done
 ##    TODOs
 ################################################################################
 
+# echo
+#
+# printf "ToDo:\n"
+#
+# echo
+#
+# tput setaf 1
+# tput bold
+# grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | grep -v '[x]' | sed 's/ *NOW /! /' | sed 's/- \[ *\] //'
+# tput sgr0
+#
+# tput setaf 3
+# grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | grep -v '[x]' | sed 's/ *TODAY / /' | sed 's/- \[ *\] //'
+#
+# tput setaf 4
+# grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | grep -v '[x]' | sed 's/ *TINY /ε /' | sed 's/- \[ *\] //'
+#
+# echo
+#
+# tput sgr0
+
+echo
+printf "New things:\n"
 echo
 
-printf "ToDo:\n"
-
-echo
-
-tput setaf 1
-tput bold
-grep 'NOW' $TODO_DIR/todo.md | grep -v 'NOW_' | grep -v '[x]' | sed 's/ *NOW /! /' | sed 's/- \[ *\] //'
-tput sgr0
-
-tput setaf 3
-grep 'TODAY' $TODO_DIR/todo.md | grep -v 'TODAY_' | grep -v '[x]' | sed 's/ *TODAY / /' | sed 's/- \[ *\] //'
-
-tput setaf 4
-grep 'TINY' $TODO_DIR/todo.md | grep -v 'TINY_' | grep -v '[x]' | sed 's/ *TINY /ε /' | sed 's/- \[ *\] //'
-
-echo
-
-tput sgr0
+echo "- C-T in command to find a path with fzf"
+echo "- A-C to change to any dir in home"

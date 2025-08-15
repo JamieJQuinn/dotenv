@@ -67,6 +67,8 @@ return {
         capabilities = capabilities
       }
       lspconfig.bashls.setup{}
+      lspconfig.clangd.setup{}
+      -- lspconfig.make.setup{}
     end
   },
   -- }}}
@@ -215,8 +217,12 @@ return {
   -- TreeSitter {{{
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    dependencies = { 
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      -- "OXY2DEV/markview.nvim",
+    },
     build = ":TSUpdate",
+    lazy = false,
     event = { "BufReadPost", "BufNewFile" },
     config = function()
     require'nvim-treesitter.configs'.setup {
@@ -337,8 +343,9 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*",  -- recommended, use latest release instead of latest commit
-    -- ft = "markdown",
+    ft = "markdown",
     -- lazy = "VeryLazy",
+    -- event = "BufEnter",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -364,7 +371,7 @@ return {
         checkboxes = {
           -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
           [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-          ["o"] = { char = "", hl_group = "ObsidianTodo" },
+          ["o"] = { char = "󰄱", hl_group = "ObsidianTodo" },
           ["x"] = { char = "", hl_group = "ObsidianDone" },
           -- Replace the above with this if you don't have a patched font:
           -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
@@ -422,16 +429,16 @@ return {
       require "extensions.lualine"
     end,
   },
-  -- {
-  --   'numToStr/Comment.nvim',
-  --   event = "BufEnter",
-  --   opts = {
-  --     mappings = {
-  --       basic=false,
-  --       extra=false
-  --     },
-  --   }
-  -- },
+  {
+    'numToStr/Comment.nvim',
+    event = "BufEnter",
+    opts = {
+      mappings = {
+        basic=false,
+        extra=false
+      },
+    }
+  },
   -- {
   --   "iamcco/markdown-preview.nvim",
   --   ft = "markdown",
@@ -454,7 +461,7 @@ return {
         vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
         vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
       end,
-      default_direction = "prefer_right",
+      default_direction = "right",
     }
   },
 
@@ -520,25 +527,24 @@ return {
     "tpope/vim-fugitive",
     event = "InsertEnter",
   },
-  -- {
-  --   "AndrewRadev/switch.vim",
-  --   ft = "markdown",
-  --   init = function()
-  --     vim.g.switch_mapping = "-"
-  --     vim.g.switch_definitions = {}
-  --     vim.b.switch_definitions = {}
-  --     vim.g.switch_custom_definitions = {
-  --       {"TODO", "DONE", "DOING", "ASAP", "NOTTODO"},
-  --       {"TINY", "DONE"},
-  --     }
-  --   end,
-  -- },
+  {
+    "AndrewRadev/switch.vim",
+    ft = "markdown",
+    init = function()
+      vim.g.switch_mapping = "-"
+      vim.g.switch_definitions = {}
+      vim.b.switch_definitions = {}
+      vim.g.switch_custom_definitions = {
+        {"TODO", "PROG", "DONE", "DONT", "MOVED"},
+      }
+    end,
+  },
   {
     "folke/todo-comments.nvim",
     lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-      signs = true,
+      signs = false,
       sign_priority = 8,
       keywords = {
         FIX = {
@@ -547,24 +553,31 @@ return {
           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
           -- signs = false, -- configure signs for some keywords individually
         },
-        TODO = { icon = "✗ ", color = "error" },
+
+        TODO = { icon = "✗ ", color = "error"},
+        PROG = { icon = " ", color = "warning" },
+        DONE = { icon = "✓ ", color = "#10B981" },
+        DONT = { icon = "~ ", color = "comment" },
+        MOVED = { icon = "> ", color = "comment" },
+
         HACK = { icon = "‼ ", color = "warning" },
         DEBUG = { icon = "! ", color = "debug" },
-        PERF = { icon = " ", color = "perf" },
+        PERF = { icon = " ", color = "info" },
+        GIRLY = { icon = "ℊ ", color = "hint" },
 
-        WARN = { icon = " ", color = "warning" },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        -- WARN = { icon = " ", color = "warning" },
+        -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        -- TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
       merge_keywords = false,
 
       highlight = {
         multiline = false, -- enable multine todo comments
         before = "", -- "fg" or "bg" or empty
-        keyword = "bg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+        keyword = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
         after = "fg", -- "fg" or "bg" or empty
         pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
-        comments_only = true, -- uses treesitter to match keywords in comments only
+        comments_only = false, -- uses treesitter to match keywords in comments only
         max_line_len = 400, -- ignore lines longer than this
         exclude = {}, -- list of file types to exclude highlighting
       },
@@ -579,6 +592,7 @@ return {
         info = { "DiagnosticInfo", "#2563EB" },
         hint = { "DiagnosticHint", "#10B981" },
         default = { "Identifier", "#7C3AED" },
+        comment = { "SpecialComment", "#3f3f3f" },
         test = { "Identifier", "#FF00FF" }
       },
       search = {
@@ -587,10 +601,11 @@ return {
     }
   },
   {
-      "lukas-reineke/indent-blankline.nvim",
-      lazy = false,
-      main = "ibl",
-      opts = {},
+    -- Highlight indentation
+    "lukas-reineke/indent-blankline.nvim",
+    lazy = false,
+    main = "ibl",
+    opts = {},
   },
   {
     -- Highlight colours like #AABBCC
@@ -617,6 +632,23 @@ return {
     "godlygeek/tabular",
     event = "InsertEnter",
   },
+  "m4xshen/hardtime.nvim", -- GAINS
+  "echasnovski/mini.surround",
+
+  -- {
+  --     "OXY2DEV/markview.nvim",
+  --     lazy = false,
+  --
+  --    -- For `nvim-treesitter` users.
+  --     priority = 49,
+  --
+  --     -- For blink.cmp's completion
+  --     -- source
+  --     -- dependencies = {
+  --     --     "saghen/blink.cmp"
+  --     -- },
+  -- },
+
   -- { 
   --   "rcarriga/nvim-dap-ui",
   --   dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
@@ -630,5 +662,19 @@ return {
   --   config = function()
   --     require "extensions.dap"
   --   end
+  -- },
+  -- {
+  --  -- Markdown Preview
+  --     "toppair/peek.nvim",
+  --     event = { "VeryLazy" },
+  --     build = "deno task --quiet build:fast",
+  --     opts = {
+  --       app = 'chromium',
+  --     },
+  --     config = function()
+  --         require("peek").setup()
+  --         vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+  --         vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+  --     end,
   -- },
 }

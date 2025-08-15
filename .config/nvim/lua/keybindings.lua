@@ -8,6 +8,7 @@ g.mapleader = ' '                                                               
 -- MINE
 nm('<leader>e', '<cmd>e#<CR>' )
 nm('<bs>', '<c-o>')
+-- nm('<tab>', '<cmd>/[[<cr>')
 nm('<leader>v', '<cmd>vsplit<CR>' )
 nm('<leader>`', 'i```<CR>```<esc>O<esc>p' )
 nm('<leader>q', '<cmd>q<CR>' )
@@ -26,12 +27,13 @@ nm('<F5>', '<cmd>make<CR>')
 -- nm('<leader>gg', '<cmd>LazyGit<cr>')
 nm(']e', '<cmd>cn<cr>')
 nm('[e', '<cmd>cp<cr>')
+nm('<leader>gc', '<cmd>Git commit<cr>i')
 
 -- im('p`', '`<esc>pa`')
 
 -- TODOs in code
 map("n", "<leader>t", function()
-  vim.cmd("TodoTelescope keywords=HACK,TODO")
+  vim.cmd("Trouble todo filter = {tag = {TODO}} filter.buf=0")
 end)
 vim.keymap.set("n", "]t", function()
   require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
@@ -42,14 +44,14 @@ vim.keymap.set("n", "[t", function()
 end, { desc = "Prev todo comment" })
 
 
-nm('<leader>n', '<cmd>noh<cr>)')
+nm('<leader>n', '<cmd>noh<cr>')
 
 -- Commenting
--- nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
--- vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
+nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
+vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
 
-map("v", "<leader>/", "gc", { desc = "sargas/ux: toggle comment", remap = true })
-map("n", "<leader>/", "gcc", { desc = "sargas/ux: toggle comment", remap = true })
+-- map("v", "<leader>/", "gc", { desc = "sargas/ux: toggle comment", remap = true })
+-- map("n", "<leader>/", "gcc", { desc = "sargas/ux: toggle comment", remap = true })
 
 -- local query=vim.treesitter.query.parse('markdown_inline','[[ (link_text) ]]')
 -- vim.keymap.set('n','<TAB>',function ()
@@ -116,7 +118,7 @@ map("i", "<C-BS>", "<C-W>")
 map("n", "ga", function() vim.lsp.buf.code_action() end)
 map("n", "gR", function() vim.lsp.buf.rename() end)
 map("n", "gD", function() vim.lsp.buf.declaration() end)
-map("n", "gds", function() vim.cmd("Telescope aerial") end)
+map("n", "<leader>#", function() vim.cmd("Telescope aerial") end)
  -- }}}
 
 -- Telescope {{{
@@ -138,7 +140,7 @@ nm('zz', '<cmd>ZenMode<CR>')
 -- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
-nm('<c-x>', '<cmd>Trouble diagnostics toggle<CR>')                                         -- Show all problems in project (with help of LSP)
+nm('<c-x>', '<cmd>Trouble quickfix toggle<CR>')                                         -- Show all problems in project (with help of LSP)
 nm('gr', '<cmd>Trouble lsp_references focus=true win.position=right<CR>')                                       -- Show use of object in project
 nm('<c-s>', '<cmd>Trouble symbols toggle focus=false<CR>')                                         -- Show all problems in project (with help of LSP)
 -- }}}

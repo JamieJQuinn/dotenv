@@ -57,7 +57,7 @@ workspace_layout default
 ##############################
 
 #border indicator on windows:
-new_window pixel 1
+new_window pixel 0
 
 # thin borders
 # hide_edge_borders both
@@ -190,6 +190,12 @@ bindsym $mod+q kill
 # exit-menu
 bindsym $mod+ctrl+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
+# Mute current window
+bindsym $mod+ctrl+m exec --no-startup-id ~/scripts/mute_active_window
+
+# Try reset randr (use when HDMI playing up)
+bindsym $mod+ctrl+a exec --no-startup-id autorandr -c
+
 # Lock the system
 # lock with a picture:
 #bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
@@ -253,7 +259,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+# bindsym $mod+s layout stacking
 bindsym $mod+g layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -311,7 +317,8 @@ bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id ~/scripts/run_in_new_terminal /usr/bin/yazi
 bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load
 bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
-bindsym Print exec --no-startup-id ~/scripts/screenshot
+# bindsym Print exec --no-startup-id ~/scripts/screenshot
+bindsym Print exec --no-startup-id xfce4-screenshooter
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+ctrl+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -341,11 +348,11 @@ set $ws10 "10"
 # where you have to replace VGA-0/HDMI-0 with the names for your displays
 # you can get from xrandr command
 workspace $ws1 output eDP
-workspace $ws2 output HDMI-A-0
-workspace $ws3 output HDMI-A-0
-workspace $ws4 output HDMI-A-0
-workspace $ws5 output HDMI-A-0
-workspace $ws6 output HDMI-A-0
+workspace $ws2 output primary
+workspace $ws3 output primary
+workspace $ws4 output primary
+workspace $ws5 output primary
+workspace $ws6 output primary
 workspace $ws7 output eDP
 workspace $ws8 output eDP
 workspace $ws9 output eDP
@@ -423,7 +430,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # start a script to setup displays
 # uncomment the next line, use arandr to setup displays and save the file as monitor:
-exec --no-startup-id ~/.screenlayout/monitor.sh
+# exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
@@ -431,7 +438,7 @@ exec --no-startup-id /usr/bin/wal -i ~/Pictures/Wallpapers/current -s
 # exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 600 600 600
+exec --no-startup-id xset s 480 dpms 300 600 900
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
@@ -465,9 +472,9 @@ exec --no-startup-id /usr/bin/dunst
 
 # Autostart apps as you like
 # exec --no-startup-id sleep 2 && wiki
-exec --no-startup-id sleep 3 && i3-msg "workspace $ws3" && firefox
-exec --no-startup-id sleep 2 && i3-msg "workspace $ws2" && kitty
 exec --no-startup-id sleep 1 && i3-msg "workspace $ws1" && wiki
+exec --no-startup-id sleep 3 && i3-msg "workspace $ws2" && kitty
+exec --no-startup-id sleep 5 && i3-msg "workspace $ws3" && firefox
 # exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 
@@ -481,7 +488,7 @@ exec --no-startup-id sleep 1 && i3-msg "workspace $ws1" && wiki
 exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-#exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet
 
 # clipman-applet
 exec --no-startup-id xfce4-clipman

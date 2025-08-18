@@ -6,7 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CONFIG_DIR=~/.config
 mkdir -p "$CONFIG_DIR"
 
-for item in .config/nvim .config/kitty .config/fish .config/i3 .config/picom.conf .config/mpv .config/yazi scripts .tmux.conf .gitconfig; do
+for item in .config/* scripts .tmux.conf .gitconfig; do
   if [ ! -e ~/"$item" ]; then
     ln -s "$DIR/$item" ~/"$item"
     echo "ln "$DIR/$item" => ~/$item"

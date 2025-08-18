@@ -324,8 +324,8 @@ bindsym Print exec --no-startup-id xfce4-screenshooter
 bindsym $mod+ctrl+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 # Polybar show/hide
-bindcode 133 exec --no-startup-id "polybar-msg cmd show"
-bindcode --release 133 exec --no-startup-id "polybar-msg cmd hide"
+# bindcode 133 exec --no-startup-id "polybar-msg cmd show"
+# bindcode --release 133 exec --no-startup-id "polybar-msg cmd hide"
 
 ##########################################
 # configuration for workspace behaviour: #

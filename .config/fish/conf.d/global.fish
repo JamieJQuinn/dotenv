@@ -61,12 +61,12 @@ end
 
 # Useful aliases
 alias kssh "kitty +kitten ssh"
-alias j "nvim +ZenMode $NOTES_DIR/journal/(date +%Y-%m).md"
+alias j "nvim +ZenMode $NOTES_DIR/journal/(date +%Y).md"
 alias todo "cd $TODO_DIR; $EDITOR todo.md"
 alias a 'xdg-open'
 alias d 'date +%Y_%m_%d'
-alias enable_performance_mode "asusctl profile -P balanced; supergfxctl -m Hybrid"
-alias disable_performance_mode "asusctl profile -P quiet; supergfxctl -m Integrated"
+# alias enable_performance_mode "asusctl profile -P balanced; supergfxctl -m Hybrid"
+# alias disable_performance_mode "asusctl profile -P quiet; supergfxctl -m Integrated"
 alias notes "cd $NOTES_DIR; nvim +'Telescope find_files' ."
 alias bonsai "cbonsai -l -m 'Hello $USER' -b 1 -L 64"
 

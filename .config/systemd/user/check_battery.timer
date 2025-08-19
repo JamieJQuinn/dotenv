@@ -1,9 +1,11 @@
 [Unit]
 Description=Check battery
+Requires=check_battery.service
 
 [Timer]
-OnCalendar=*-*-* *:*:00
-Persistent=true
+OnBootSec=1m
+# ...and again every 5 minutes after `alert-battery.service` runs
+OnUnitActiveSec=5m
 
 [Install]
 WantedBy=timers.target

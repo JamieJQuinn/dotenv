@@ -81,9 +81,10 @@ if os.getenv("NOTES_DIR") then
   nm('<leader>w#', '<cmd>ObsidianTags<CR>')
   nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
   -- map("n", "<leader>x", function() require("obsidian").util.toggle_checkbox({" ", "x", "o"}) end)
-  -- nm('[j', '<cmd>ObsidianYesterday<CR>')
-  nm('<leader>wj', '<cmd>ObsidianToday<CR>')
-  -- nm(']j', '<cmd>ObsidianTomorrow<CR>')
+  map("n", "<leader>wj", function()
+    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
+    vim.cmd("e ./journal/2025.md")
+  end)
 
   map("n", "<leader>ww", function()
     vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
@@ -108,8 +109,8 @@ if os.getenv("NOTES_DIR") then
   end)
 end
 
-map("n", "<leader>dd", function() require("dapui").toggle() end)
-map("n", "<leader>ds", function() require("dap").continue() end)
+-- map("n", "<leader>dd", function() require("dapui").toggle() end)
+-- map("n", "<leader>ds", function() require("dap").continue() end)
 
 map("i", "<C-BS>", "<C-W>")
 

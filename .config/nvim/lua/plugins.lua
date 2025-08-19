@@ -11,6 +11,7 @@ return {
   -- Mason {{{
   {
     "williamboman/mason.nvim",
+    lazy = false,
     build = ":MasonUpdate",
     dependencies = {
       "neovim/nvim-lspconfig",
@@ -24,10 +25,9 @@ return {
     "neovim/nvim-lspconfig",
     lazy=false,
     config = function()
-      local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      lspconfig.zls.setup{capabilities = capabilities}
-      require'lspconfig'.lua_ls.setup {
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config('lua_ls', {
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
@@ -38,8 +38,6 @@ return {
 
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
             runtime = {
-              -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
               version = 'LuaJIT'
             },
             -- Make the server aware of Neovim runtime files
@@ -47,12 +45,7 @@ return {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME
-                -- Depending on the usage, you might want to add additional paths here.
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
               }
-              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-              -- library = vim.api.nvim_get_runtime_file("", true)
             }
           })
         end,
@@ -65,10 +58,10 @@ return {
           }
         },
         capabilities = capabilities
-      }
-      lspconfig.bashls.setup{}
-      lspconfig.clangd.setup{}
-      -- lspconfig.make.setup{}
+      })
+      vim.lsp.enable('zls')
+      vim.lsp.enable('bashls')
+      vim.lsp.enable('clangd')
     end
   },
   -- }}}
@@ -207,9 +200,8 @@ return {
   -- Trouble {{{
   {
     "folke/trouble.nvim",
-    lazy = true,
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
     dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
   -- }}}
@@ -218,11 +210,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = { 
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      -- 'nvim-treesitter/nvim-treesitter-textobjects',
       -- "OXY2DEV/markview.nvim",
     },
     build = ":TSUpdate",
-    lazy = false,
+    -- lazy = false,
     event = { "BufReadPost", "BufNewFile" },
     config = function()
     require'nvim-treesitter.configs'.setup {
@@ -448,7 +440,7 @@ return {
   -- },
   {
     "stevearc/aerial.nvim",
-    event = "BufEnter",
+    cmd = "AerialToggle",
     -- Optional dependencies
     dependencies = {
        "nvim-treesitter/nvim-treesitter",

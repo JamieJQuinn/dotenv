@@ -7,5 +7,5 @@ if [ "$notify_return" = "skip" ]; then
   exit 0
 fi
 
-# /usr/bin/borgmatic --verbosity -2 --syslog-verbosity 1
-/usr/bin/borgmatic --verbosity 1 --syslog-verbosity 1
+/usr/bin/borgmatic --verbosity -2 --syslog-verbosity 1
+# /usr/bin/borgmatic --verbosity 1 --syslog-verbosity 1 # FOR DEBUG

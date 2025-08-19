@@ -9,7 +9,15 @@ This repo contains my configs for
 
 and a few miscellaneous scripts.
 
-## Tricks
+## Install
+
+```bash
+./pacman_installs.sh
+./install.sh
+# ./hpc_install.sh # if required!
+```
+
+## Post-Install
 
 ### `ssh-agent`
 
@@ -27,6 +35,13 @@ set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 systemctl --user enable --now ssh-agent.service
 ```
 
+### Tailscale
+
+```bash
+sudo systemctl enable --now tailscaled
+sudo tailscale login
+```
+
 ### Borgmatic
 
 ```bash
@@ -40,6 +55,8 @@ systemctl --user enable --now borgmatic-jamie.timer
 sudo pacman -S syncthing
 systemctl --user enable --now syncthing.service
 ```
+
+## Tricks
 
 ### Improving GRUB LUKS speed
 

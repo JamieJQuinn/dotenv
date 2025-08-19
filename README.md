@@ -27,9 +27,16 @@ set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 systemctl --user enable --now ssh-agent.service
 ```
 
+### Borgmatic
+
+```bash
+sudo pacman -S borgmatic
+systemctl --user enable --now borgmatic-jamie.timer
+```
+
 ### `syncthing`
 
-```
+```bash
 sudo pacman -S syncthing
 systemctl --user enable --now syncthing.service
 ```
@@ -41,6 +48,7 @@ From <https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Speeding_up_LUKS_dec
 ```
 cryptsetup luksChangeKey --pbkdf-force-iterations 1000 /dev/sda3
 ```
+
 ### Finding fonts
 
 `fc-list`

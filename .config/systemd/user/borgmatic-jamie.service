@@ -11,5 +11,4 @@ Restart=no
 # Prevent rate limiting of borgmatic log events. If you are using an older version of systemd that
 # doesn't support this (pre-240 or so), you may have to remove this option.
 LogRateLimitIntervalSec=0
-# Delay start to prevent backups running during boot.
-ExecStart=/usr/bin/borgmatic --verbosity -2 --syslog-verbosity 1
+ExecStart=/home/jamie/scripts/run_borgmatic_backup.sh

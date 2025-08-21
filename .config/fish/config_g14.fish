@@ -4,4 +4,4 @@ end
 
 set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 
-set PATH ~/.zvm/bin $PATH
+set -x PATH ~/.zvm/bin $PATH

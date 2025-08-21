@@ -122,19 +122,7 @@ return {
     config = function()
       -- Add snippets from Friendly Snippets
       require("luasnip/loaders/from_vscode").lazy_load()
-
-      local ls = require("luasnip")
-      local t = ls.text_node
-      local i = ls.insert_node
-      local s = ls.snippet
-      local rep = require("luasnip.extras").rep
-
-      ls.add_snippets(nil, {
-        zig = {
-          s("hello_world", {t({"const std = @import(\"std\");", "", "pub fn main() void {", "    "}), i(1), t({"", "}"})}),
-          s("init", {t("var "), i(1), t" = ", i(2), t".init(", i(3), t{");", ""}, rep(1), t".deinit();"}),
-        },
-      })
+      require("luasnip/loaders/from_snipmate").lazy_load()
     end
   },
   -- }}}

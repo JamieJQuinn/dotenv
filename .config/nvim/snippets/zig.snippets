@@ -1,0 +1,11 @@
+snippet hello_world
+  const std = @import("std");
+
+  pub fn main() void {
+    $0
+  }
+
+snippet init
+  var $1 = $2.init($3);
+  $1.deinit();
+  $0

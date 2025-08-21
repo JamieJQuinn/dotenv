@@ -22,10 +22,11 @@ echo
 
 ## Notes conflict
 
-printf "Current conflicts:\n"
-
-fd sync-conflict $NOTES_DIR
-echo
+if fd --has-results sync-conflict $NOTES_DIR; then
+  printf "Current conflicts:\n"
+  fd sync-conflict $NOTES_DIR
+  echo
+fi
 
 ## Todos
 

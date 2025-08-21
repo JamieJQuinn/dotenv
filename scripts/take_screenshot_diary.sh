@@ -14,6 +14,7 @@ notify_return=$(notify-send -t 10000 -A skip="Skip" "Taking screenshot in 15 sec
 
 if [ "$notify_return" = "skip" ]; then
   echo "Skipping save."
+  notify-send -t 500 "Skipping screenshot"
   exit 0
 fi
 

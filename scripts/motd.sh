@@ -17,8 +17,19 @@ echo
 
 ## Journal
 
-echo "Last journal entry:" $(grep '^#' $NOTES_DIR/journal/$(date +%Y).md | tail -n1 | cut -d' ' -f2)
-echo
+orangeText="\e[38;2;255;165;0m"
+reset="\e[m"
+
+last_entry=$(grep '^#' $NOTES_DIR/journal/$(date +%Y).md | tail -n1 | cut -d' ' -f2)
+
+now_s=$(date -d "$(date +%Y-%m-%d)" +%s)
+last_entry_s=$(date -d "$last_entry" +%s)
+
+if [ $now_s -gt $last_entry_s ];
+then
+  echo -e "Last journal entry:" "${orangeText}${last_entry}${reset}"
+  echo
+fi  
 
 ## Notes conflict
 
@@ -32,7 +43,7 @@ fi
 
 printf "TODO:\n"
 
-grep ASAP $NOTES_DIR/todo/todo.md
+grep ASAP $NOTES_DIR/todo/todo.md | lolcat
 echo
 
 ##############################################################################

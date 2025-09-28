@@ -214,6 +214,7 @@ return {
         "python",
         "zig",
         "lua",
+        "jsonnet",
       },
 
       -- Install all parsers synchronously
@@ -419,16 +420,37 @@ return {
       },
     }
   },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_preview_options = {
+        maid = {
+          flowchart = {
+            defaultRenderer = "elk"
+          },
+          securityLevel = "loose",
+        },
+        disable_sync_scroll = 1,
+      }
+    end,
+    ft = { "markdown" },
+  },
   -- {
   --   "iamcco/markdown-preview.nvim",
-  --   ft = "markdown",
-  --   build = function()
-  --     fn["mkdp#util#install"]()
+  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  --   build = "cd app && yarn install",
+  --   init = function()
+  --     vim.g.mkdp_filetypes = { "markdown" }
   --   end,
+  --   ft = { "markdown" },
   -- },
   {
     "stevearc/aerial.nvim",
-    cmd = "AerialToggle",
+    -- cmd = "AerialToggle",
+    event = "BufEnter", -- dae this to get immediate access to { and }(see below)
     -- Optional dependencies
     dependencies = {
        "nvim-treesitter/nvim-treesitter",
@@ -613,7 +635,24 @@ return {
     event = "InsertEnter",
   },
   "m4xshen/hardtime.nvim", -- GAINS
-  "echasnovski/mini.surround",
+  {
+    "echasnovski/mini.surround",
+    event = "InsertEnter",
+    opts = {},
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      -- NOTE: The log_level is in `opts.opts`
+      opts = {
+        log_level = "DEBUG", -- or "TRACE"
+      },
+    },
+  },
 
   -- {
   --     "OXY2DEV/markview.nvim",

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+ACPI=$(acpi)
+
+battery_level=$(echo "$ACPI" | grep -oe '[0-9]*%' | grep -oe '[0-9]*')
+TIMELEFT=$(echo "$ACPI" | cut -d' ' -f5)
+
+if echo "$ACPI" | grep "Charging"; then 
+  printf "\uf0e7 "
+else 
+  printf "\uf240 "
+fi
+echo "$battery_level% ($TIMELEFT)"

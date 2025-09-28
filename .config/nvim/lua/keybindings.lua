@@ -11,6 +11,12 @@ nm('<bs>', '<c-o>')
 -- nm('<tab>', '<cmd>/[[<cr>')
 nm('<leader>v', '<cmd>vsplit<CR>' )
 nm('<leader>`', 'i```<CR>```<esc>O<esc>p' )
+vim.keymap.set('v', '<leader>;', 'c:::<CR>:::<esc>O<esc>pi<CR><esc>')
+vim.keymap.set('v', '<leader>;i', 'c::: info<CR>:::<esc>O<esc>pi<CR><esc>')
+vim.keymap.set('v', '<leader>;c', 'c::: callout<CR>:::<esc>O<esc>pi<CR><esc>')
+vim.keymap.set('v', '<leader>;C', 'c::: challenge<CR>:::<esc>O<esc>pi<CR><esc>')
+vim.keymap.set('v', '<leader>;s', 'c:::: solution<CR>::::<esc>O<esc>pi<CR><esc>')
+vim.keymap.set('v', '<leader>;k', 'c::: key<CR>:::<esc>O<esc>pi<CR><esc>')
 nm('<leader>q', '<cmd>q<CR>' )
 nm('j', 'gj' )
 nm('k', 'gk' )
@@ -72,6 +78,11 @@ vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
 
 map("n", "]e", function() vim.diagnostic.goto_next() end)
 map("n", "[e", function() vim.diagnostic.goto_prev() end)
+
+-- Markdown
+
+vim.keymap.set('v', '<leader>b', 'c**<c-r>"**')
+vim.keymap.set('v', '<leader>i', 'c_<c-r>"_')
 
 -- WIKI --
 if os.getenv("NOTES_DIR") then

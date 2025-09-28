@@ -312,16 +312,17 @@ bindsym $mod+ctrl+w exec --no-startup-id ~/scripts/cycle_wallpaper
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+shift+w exec --no-startup-id ~/scripts/wiki
 bindsym $mod+c exec --no-startup-id ~/scripts/cwiki
-bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
+bindsym $mod+m exec --no-startup-id /usr/bin/evolution
 bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id ~/scripts/run_in_new_terminal /usr/bin/yazi
-bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load
+bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load vanilla
+bindsym $mod+shift+b exec --no-startup-id ~/scripts/brogue_load rapid
 bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
 # bindsym Print exec --no-startup-id ~/scripts/screenshot
 bindsym Print exec --no-startup-id xfce4-screenshooter
 
 # Power Profiles menu switcher (rofi)
-bindsym $mod+ctrl+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
+bindsym $mod+ctrl+p exec --no-startup-id ~/scripts/toggle_g14_performance.sh
 
 # Polybar show/hide
 # bindcode 133 exec --no-startup-id "polybar-msg cmd show"
@@ -438,7 +439,7 @@ exec --no-startup-id /usr/bin/wal -i ~/Pictures/Wallpapers/current -s
 # exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 900 1200 1500
+exec --no-startup-id xset s 1800 dpms 2400 3000 3600
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms

@@ -22,10 +22,10 @@ reset="\e[m"
 
 last_entry=$(grep '^#' $NOTES_DIR/journal/$(date +%Y).md | tail -n1 | cut -d' ' -f2)
 
-now_s=$(date -d "$(date +%Y-%m-%d)" +%s)
+yesterday_s=$(date -d "00:00:00 yesterday" +%s)
 last_entry_s=$(date -d "$last_entry" +%s)
 
-if [ $now_s -gt $last_entry_s ];
+if [ $yesterday_s -gt $last_entry_s ];
 then
   echo -e "Last journal entry:" "${orangeText}${last_entry}${reset}"
   echo

@@ -9,3 +9,7 @@ snippet init
   var $1 = $2.init($3);
   $1.deinit();
   $0
+
+snippet logger
+  const logger = log.scoped(@typeName(@This()));
+  $0

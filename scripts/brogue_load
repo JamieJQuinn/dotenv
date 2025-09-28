@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 
-FNAME=$(ls ~/.local/share/brogue-ce | grep "broguesave" | head -n 1)
+MODE="${1:-vanilla}"
 
-if [[ -z "$FNAME" ]]; then
-  brogue-ce -S --full-screen -n
-else
-  echo Loading $FNAME
-  brogue-ce -S --full-screen -o "$FNAME"
+if [ "$MODE" == "vanilla" ]; then
+  FNAME=$(ls ~/.local/share/brogue-ce | grep "broguesave" | grep -v "RB" | head -n 1)
+
+  if [[ -z "$FNAME" ]]; then
+    brogue-ce -S --full-screen -n
+  else
+    echo Loading $FNAME
+    brogue-ce -S --full-screen -o "$FNAME"
+  fi
+elif [ "$MODE" == "rapid" ]; then
+  FNAME=$(ls ~/.local/share/brogue-ce | grep "broguesave" | grep "RB" | head -n 1)
+
+  if [[ -z "$FNAME" ]]; then
+    brogue-ce -S --full-screen -n --variant rapid_brogue
+  else
+    echo Loading $FNAME
+    brogue-ce -S --full-screen -o "$FNAME" --variant rapid_brogue
+  fi
 fi

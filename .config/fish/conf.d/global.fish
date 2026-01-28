@@ -20,6 +20,10 @@ abbr -a zbd "zig build debug"
 set -x EDITOR nvim
 alias vim nvim
 
+# Nordvpn
+abbr nc "nordvpn c"
+abbr nd "nordvpn d"
+
 # FZF
 if type -q fzf
   fzf --fish | source
@@ -45,11 +49,11 @@ set -x TODO_DIR ~/notes/todo
 set -x NOTES_DIR ~/notes
 
 # Configs
-alias vimcfg "cd ~/.config/nvim; nvim +'Telescope find_files'"
-alias fishcfg "cd ~/.config/fish; nvim +'Telescope find_files' ."
+alias vimcfg "cd ~/.config/nvim; nvim +'FzfLua files'"
+alias fishcfg "cd ~/.config/fish; nvim +'FzfLua files' ."
+alias sshcfg "cd ~/.ssh; nvim +'FzfLua files' ."
 alias kittycfg "cd ~/.config/kitty; $EDITOR kitty.conf"
 alias i3cfg "cd ~/.config/i3; $EDITOR config"
-alias sshcfg "cd ~/.ssh; nvim +'Telescope find_files' ."
 
 function cheatsh --description "Streamline cheat.sh call"
     curl cheat.sh/$argv
@@ -67,7 +71,7 @@ alias a 'xdg-open'
 alias d 'date +%Y_%m_%d'
 # alias enable_performance_mode "asusctl profile -P balanced; supergfxctl -m Hybrid"
 # alias disable_performance_mode "asusctl profile -P quiet; supergfxctl -m Integrated"
-alias notes "cd $NOTES_DIR; nvim +'Telescope find_files' ."
+alias notes "cd $NOTES_DIR; nvim +'FzfLua files' ."
 alias bonsai "cbonsai -l -m 'Hello $USER' -b 1 -L 64"
 
 # Add scripts

@@ -81,22 +81,18 @@ return {
     end
   },
   -- }}}
-
-  -- Telescope {{{
   {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
-    cmd = "Telescope",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "ahmedkhalf/project.nvim",
-    },
-    config = function()
-      require "extensions.telescope"
-    end
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "nvim-mini/mini.icons" },
+    ---@module "fzf-lua"
+    ---@type fzf-lua.Config|{}
+    ---@diagnostic disable: missing-fields
+    opts = {}
+    ---@diagnostic enable: missing-fields
   },
-  -- }}}
-
   -- CMP {{{
   {
     'hrsh7th/nvim-cmp',
@@ -653,6 +649,9 @@ return {
       },
     },
   },
+  -- {
+  --   "vimwiki/vimwiki",
+  -- },
 
   -- {
   --     "OXY2DEV/markview.nvim",

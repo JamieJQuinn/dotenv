@@ -3,78 +3,49 @@ require "helpers/keyboard"
 
 local map = vim.keymap.set
 
-g.mapleader = ' '                                                                 -- Use Space, like key for alternative hotkeys
+g.mapleader = ' ' -- Use Space, like key for alternative hotkeys
 
--- MINE
-nm('<leader>e', '<cmd>e#<CR>' )
-nm('<bs>', '<c-o>')
--- nm('<tab>', '<cmd>/[[<cr>')
-nm('<leader>v', '<cmd>vsplit<CR>' )
-nm('<leader>`', 'i```<CR>```<esc>O<esc>p' )
-nm('<leader>q', '<cmd>q<CR>' )
+-- Just wee shortcuts
 nm('j', 'gj' )
 nm('k', 'gk' )
 nm('<c-h>', '<c-w><c-h>' )
 nm('<c-l>', '<c-w><c-l>' )
 nm('<c-j>', '<c-w><c-j>' )
 nm('<c-k>', '<c-w><c-k>' )
-nm('<leader>a', '<cmd>AerialToggle!<CR>')
--- nm('<leader>#', '<cmd>Telescope aerial<CR>')
 nm('vv', 'viw')
 vm('p', 'P')
-nm('<F5>', '<cmd>make<CR>')
--- nm('<F6>', '<cmd>make<CR>')
--- nm('<leader>gg', '<cmd>LazyGit<cr>')
-nm(']e', '<cmd>cn<cr>')
-nm('[e', '<cmd>cp<cr>')
-nm('<leader>gc', '<cmd>Git commit<cr>i')
-
--- im('p`', '`<esc>pa`')
-
--- TODOs in code
-map("n", "<leader>t", function()
-  vim.cmd("Trouble todo filter = {tag = {TODO}} filter.buf=0")
-end)
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
-end, { desc = "Next todo comment" })
-
-vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev({keywords = { "TODO", "HACK" }})
-end, { desc = "Prev todo comment" })
-
-
+nm('<bs>', '<c-o>')
+nm('<leader>v', '<cmd>vsplit<CR>' )
+nm('<leader>q', '<cmd>q<CR>' )
 nm('<leader>n', '<cmd>noh<cr>')
+nm('<leader>e', '<cmd>e#<CR>' )
 
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
 vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
 
--- map("v", "<leader>/", "gc", { desc = "sargas/ux: toggle comment", remap = true })
--- map("n", "<leader>/", "gcc", { desc = "sargas/ux: toggle comment", remap = true })
+-- Navigate errors
+map("n", "]e", function() vim.diagnostic.jump({count = 1, float=true}) end)
+map("n", "[e", function() vim.diagnostic.jump({count = -1, float=true}) end)
 
--- local query=vim.treesitter.query.parse('markdown_inline','[[ (link_text) ]]')
--- vim.keymap.set('n','<TAB>',function ()
---     vim.cmd("/[[.\\{-}\\]\\]")
---     vim.cmd("noh")
---     -- local root=vim.treesitter.get_parser():parse()[1]:root()
---     -- local _,node,_=query:iter_captures(root,0,vim.fn.line'.',-1)()
---     -- if not node then return end
---     -- require'nvim-treesitter.ts_utils'.goto_node(node)
--- end)
+-- Make
+nm('<F5>', '<cmd>make<CR>')
+nm('<leader>m', '<cmd>make<CR>')
 
--- Telekasten {{{
--- im('[[', '<cmd>Telekasten insert_link<CR>')
--- im('[#', '<cmd>Telekasten show_tags<CR>')
--- nm('[#', '<cmd>Telekasten show_tags<CR>')
--- nm('<leader>wb', '<cmd>Telekasten show_backlinks<CR>')
---- }}}
+-- Quick toggles
+nm('<leader>gc', '<cmd>Git commit<cr>')
+nm('<leader>a', '<cmd>AerialToggle!<CR>')
 
-map("n", "]e", function() vim.diagnostic.goto_next() end)
-map("n", "[e", function() vim.diagnostic.goto_prev() end)
+-- TODOs
+nm('<c-t>', '<cmd>Trouble todo filter = {tag = {TODO}} filter.buf=0<CR>')
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
+end, { desc = "Next todo comment" })
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev({keywords = { "TODO", "HACK" }})
+end, { desc = "Prev todo comment" })
 
 -- Markdown
-
 vim.keymap.set('v', '<leader>b', 'c**<c-r>"**')
 vim.keymap.set('v', '<leader>i', 'c_<c-r>"_')
 
@@ -101,7 +72,7 @@ if os.getenv("NOTES_DIR") then
   end)
   map("n", "<leader>wn", function()
     vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("Telescope find_files")
+    vim.cmd("FzfLua files")
   end)
   map("n", "<leader>wt", function()
     vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
@@ -123,19 +94,19 @@ map("i", "<C-BS>", "<C-W>")
 -- map("n", "K", function() vim.lsp.buf.hover() end)
 map("n", "ga", function() vim.lsp.buf.code_action() end)
 map("n", "gR", function() vim.lsp.buf.rename() end)
+map("n", "gd", function() vim.lsp.buf.definition() end)
 map("n", "gD", function() vim.lsp.buf.declaration() end)
-map("n", "<leader>#", function() vim.cmd("Telescope aerial") end)
  -- }}}
 
 -- Telescope {{{
-nm('gd', '<cmd>Telescope lsp_definitions<CR>')                            -- Goto declaration
-nm('<leader>O', '<cmd>Telescope oldfiles<CR>')                                   -- Show recent files
-nm('<leader>o', '<cmd>Telescope git_files<CR>')                                  -- Search for a file in project
-nm('<leader>p', '<cmd>Telescope find_files<CR>')                                 -- Search for a file (ignoring git-ignore)
-nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                   -- Show jumplist (previous locations)
+-- nm('<leader>O', '<cmd>Telescope oldfiles<CR>')                                   -- Show recent files
+-- nm('<leader>o', '<cmd>Telescope git_files<CR>')                                  -- Search for a file in project
+nm('<leader>p', '<cmd>FzfLua files<CR>')                                 -- Search for a file (ignoring git-ignore)
+nm('<leader>#', '<cmd>FzfLua lsp_document_symbols<CR>')                                 -- Search for a file (ignoring git-ignore)
+-- nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                   -- Show jumplist (previous locations)
 -- nm('<leader>b', '<cmd>Telescope git_branches<CR>')                               -- Show git branches
-nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                  -- Find a string in project
-nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
+nm('<leader>f', '<cmd>FzfLua live_grep_native<CR>')                                  -- Find a string in project
+-- nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
 -- nm('<leader>a', '<cmd>Telescope<CR>')                                            -- Show all commands
 -- nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
 -- }}}
@@ -148,7 +119,7 @@ nm('zz', '<cmd>ZenMode<CR>')
 -- Trouble {{{
 nm('<c-x>', '<cmd>Trouble quickfix toggle<CR>')                                         -- Show all problems in project (with help of LSP)
 nm('gr', '<cmd>Trouble lsp_references focus=true win.position=right<CR>')                                       -- Show use of object in project
-nm('<c-s>', '<cmd>Trouble symbols toggle focus=false<CR>')                                         -- Show all problems in project (with help of LSP)
+-- nm('<c-s>', '<cmd>Trouble symbols toggle focus=false<CR>')                                         -- Show all problems in project (with help of LSP)
 -- }}}
 
 -- Neo Tree {{{

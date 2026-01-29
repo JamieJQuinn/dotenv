@@ -1,4 +1,5 @@
 # Git
+abbr -a lg lazygit
 abbr -a gc git commit
 abbr -a gs git status
 abbr -a gd git diff

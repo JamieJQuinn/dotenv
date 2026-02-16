@@ -2,4 +2,6 @@
 
 set -e
 
-mpv "$(find ~/Music/study_music_yt_dl/audio/ -printf '%p\n' | shuf)"
+cd ~/Music/study_music_yt_dl/audio
+
+mpv . --shuffle

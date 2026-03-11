@@ -6,6 +6,7 @@
 ]]
 
 require "helpers/globals"
+local map = vim.keymap.set
 
 return {
   -- Mason {{{
@@ -225,57 +226,6 @@ return {
         enable = { "markdown" },
         disable = {},
       },
-
-      textobjects = {
-        move = {
-          -- enable = true,
-          enable = { "markdown", "markdown-inline" },
-          set_jumps = true, -- whether to set jumps in the jumplist
-          lookahead = true,
-          goto_next_start = {
-            -- ["]m"] = "@function.outer",
-            -- ["]]"] = { query = "@class.outer", desc = "Next class start" },
-            --
-            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-            -- ["]o"] = "@loop.inner",
-            -- ["]o"] = { query = "@loop.outer" },
-            -- ["]l"] = { query = "@markup.link.label", query_group = "highlights"},
-            ["]l"] = { query = "@markup.link"},
-            -- ["]h"] = { query = "@markup.heading.1" },
-            ["]h"] = { query = "@markup.heading.*" },
-            -- ["]h"] = { query = "@markup.heading.1" },
-            --
-            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-            -- ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-            -- ["]f"] = { query = "@local.definition.function", query_group = "locals", desc = "Next scope" },
-            -- ["]h"] = { query = "@markup.header.1", query_group = "highlights", desc = "Next header 1" },
-            -- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-          },
-          -- goto_next_end = {
-          --   ["]M"] = "@function.outer",
-          --   ["]["] = "@class.outer",
-          -- },
-          goto_previous_start = {
-            ["[h"] = { query = "@markup.heading.*" },
-            -- ["[m"] = "@function.outer",
-            -- ["[["] = "@class.outer",
-          },
-          -- goto_previous_end = {
-          --   ["[M"] = "@function.outer",
-          --   ["[]"] = "@class.outer",
-          -- },
-          -- Below will go to either the start or the end, whichever is closer.
-          -- Use if you want more granular movements
-          -- Make it even more gradual by adding multiple queries and regex.
-          -- goto_next = {
-          --   ["]d"] = "@conditional.outer",
-          -- },
-          -- goto_previous = {
-          --   ["[d"] = "@conditional.outer",
-          -- }
-        },
-      },
     }
     end,
   },
@@ -292,113 +242,81 @@ return {
     end
   },
   -- }}}
-
-  -- {
-  -- "serenevoid/kiwi.nvim",
-  --   ft = "markdown",
-  --   opts = {
-  --       {
-  --           name = "cr0ft",
-  --           path = "~/notes/cr0ft_roguelike_wiki/"
-  --       },
-  --       {
-  --           name = "notes",
-  --           path = "~/notes"
-  --       },
-  --       {
-  --           name = "wiki",
-  --           path = "~/notes/wiki"
-  --       }
-  --   },
-  --   keys = {
-  --       { "<leader>ww", ":lua require(\"kiwi\").open_wiki_index(\"wiki\")<cr>", desc = "Open Wiki index" },
-  --       { "<leader>wc", ":lua require(\"kiwi\").open_wiki_index(\"cr0ft\")<cr>", desc = "Open index of personal wiki" },
-  --       { "<cr>", ":lua require(\"kiwi\").todo.toggle()<cr>", desc = "Toggle Markdown Task" }
-  --   },
-  -- },
-
   {
-    "epwalsh/obsidian.nvim",
-    version = "*",  -- recommended, use latest release instead of latest commit
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- use latest release, remove to use latest commit
     ft = "markdown",
-    -- lazy = "VeryLazy",
-    -- event = "BufEnter",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    opts = {
-      workspaces = {
-        {
-          name = "notes",
-          path = os.getenv("NOTES_DIR"),
+    ---@module 'obsidian'
+    config = function()
+      require "helpers.globals"
+
+      nm('<leader>wp', '<cmd>ObsidianQuickSwitch<CR>')
+      nm('<leader>wf', '<cmd>ObsidianSearch<CR>')
+      nm('<leader>w#', '<cmd>ObsidianTags<CR>')
+      nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
+      if (os.getenv("NOTES_DIR")) then
+        NOTES_DIR = os.getenv("NOTES_DIR")
+
+        map("n", "<leader>wj", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR)
+          vim.cmd("e ./journal/2025.md")
+        end)
+
+        map("n", "<leader>ww", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR)
+          vim.cmd("e ./wiki/readme.md")
+        end)
+        map("n", "<leader>wq", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR)
+          vim.cmd("e ./quicknote.md")
+        end)
+        map("n", "<leader>wn", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR)
+          vim.cmd("FzfLua files")
+        end)
+        map("n", "<leader>wt", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR)
+          vim.cmd("e todo/todo.md")
+        end)
+
+        map("n", "<leader>wc", function()
+          vim.api.nvim_set_current_dir(NOTES_DIR .. "/cr0ft_roguelike_wiki")
+          vim.cmd("e ./index.md")
+        end)
+      end
+      require('obsidian').setup{
+        legacy_commands = false, -- this will be removed in the next major release
+        workspaces = {
+          {
+            name = "notes",
+            path = os.getenv("NOTES_DIR"),
+          },
+          {
+            name = "wiki",
+            path = os.getenv("NOTES_DIR") .. "/wiki",
+          },
+          {
+            name = "cr0ft",
+            path = os.getenv("NOTES_DIR") .. "/cr0ft_roguelike_wiki",
+          },
         },
-        {
-          name = "wiki",
-          path = os.getenv("NOTES_DIR") .. "/wiki",
+        frontmatter = {enabled = false},
+        daily_notes = {
+          folder = "journal",
+          date_format = "%Y-%m-%d",
         },
-        {
-          name = "cr0ft",
-          path = os.getenv("NOTES_DIR") .. "/cr0ft_roguelike_wiki",
-        },
-      },
-
-      disable_frontmatter = true,
-      ui = {
-        enable = false,
-        checkboxes = {
-          -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-          ["o"] = { char = "󰄱", hl_group = "ObsidianTodo" },
-          ["x"] = { char = "", hl_group = "ObsidianDone" },
-          -- Replace the above with this if you don't have a patched font:
-          -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-          -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
-
-          -- You can also add more custom ones...
-        },
-      },
-
-      completion = {
-        nvim_cmp = true,
-        min_chars = 1,
-        -- prepend_note_id = false,
-        -- use_path_only = true,
-      },
-
-      mappings = {
-        -- Smart action depending on context, either follow link or toggle checkbox.
-        ["<cr>"] = {
-          action = function()
-            return require("obsidian").util.smart_action()
-          end,
-          opts = { buffer = true, expr = true },
-        }
-      },
-
-      -- callbacks = {
-      --   post_set_workspace = function(client, workspace)
-      --     -- local root = require("obsidian").find_vault_root()
-      --     vim.api.nvim_set_current_dir(workspace.path.filename)
-      --   end,
-      -- },
-
-      daily_notes = {
-        folder = "journal",
-        date_format = "%Y-%m-%d",
-      },
-
-      note_id_func = function(title)
-        return title:gsub(" ", "_"):gsub("[^A-Za-z0-9_]", ""):lower()
-      end,
-
-      follow_url_func = function(url)
-        -- Open the URL in the default web browser.
-        -- vim.fn.jobstart({"open", url})  -- Mac OS
-        vim.fn.jobstart({"xdg-open", url})  -- linux
-      end,
-    },
+        ui = {enable = false},
+        note_id_func = require('obsidian.builtin').title_to_slug,
+        -- footer = {
+        --   enabled = true,
+        --   format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
+        --   hl_group = "Comment",
+        --   separator = string.rep("-", 80),
+        -- },
+      }
+    end
   },
-
+  "bullets-vim/bullets.vim",
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {{'nvim-tree/nvim-web-devicons'}},
@@ -434,15 +352,6 @@ return {
     end,
     ft = { "markdown" },
   },
-  -- {
-  --   "iamcco/markdown-preview.nvim",
-  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  --   build = "cd app && yarn install",
-  --   init = function()
-  --     vim.g.mkdp_filetypes = { "markdown" }
-  --   end,
-  --   ft = { "markdown" },
-  -- },
   {
     "stevearc/aerial.nvim",
     -- cmd = "AerialToggle",
@@ -462,7 +371,6 @@ return {
       default_direction = "right",
     }
   },
-
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -649,50 +557,4 @@ return {
       },
     },
   },
-  -- {
-  --   "vimwiki/vimwiki",
-  -- },
-
-  -- {
-  --     "OXY2DEV/markview.nvim",
-  --     lazy = false,
-  --
-  --    -- For `nvim-treesitter` users.
-  --     priority = 49,
-  --
-  --     -- For blink.cmp's completion
-  --     -- source
-  --     -- dependencies = {
-  --     --     "saghen/blink.cmp"
-  --     -- },
-  -- },
-
-  -- { 
-  --   "rcarriga/nvim-dap-ui",
-  --   dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
-  --   config = function()
-  --     require("dapui").setup()
-  --   end,
-  -- },
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require "extensions.dap"
-  --   end
-  -- },
-  -- {
-  --  -- Markdown Preview
-  --     "toppair/peek.nvim",
-  --     event = { "VeryLazy" },
-  --     build = "deno task --quiet build:fast",
-  --     opts = {
-  --       app = 'chromium',
-  --     },
-  --     config = function()
-  --         require("peek").setup()
-  --         vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-  --         vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-  --     end,
-  -- },
 }

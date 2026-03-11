@@ -19,6 +19,7 @@ nm('<leader>v', '<cmd>vsplit<CR>' )
 nm('<leader>q', '<cmd>q<CR>' )
 nm('<leader>n', '<cmd>noh<cr>')
 nm('<leader>e', '<cmd>e#<CR>' )
+map("i", "<C-BS>", "<C-W>")
 
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
@@ -29,7 +30,7 @@ map("n", "]e", function() vim.diagnostic.jump({count = 1, float=true}) end)
 map("n", "[e", function() vim.diagnostic.jump({count = -1, float=true}) end)
 
 -- Make
-nm('<F5>', '<cmd>make<CR>')
+-- nm('<F5>', '<cmd>make<CR>') // I'm sick of dealing with fn-lock
 nm('<leader>m', '<cmd>make<CR>')
 
 -- Quick toggles
@@ -48,47 +49,6 @@ end, { desc = "Prev todo comment" })
 -- Markdown
 vim.keymap.set('v', '<leader>b', 'c**<c-r>"**')
 vim.keymap.set('v', '<leader>i', 'c_<c-r>"_')
-
--- WIKI --
-if os.getenv("NOTES_DIR") then
-  -- Obsidian.nvim --
-  nm('<leader>wp', '<cmd>ObsidianQuickSwitch<CR>')
-  nm('<leader>wf', '<cmd>ObsidianSearch<CR>')
-  nm('<leader>w#', '<cmd>ObsidianTags<CR>')
-  nm('<leader>wb', '<cmd>ObsidianBacklinks<CR>')
-  -- map("n", "<leader>x", function() require("obsidian").util.toggle_checkbox({" ", "x", "o"}) end)
-  map("n", "<leader>wj", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("e ./journal/2025.md")
-  end)
-
-  map("n", "<leader>ww", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("e ./wiki/readme.md")
-  end)
-  map("n", "<leader>wq", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("e ./quicknote.md")
-  end)
-  map("n", "<leader>wn", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("FzfLua files")
-  end)
-  map("n", "<leader>wt", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR"))
-    vim.cmd("e todo/todo.md")
-  end)
-
-  map("n", "<leader>wc", function()
-    vim.api.nvim_set_current_dir(os.getenv("NOTES_DIR") .. "/cr0ft_roguelike_wiki")
-    vim.cmd("e ./index.md")
-  end)
-end
-
--- map("n", "<leader>dd", function() require("dapui").toggle() end)
--- map("n", "<leader>ds", function() require("dap").continue() end)
-
-map("i", "<C-BS>", "<C-W>")
 
 -- LSP {{{
 -- map("n", "K", function() vim.lsp.buf.hover() end)
@@ -114,7 +74,7 @@ nm('<leader>f', '<cmd>FzfLua live_grep_native<CR>')                             
 -- ZenMode
 nm('zz', '<cmd>ZenMode<CR>')
 
--- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
+nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
 nm('<c-x>', '<cmd>Trouble quickfix toggle<CR>')                                         -- Show all problems in project (with help of LSP)

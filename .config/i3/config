@@ -313,12 +313,13 @@ bindsym $mod+ctrl+w exec --no-startup-id ~/scripts/cycle_wallpaper
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+shift+w exec --no-startup-id ~/scripts/wiki
 bindsym $mod+c exec --no-startup-id ~/scripts/cwiki
-bindsym $mod+m exec --no-startup-id /usr/bin/evolution
-bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
+# bindsym $mod+m exec --no-startup-id /usr/bin/evolution
+# bindsym $mod+k exec --no-startup-id /usr/bin/keepassxc
 bindsym $mod+f exec --no-startup-id ~/scripts/run_in_new_terminal /usr/bin/yazi
 bindsym $mod+b exec --no-startup-id ~/scripts/brogue_load vanilla
 bindsym $mod+shift+b exec --no-startup-id ~/scripts/brogue_load rapid
 bindsym $mod+v exec --no-startup-id ~/scripts/toggle_vpn
+bindsym $mod+n exec --no-startup-id ~/scripts/save_clipboard
 # bindsym Print exec --no-startup-id ~/scripts/screenshot
 bindsym Print exec --no-startup-id xfce4-screenshooter
 

@@ -20,6 +20,7 @@ nm('<leader>q', '<cmd>q<CR>' )
 nm('<leader>n', '<cmd>noh<cr>')
 nm('<leader>e', '<cmd>e#<CR>' )
 map("i", "<C-BS>", "<C-W>")
+-- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Commenting
 nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
@@ -73,8 +74,6 @@ nm('<leader>f', '<cmd>FzfLua live_grep_native<CR>')                             
 
 -- ZenMode
 nm('zz', '<cmd>ZenMode<CR>')
-
-nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Trouble {{{
 nm('<c-x>', '<cmd>Trouble quickfix toggle<CR>')                                         -- Show all problems in project (with help of LSP)

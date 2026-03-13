@@ -20,25 +20,6 @@ return {
     opts = {},
   },
   -- }}}
-
-  -- Mason {{{
-  -- }}}
-
-  -- Neo Tree {{{
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    cmd = "NeoTreeFocusToggle",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    config = function ()
-      require "extensions.neotree"
-    end
-  },
-  -- }}}
   {
     "ibhagwan/fzf-lua",
     -- optional for icon support
@@ -109,17 +90,6 @@ return {
   --     },
   --     opts_extend = { "sources.default" }
   -- },
-
-  -- Git Signs{{{
-  {
-    'lewis6991/gitsigns.nvim',
-    event = "BufEnter",
-    config = function()
-      require "extensions.gitsigns"
-    end
-  },
-  -- }}}
-
   -- Trouble {{{
   {
     "folke/trouble.nvim",
@@ -140,13 +110,6 @@ return {
   },
   -- }}}
   "bullets-vim/bullets.vim",
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = {{'nvim-tree/nvim-web-devicons'}},
-    config = function()
-      require "extensions.lualine"
-    end,
-  },
   {
     'numToStr/Comment.nvim',
     event = "BufEnter",

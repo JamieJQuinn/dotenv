@@ -6,6 +6,7 @@ return {
     "nvim-neotest/nvim-nio",
     "williamboman/mason.nvim",
   },
+  event = "BufEnter",
   config = function()
     local dap = require "dap"
     local ui = require "dapui"
@@ -46,6 +47,7 @@ return {
     -- vim.keymap.set("n", "<leader>k", dap.step_out)
     -- vim.keymap.set("n", "<leader>di", dap.step_back)
     vim.keymap.set("n", "<leader>dr", dap.restart)
+    vim.keymap.set("n", "<leader>dt", dap.terminate)
 
     dap.listeners.before.attach.dapui_config = function()
       ui.open()

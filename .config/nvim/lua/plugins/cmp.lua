@@ -49,33 +49,32 @@ return {
           c = cmp.mapping.close(), -- Close completion window
         }),
 
-        ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
-        ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+
         ['<C-j>'] = cmp.mapping(
           function(fallback)
             if luasnip.jumpable() then
               luasnip.jump(1)
+            else
+              -- if cmp.visible() then
+                cmp.select_next_item()
+              -- else
+              --   fallback()
+              -- end
             end
           end
           , { 'i', 's' }),
 
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if luasnip.jumpable() then
-            luasnip.jump(1)
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
+        ['<C-k>'] = cmp.mapping(
+          function(fallback)
+            if luasnip.jumpable() then
+              luasnip.jump(-1)
+            else
+              cmp.select_prev_item()
+            end
           end
-        end, { "i", "s" }),
-        --
-        -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-        --   if luasnip.jumpable(-1) then
-        --     luasnip.jump(-1)
-        --   else
-        --     fallback()
-        --   end
-        -- end, { "i", "s" }),
+          , { 'i', 's' }),
       },
 
       sources = cmp.config.sources({
@@ -95,5 +94,7 @@ return {
         })
       }
     }
+
+    require("luasnip/loaders/from_vscode").lazy_load()
   end,
 };

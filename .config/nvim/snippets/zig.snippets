@@ -13,3 +13,14 @@ snippet init
 snippet logger
   const logger = log.scoped(@typeName(@This()));
   $0
+
+snippet th*
+  this: *@This()$0
+
+snippet th
+  this: @This()$0
+
+snippet fn
+  fn $1($2) $3 {
+    $0
+  }

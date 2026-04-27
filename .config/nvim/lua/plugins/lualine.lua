@@ -13,7 +13,7 @@ return {
     options = {
       component_separators = '',
       section_separators = { left = '', right = '' },
-      theme = 'onedark',
+      -- theme = 'onedark',
     },
     sections = {
       lualine_a = { { 'mode', separator = { left = '' }}},

@@ -18,9 +18,11 @@ cmd[[autocmd FileType markdown Pencil]]
 cmd[[autocmd FileType zig map <F6> <cmd>!zig build run<CR>]]
 cmd[[autocmd FileType zig map <F7> <cmd>!zig fmt %<CR>]]
 -- cmd[[autocmd FileType markdown set conceallevel=1]]
+cmd[[autocmd BufWritePost *.zig silent! <cmd>!zig fmt %<CR>]]
 
 -- Zig autofmt
-g["zig_fmt_autosave"] = false
+g["zig_fmt_autosave"] = true
+-- g["zig_build_makeprg_params"] = "-freference-trace=8"
 
 -- Swap (recovery)
 opt.directory = "."                -- Set swap file location
@@ -38,11 +40,14 @@ opt.fixeol = false -- Turn off appending new line in the end of a file
 -- }}}
 
 -- Folding {{{
-opt.foldenable = false
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldminlines = 10
-opt.foldlevel = 2
+-- opt.foldenable = false
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldminlines = 10
+-- vim.opt.foldcolumn = "0"
+-- vim.opt.foldtext = ""
+-- vim.opt.foldlevel = 2
+-- vim.opt.foldlevelstart = 99
 -- opt.foldnestmax = 1
 cmd[[autocmd FileType markdown set foldenable]]
 cmd[[autocmd FileType markdown set foldlevel=2]]

@@ -24,8 +24,8 @@ map({"i", "c"}, "<C-BS>", "<C-W>")
 -- nm('<leader>b', '<cmd>lua if vim.o.bg == "dark" then vim.o.bg = "light" else vim.o.bg = "dark" end<CR>')
 
 -- Commenting
-nm('<leader>/', '<Plug>(comment_toggle_linewise_current)')
-vm('<leader>/', '<Plug>(comment_toggle_linewise_visual)')
+map("n", '<leader>/', 'gcc', {remap = true})
+map("v", '<leader>/', 'gc', {remap = true})
 
 -- Navigate errors
 map("n", "]e", function() vim.diagnostic.jump({count = 1, float=true}) end)

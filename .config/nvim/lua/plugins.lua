@@ -68,17 +68,6 @@ return {
   --   --   vim.cmd('colorscheme mfd-lumon')
   --   -- end,
   -- },
-  -- "bullets-vim/bullets.vim",
-  {
-    'numToStr/Comment.nvim',
-    event = "BufEnter",
-    opts = {
-      mappings = {
-        basic=false,
-        extra=false
-      },
-    }
-  },
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

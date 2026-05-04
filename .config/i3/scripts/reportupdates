@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+update_out=$(checkupdates)
+
+if [ "$update_out" ]; then
+  n_updates=$(echo "$update_out" | wc | awk '{print $1}')
+  linux_update=$(echo "$update_out" | grep "linux")
+
+  output="[🡅 "$n_updates"]"
+
+  if [ "$linux_update" ]; then
+    output="$output !"
+  fi
+
+  output="$output]"
+
+  echo $output
+fi

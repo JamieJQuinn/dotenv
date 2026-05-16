@@ -21,7 +21,8 @@ function get_mute {
 
 # Uses regex to get brightness from xbacklight
 function get_brightness {
-    xbacklight -get | grep -Po '[0-9]{1,3}' | head -n 1
+    # xbacklight -get | grep -Po '[0-9]{1,3}' | head -n 1
+    echo "scale=2;$(cat /sys/class/backlight/amdgpu_bl2/brightness) / $(cat /sys/class/backlight/amdgpu_bl2/max_brightness) * 100" | bc
 }
 
 # Returns a mute icon, a volume-low icon, or a volume-high icon, depending on the volume
@@ -84,13 +85,21 @@ case $1 in
 
     brightness_up)
     # Increases brightness and displays the notification
-    xbacklight -inc $brightness_step -time 0 
+    step=$(echo "$(cat /sys/class/backlight/amdgpu_bl2/max_brightness) / 10" | bc)
+    current=$(cat /sys/class/backlight/amdgpu_bl2/brightness)
+    new=$(($current + $step))
+    echo $new > /sys/class/backlight/amdgpu_bl2/brightness
+    # xbacklight -inc $brightness_step -time 0 
     show_brightness_notif
     ;;
 
     brightness_down)
     # Decreases brightness and displays the notification
-    xbacklight -dec $brightness_step -time 0
+    step=$(echo "$(cat /sys/class/backlight/amdgpu_bl2/max_brightness) / 10" | bc)
+    current=$(cat /sys/class/backlight/amdgpu_bl2/brightness)
+    new=$(($current - $step))
+    echo $new > /sys/class/backlight/amdgpu_bl2/brightness
+    # xbacklight -dec $brightness_step -time 0
     show_brightness_notif
     ;;
 esac

@@ -160,4 +160,41 @@ return {
     event = "InsertEnter",
     opts = {},
   },
+  {
+    'https://codeberg.org/ziglang/zig.vim',
+    ft = "zig",
+    init = function()
+      -- vim.g.zig_fmt_parse_errors = 1
+      -- vim.g.zig_fmt_autosave = 1
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = { "*.zig", "*.zon" },
+        callback = function(ev)
+          vim.lsp.buf.format()
+        end
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    lazy = false,
+    branch = "main",
+    init = function()
+      -- Disable entire built-in ftplugin mappings to avoid conflicts.
+      -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+      vim.g.no_plugin_maps = true
+
+      vim.keymap.set("n", "<leader>L", function()
+        require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
+      end)
+      vim.keymap.set("n", "<leader>H", function()
+        require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
+      end)
+    end,
+  },
+  {
+    "arborist-ts/arborist.nvim",
+    init = function()
+      require("arborist").setup()
+    end
+  },
 }

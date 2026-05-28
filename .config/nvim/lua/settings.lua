@@ -23,6 +23,7 @@ cmd[[autocmd BufWritePost *.zig silent! <cmd>!zig fmt %<CR>]]
 -- Zig autofmt
 g["zig_fmt_autosave"] = true
 -- g["zig_build_makeprg_params"] = "-freference-trace=8"
+g["zig_build_makeprg_params"] = "--error-style minimal"
 
 -- Swap (recovery)
 opt.directory = "."                -- Set swap file location

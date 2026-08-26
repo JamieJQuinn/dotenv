@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+for f in *sync-conflict*; do
+  nvim -d "$(echo "$f" | sed 's/.sync-conflict-.*-.*-.*\././')" "$f"
+done

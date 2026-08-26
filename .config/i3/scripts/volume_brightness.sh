@@ -9,6 +9,8 @@ volume_step=5
 brightness_step=10
 max_volume=100
 
+brightness_device="/sys/class/backlight/$(ls /sys/class/backlight | head -n 1)/brightness"
+
 # Uses regex to get volume from pactl
 function get_volume {
     pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1
@@ -22,7 +24,7 @@ function get_mute {
 # Uses regex to get brightness from xbacklight
 function get_brightness {
     # xbacklight -get | grep -Po '[0-9]{1,3}' | head -n 1
-    echo "scale=2;$(cat /sys/class/backlight/amdgpu_bl2/brightness) / $(cat /sys/class/backlight/amdgpu_bl2/max_brightness) * 100" | bc
+    echo "scale=2;$(cat $brightness_device) / $(cat $brightness_device) * 100" | bc
 }
 
 # Returns a mute icon, a volume-low icon, or a volume-high icon, depending on the volume
@@ -85,20 +87,20 @@ case $1 in
 
     brightness_up)
     # Increases brightness and displays the notification
-    step=$(echo "$(cat /sys/class/backlight/amdgpu_bl2/max_brightness) / 10" | bc)
-    current=$(cat /sys/class/backlight/amdgpu_bl2/brightness)
+    step=$(echo "$(cat $brightness_device) / 10" | bc)
+    current=$(cat $brightness_device)
     new=$(($current + $step))
-    echo $new > /sys/class/backlight/amdgpu_bl2/brightness
+    echo $new > $brightness_device
     # xbacklight -inc $brightness_step -time 0 
     show_brightness_notif
     ;;
 
     brightness_down)
     # Decreases brightness and displays the notification
-    step=$(echo "$(cat /sys/class/backlight/amdgpu_bl2/max_brightness) / 10" | bc)
-    current=$(cat /sys/class/backlight/amdgpu_bl2/brightness)
+    step=$(echo "$(cat $brightness_device) / 10" | bc)
+    current=$(cat $brightness_device)
     new=$(($current - $step))
-    echo $new > /sys/class/backlight/amdgpu_bl2/brightness
+    echo $new > $brightness_device
     # xbacklight -dec $brightness_step -time 0
     show_brightness_notif
     ;;

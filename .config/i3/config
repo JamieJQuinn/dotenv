@@ -182,7 +182,7 @@ bindcode $mod+Shift+90 	 move container to workspace  $ws10
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id kitty
-bindsym $mod+shift+Return exec --no-startup-id wiki
+bindsym $mod+shift+Return exec --no-startup-id "open_sexy_window wiki"
 
 # kill focused window
 bindsym $mod+q kill
@@ -474,7 +474,7 @@ exec --no-startup-id /usr/bin/dunst
 #exec_always --no-startup-id autotiling
 
 # Autostart apps as you like
-exec --no-startup-id sleep 1 && i3-msg "workspace $ws1" && wiki
+exec --no-startup-id sleep 1 && i3-msg "workspace $ws1" && "open_sexy_window wiki"
 exec --no-startup-id sleep 3 && i3-msg "workspace $ws2" && kitty
 exec --no-startup-id sleep 5 && i3-msg "workspace $ws3" && firefox
 

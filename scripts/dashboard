@@ -1,0 +1,52 @@
+#!/bin/bash
+
+session_name='dashboard'
+
+tmux has-session -t $session_name
+if [ $? != 0 ]
+then
+
+    # SESSION
+
+    cd ~
+    tmux new-session               -ds $session_name
+    tmux set-window-option          -t $session_name     allow-rename off
+    tmux rename-window              -t $session_name:0   random-overview
+
+    # GENERAL OPTIONS / DESIGN
+
+    tmux set                        -g status-style bg=red
+    tmux set                        -g status-style bg=red
+    tmux set                        -g pane-border-style "fg=white"
+    tmux set                        -g pane-active-border-style "bg=default fg=red"
+    # tmux set                        -g window-style "fg=#E4E2E1 bg=#332E33"
+    # tmux set                        -g window-active-style "fg=white bg=black"
+
+    # FIRST WINDOW
+
+    tmux send-keys                  -t $session_name:0.0 'wiki' C-m
+    tmux split-window      -h -p 33 -t $session_name:0
+    tmux send-keys                  -t $session_name:0.1 'nvidia-smi -l 5' C-m
+    tmux split-window      -v -p 85 -t $session_name:0
+    tmux send-keys                  -t $session_name:0.2 'top' C-m
+
+    # SECOND WINDOW
+
+    # tmux new-window                 -t $session_name:1
+    # tmux set-window-option          -t $session_name:1   allow-rename off
+    # tmux rename-window              -t $session_name:1   another-overview
+    #
+    # tmux split-window      -h -p 50 -t $session_name:1
+    # tmux split-window      -v -p 50 -t $session_name:1
+    # tmux split-window      -v -p 50 -t $session_name:1
+    #
+    # tmux select-pane                -t 0
+    # tmux split-window      -v -p 50 -t $session_name:1
+    #
+    # # SELECT DEFAULT PANE AFTER OPENING
+
+    tmux select-window              -t $session_name:0
+    tmux select-pane                -t 0
+fi
+
+tmux attach -t $session_name

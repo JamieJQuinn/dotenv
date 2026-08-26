@@ -38,7 +38,7 @@ return {
     })
     vim.lsp.enable('zls')
     vim.lsp.enable('bashls')
-    vim.lsp.enable('clangd')
+    -- vim.lsp.enable('clangd')
     vim.lsp.enable('jsonnet_ls')
   end
 };

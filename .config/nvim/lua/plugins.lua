@@ -60,13 +60,13 @@ return {
       require('onedark').load()
     end
   },
-  -- { // just a fun colourscheme
+  -- { -- just a fun colourscheme
   --   'kungfusheep/mfd.nvim',
   --   lazy = false,
   --   priority = 1000,
-  --   -- config = function()
-  --   --   vim.cmd('colorscheme mfd-lumon')
-  --   -- end,
+  --   config = function()
+  --     vim.cmd('colorscheme mfd-lumon')
+  --   end,
   -- },
   {
     "iamcco/markdown-preview.nvim",
@@ -191,10 +191,31 @@ return {
       end)
     end,
   },
-  {
-    "arborist-ts/arborist.nvim",
+  -- {
+  --   "arborist-ts/arborist.nvim",
+  --   init = function()
+  --     require("arborist").setup()
+  --   end
+  -- },
+{
+    'ggml-org/llama.vim',
     init = function()
-      require("arborist").setup()
-    end
-  },
+        vim.g.llama_config = {
+            auto_fim = false,
+
+		    keymap_fim_trigger =      "<C-f>",
+		    keymap_fim_accept_full =  "<Tab>",
+		    keymap_fim_accept_line =  "<S-Tab>",
+		    keymap_fim_accept_word =  "",
+		    keymap_fim_next =         "<C-J>",
+		    keymap_fim_prev =         "<C-K>",
+		    keymap_inst_trigger =     "",
+		    keymap_inst_rerun =       "",
+		    keymap_inst_continue =    "",
+		    keymap_inst_accept =      "<Tab>",
+		    keymap_inst_cancel =      "<Esc>",
+		    keymap_debug_toggle =     "",
+        }
+    end,
+},
 }

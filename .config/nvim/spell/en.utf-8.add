@@ -10,6 +10,7 @@ MPI
 WebGL
 parallelised
 GPU
+CUDA
 OpenMP
 blog
 CoLab

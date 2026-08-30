@@ -174,23 +174,23 @@ return {
       })
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    lazy = false,
-    branch = "main",
-    init = function()
-      -- Disable entire built-in ftplugin mappings to avoid conflicts.
-      -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
-      vim.g.no_plugin_maps = true
-
-      vim.keymap.set("n", "<leader>L", function()
-        require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
-      end)
-      vim.keymap.set("n", "<leader>H", function()
-        require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
-      end)
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   lazy = false,
+  --   branch = "main",
+  --   init = function()
+  --     -- Disable entire built-in ftplugin mappings to avoid conflicts.
+  --     -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+  --     vim.g.no_plugin_maps = true
+  --
+  --     vim.keymap.set("n", "<leader>L", function()
+  --       require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
+  --     end)
+  --     vim.keymap.set("n", "<leader>H", function()
+  --       require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
+  --     end)
+  --   end,
+  -- },
   -- {
   --   "arborist-ts/arborist.nvim",
   --   init = function()

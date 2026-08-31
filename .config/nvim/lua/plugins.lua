@@ -68,24 +68,24 @@ return {
   --     vim.cmd('colorscheme mfd-lumon')
   --   end,
   -- },
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && yarn install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.g.mkdp_preview_options = {
-        maid = {
-          flowchart = {
-            defaultRenderer = "elk"
-          },
-          securityLevel = "loose",
-        },
-        disable_sync_scroll = 1,
-      }
-    end,
-    ft = { "markdown" },
-  },
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  --   build = "cd app && yarn install",
+  --   init = function()
+  --     vim.g.mkdp_filetypes = { "markdown" }
+  --     vim.g.mkdp_preview_options = {
+  --       maid = {
+  --         flowchart = {
+  --           defaultRenderer = "elk"
+  --         },
+  --         securityLevel = "loose",
+  --       },
+  --       disable_sync_scroll = 1,
+  --     }
+  --   end,
+  --   ft = { "markdown" },
+  -- },
   {
     "stevearc/aerial.nvim",
     -- cmd = "AerialToggle",
@@ -149,6 +149,7 @@ return {
   },
   {
     "godlygeek/tabular",
+    ft = 'markdown',
     event = "BufEnter",
   },
   {
@@ -197,25 +198,30 @@ return {
   --     require("arborist").setup()
   --   end
   -- },
-{
-    'ggml-org/llama.vim',
-    init = function()
-        vim.g.llama_config = {
-            auto_fim = false,
-
-		    keymap_fim_trigger =      "<C-f>",
-		    keymap_fim_accept_full =  "<Tab>",
-		    keymap_fim_accept_line =  "<S-Tab>",
-		    keymap_fim_accept_word =  "",
-		    keymap_fim_next =         "<C-J>",
-		    keymap_fim_prev =         "<C-K>",
-		    keymap_inst_trigger =     "",
-		    keymap_inst_rerun =       "",
-		    keymap_inst_continue =    "",
-		    keymap_inst_accept =      "<Tab>",
-		    keymap_inst_cancel =      "<Esc>",
-		    keymap_debug_toggle =     "",
-        }
-    end,
-},
+  -- {
+  --     'ggml-org/llama.vim',
+  --     init = function()
+  --         vim.g.llama_config = {
+  --             auto_fim = false,
+  --
+  --         keymap_fim_trigger =      "<C-f>",
+  --         keymap_fim_accept_full =  "<Tab>",
+  --         keymap_fim_accept_line =  "<S-Tab>",
+  --         keymap_fim_accept_word =  "",
+  --         keymap_fim_next =         "<C-J>",
+  --         keymap_fim_prev =         "<C-K>",
+  --         keymap_inst_trigger =     "",
+  --         keymap_inst_rerun =       "",
+  --         keymap_inst_continue =    "",
+  --         keymap_inst_accept =      "<Tab>",
+  --         keymap_inst_cancel =      "<Esc>",
+  --         keymap_debug_toggle =     "",
+  --         }
+  --     end,
+  -- },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate'
+  },
 }

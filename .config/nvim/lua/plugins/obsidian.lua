@@ -1,11 +1,8 @@
-local map = vim.keymap.set
-
 return {
   "obsidian-nvim/obsidian.nvim",
-  enabled = true,
   version = "*", -- use latest release, remove to use latest commit
+  -- cmd = 'Obsidian',
   ft = "markdown",
-  ---@module 'obsidian'
   config = function()
     require "helpers.globals"
 
@@ -26,18 +23,28 @@ return {
         },
       },
       frontmatter = {enabled = false},
+      footer = {enabled = false},
+      ui = {enable = false},
+      statusline = {enabled = false},
+      checkbox = {enabled = false},
+
+      picker = {
+        name = "fzf-lua",
+      },
+
       daily_notes = {
         folder = "journal",
         date_format = "%Y-%m-%d",
       },
-      ui = {enable = false},
       note_id_func = require('obsidian.builtin').title_to_slug,
-      -- footer = {
-      --   enabled = true,
-      --   format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
-      --   hl_group = "Comment",
-      --   separator = string.rep("-", 80),
-      -- },
     }
+
+    local actions = require "obsidian.actions"
+    vim.keymap.set("n", "<Tab>", function()
+      actions.nav_link "next"
+    end, { buffer = true, desc = "Go to next link" })
+    vim.keymap.set("n", "<S-Tab>", function()
+      actions.nav_link "prev"
+    end, { buffer = true, desc = "Go to previous link" })
   end
 };

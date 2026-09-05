@@ -2,7 +2,8 @@ return {
   "folke/todo-comments.nvim",
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
-  opts = {
+  config = function ()
+    require("todo-comments").setup{
     signs = false,
     sign_priority = 8,
     keywords = {
@@ -55,7 +56,23 @@ return {
       test = { "Identifier", "#FF00FF" }
     },
     search = {
+      command = "rg",
+      args = {
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--follow",
+      },
       pattern = [[\b(KEYWORDS)]], -- ripgrep regex
     },
   }
+    vim.keymap.set("n", "]t", function()
+      require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
+    end, { desc = "Next todo comment" })
+    vim.keymap.set("n", "[t", function()
+      require("todo-comments").jump_prev({keywords = { "TODO", "HACK" }})
+    end, { desc = "Prev todo comment" })
+  end
 };

@@ -33,21 +33,10 @@ map("n", "]e", function() vim.diagnostic.jump({count = 1, float=true}) end)
 map("n", "[e", function() vim.diagnostic.jump({count = -1, float=true}) end)
 
 -- Make
--- nm('<F5>', '<cmd>make<CR>') // I'm sick of dealing with fn-lock
 nm('<leader>m', '<cmd>make<CR>')
 
 -- Quick toggles
 nm('<leader>gc', '<cmd>Git commit<cr>')
-nm('<leader>a', '<cmd>AerialToggle!<CR>')
-
--- TODOs
-nm('<c-t>', '<cmd>Trouble todo filter = {tag = {TODO}} filter.buf=0<CR>')
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next({keywords = { "TODO", "HACK" }})
-end, { desc = "Next todo comment" })
-vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev({keywords = { "TODO", "HACK" }})
-end, { desc = "Prev todo comment" })
 
 -- Markdown
 vim.keymap.set('v', '<leader>b', 'c**<c-r>"**')
@@ -89,13 +78,12 @@ if (os.getenv("NOTES_DIR")) then
   end)
 end
 
--- LSP {{{
--- map("n", "K", function() vim.lsp.buf.hover() end)
+-- LSP
 map("n", "ga", function() vim.lsp.buf.code_action() end)
 map("n", "gR", function() vim.lsp.buf.rename() end)
 map("n", "gd", function() vim.lsp.buf.definition() end)
 map("n", "gD", function() vim.lsp.buf.declaration() end)
- -- }}}
+map("n", "gfo", function() vim.lsp.buf.format() end)
 
 -- Telescope {{{
 -- nm('<leader>O', '<cmd>Telescope oldfiles<CR>')                                   -- Show recent files
@@ -111,15 +99,6 @@ nm('<leader>fj', '<cmd>FzfLua jumps<CR>')                                  -- Fi
 -- nm('<leader>b', '<cmd>Telescope buffers<CR>')                                    -- Show all buffers
 -- nm('<leader>a', '<cmd>Telescope<CR>')                                            -- Show all commands
 -- nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')              -- Search for dynamic symbols
--- }}}
-
--- ZenMode
-nm('zz', '<cmd>ZenMode<CR>')
-
--- Trouble {{{
-nm('<c-x>', '<cmd>Trouble quickfix toggle<CR>')                                         -- Show all problems in project (with help of LSP)
-nm('gr', '<cmd>Trouble lsp_references focus=true win.position=right<CR>')                                       -- Show use of object in project
--- nm('<c-s>', '<cmd>Trouble symbols toggle focus=false<CR>')                                         -- Show all problems in project (with help of LSP)
 -- }}}
 
 -- Neo Tree {{{

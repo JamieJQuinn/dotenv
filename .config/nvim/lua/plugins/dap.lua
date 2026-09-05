@@ -6,7 +6,9 @@ return {
     "nvim-neotest/nvim-nio",
     "williamboman/mason.nvim",
   },
-  event = "BufEnter",
+  keys = {
+    {"<leader>dd", "<cmd>lua require('dap').continue()<cr>"},
+  },
   config = function()
     local dap = require "dap"
     local ui = require "dapui"
@@ -38,7 +40,6 @@ return {
       require("dapui").eval(nil, { enter = true })
     end)
 
-    vim.keymap.set("n", "<leader>dd", dap.continue)
     vim.keymap.set("n", "<leader>dp", dap.pause)
     vim.keymap.set("n", "<leader>j", dap.down)
     vim.keymap.set("n", "<leader>k", dap.up)

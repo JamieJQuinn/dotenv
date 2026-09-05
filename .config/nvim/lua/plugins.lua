@@ -1,22 +1,38 @@
---[[
-  File: plugins.lua
-  Description: This file needed for loading plugin list into lazy.nvim and loading plugins
-  Info: Use <zo> and <zc> to open and close foldings
-  See: https://github.com/folke/lazy.nvim
-]]
-
 require "helpers/globals"
--- local map = vim.keymap.set
 
 return {
   {
-    "williamboman/mason.nvim",
+    "navarasu/onedark.nvim",
     lazy = false,
-    build = ":MasonUpdate",
-    dependencies = {
-      "neovim/nvim-lspconfig",
+    priority=1000,
+    config = function ()
+      require('onedark').setup {style = 'dark'}
+      require('onedark').load()
+    end
+  },
+  {
+    "stevearc/aerial.nvim",
+    keys = {
+      {"{", '<cmd>AerialPrev<CR>'},
+      {"}", '<cmd>AerialNext<CR>'},
+      {"<leader>a", '<cmd>AerialToggle!<CR>'},
     },
-    opts = {},
+    dependencies = {
+       "nvim-tree/nvim-web-devicons"
+    },
+    opts = {
+      default_direction = "right",
+    }
+  },
+  {
+    "preservim/vim-pencil",
+    ft = {"markdown", "text"},
+    cmd = "Pencil",
+    init = function()
+      vim.g["pencil#wrapModeDefault"] = "soft"
+      vim.g["pencil#autoformat"] = 0
+      vim.g["pencil#conceallevel"] = 0
+    end,
   },
   {
     "ibhagwan/fzf-lua",
@@ -37,6 +53,28 @@ return {
     end
   },
   {
+    "folke/trouble.nvim",
+    keys = {
+      {'<c-t>', '<cmd>Trouble todo filter = {tag = {TODO}} filter.buf=0<CR>'},
+      {'<c-x>', '<cmd>Trouble quickfix toggle<CR>'},
+      {'gr', '<cmd>Trouble lsp_references focus=true win.position=right<CR>'},
+    },
+    cmd = "Trouble",
+    opts = {}, -- Empty opts is necessary!
+    dependencies = { {'nvim-tree/nvim-web-devicons'}}
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate'
+  },
+  {
+    "williamboman/mason.nvim",
+    lazy = false,
+    build = ":MasonUpdate",
+    opts = {},
+  },
+  {
     'L3MON4D3/LuaSnip',
     event = "InsertEnter",
     config = function()
@@ -46,66 +84,8 @@ return {
     end
   },
   {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
-    dependencies = { {'nvim-tree/nvim-web-devicons'}}
-  },
-  {
-    "navarasu/onedark.nvim",
-    lazy = false,
-    priority=1000,
-    config = function ()
-      require('onedark').setup {style = 'dark'}
-      require('onedark').load()
-    end
-  },
-  -- { -- just a fun colourscheme
-  --   'kungfusheep/mfd.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd('colorscheme mfd-lumon')
-  --   end,
-  -- },
-  -- {
-  --   "iamcco/markdown-preview.nvim",
-  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  --   build = "cd app && yarn install",
-  --   init = function()
-  --     vim.g.mkdp_filetypes = { "markdown" }
-  --     vim.g.mkdp_preview_options = {
-  --       maid = {
-  --         flowchart = {
-  --           defaultRenderer = "elk"
-  --         },
-  --         securityLevel = "loose",
-  --       },
-  --       disable_sync_scroll = 1,
-  --     }
-  --   end,
-  --   ft = { "markdown" },
-  -- },
-  {
-    "stevearc/aerial.nvim",
-    -- cmd = "AerialToggle",
-    event = "BufEnter", -- dae this to get immediate access to { and }(see below)
-    dependencies = {
-       "nvim-tree/nvim-web-devicons"
-    },
-    opts = {
-      -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-      on_attach = function(bufnr)
-      -- Jump forwards/backwards with '{' and '}'
-        vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
-        vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
-      end,
-      default_direction = "right",
-    }
-  },
-  {
     "tpope/vim-fugitive",
-    event = "BufEnter",
+    cmd = "Git",
   },
   {
     "AndrewRadev/switch.vim",
@@ -126,102 +106,82 @@ return {
     main = "ibl",
     opts = {},
   },
-  {
-    -- Highlight colours like #AABBCC
-    "brenoprata10/nvim-highlight-colors",
-    event = "BufEnter",
-    opts = {},
-  },
-  {
-    -- Change terminal background to match vim
-    "typicode/bg.nvim",
-    event = "BufEnter",
-  },
-  {
-    "preservim/vim-pencil",
-    ft = {"markdown", "text"},
-    cmd = "Pencil",
-    init = function()
-      vim.g["pencil#wrapModeDefault"] = "soft"
-      vim.g["pencil#autoformat"] = 0
-      vim.g["pencil#conceallevel"] = 0
-    end,
-  },
-  {
-    "godlygeek/tabular",
-    ft = 'markdown',
-    event = "BufEnter",
-  },
-  {
-    "m4xshen/hardtime.nvim", -- GAINS
-    lazy = false,
-  },
-  {
-    "echasnovski/mini.surround",
-    event = "InsertEnter",
-    opts = {},
-  },
-  {
-    'https://codeberg.org/ziglang/zig.vim',
-    ft = "zig",
-    init = function()
-      -- vim.g.zig_fmt_parse_errors = 1
-      -- vim.g.zig_fmt_autosave = 1
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = { "*.zig", "*.zon" },
-        callback = function(ev)
-          vim.lsp.buf.format()
-        end
-      })
-    end,
-  },
   -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   -- Highlight colours like #AABBCC
+  --   "brenoprata10/nvim-highlight-colors",
+  --   event = "BufEnter",
+  --   opts = {},
+  -- },
+  -- {
+  --   "godlygeek/tabular",
+  --   ft = 'markdown',
+  --   event = "BufEnter",
+  -- },
+  -- {
+  --   "m4xshen/hardtime.nvim", -- GAINS
   --   lazy = false,
-  --   branch = "main",
+  -- },
+  -- {
+  --   "echasnovski/mini.surround",
+  --   event = "InsertEnter",
+  --   opts = {},
+  -- },
+  -- {
+  --   'https://codeberg.org/ziglang/zig.vim',
+  --   ft = "zig",
   --   init = function()
-  --     -- Disable entire built-in ftplugin mappings to avoid conflicts.
-  --     -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
-  --     vim.g.no_plugin_maps = true
-  --
-  --     vim.keymap.set("n", "<leader>L", function()
-  --       require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
-  --     end)
-  --     vim.keymap.set("n", "<leader>H", function()
-  --       require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
-  --     end)
+  --     -- vim.g.zig_fmt_parse_errors = 1
+  --     -- vim.g.zig_fmt_autosave = 1
+  --     vim.api.nvim_create_autocmd('BufWritePre', {
+  --       pattern = { "*.zig", "*.zon" },
+  --       callback = function(ev)
+  --         vim.lsp.buf.format()
+  --       end
+  --     })
   --   end,
   -- },
-  -- {
-  --   "arborist-ts/arborist.nvim",
-  --   init = function()
-  --     require("arborist").setup()
-  --   end
-  -- },
-  -- {
-  --     'ggml-org/llama.vim',
-  --     init = function()
-  --         vim.g.llama_config = {
-  --             auto_fim = false,
-  --
-  --         keymap_fim_trigger =      "<C-f>",
-  --         keymap_fim_accept_full =  "<Tab>",
-  --         keymap_fim_accept_line =  "<S-Tab>",
-  --         keymap_fim_accept_word =  "",
-  --         keymap_fim_next =         "<C-J>",
-  --         keymap_fim_prev =         "<C-K>",
-  --         keymap_inst_trigger =     "",
-  --         keymap_inst_rerun =       "",
-  --         keymap_inst_continue =    "",
-  --         keymap_inst_accept =      "<Tab>",
-  --         keymap_inst_cancel =      "<Esc>",
-  --         keymap_debug_toggle =     "",
-  --         }
-  --     end,
-  -- },
-  {
-    'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    build = ':TSUpdate'
-  },
+  -- -- {
+  -- --   "nvim-treesitter/nvim-treesitter-textobjects",
+  -- --   lazy = false,
+  -- --   branch = "main",
+  -- --   init = function()
+  -- --     -- Disable entire built-in ftplugin mappings to avoid conflicts.
+  -- --     -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+  -- --     vim.g.no_plugin_maps = true
+  -- --
+  -- --     vim.keymap.set("n", "<leader>L", function()
+  -- --       require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
+  -- --     end)
+  -- --     vim.keymap.set("n", "<leader>H", function()
+  -- --       require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
+  -- --     end)
+  -- --   end,
+  -- -- },
+  -- -- {
+  -- --   "arborist-ts/arborist.nvim",
+  -- --   init = function()
+  -- --     require("arborist").setup()
+  -- --   end
+  -- -- },
+  -- -- {
+  -- --     'ggml-org/llama.vim',
+  -- --     init = function()
+  -- --         vim.g.llama_config = {
+  -- --             auto_fim = false,
+  -- --
+  -- --         keymap_fim_trigger =      "<C-f>",
+  -- --         keymap_fim_accept_full =  "<Tab>",
+  -- --         keymap_fim_accept_line =  "<S-Tab>",
+  -- --         keymap_fim_accept_word =  "",
+  -- --         keymap_fim_next =         "<C-J>",
+  -- --         keymap_fim_prev =         "<C-K>",
+  -- --         keymap_inst_trigger =     "",
+  -- --         keymap_inst_rerun =       "",
+  -- --         keymap_inst_continue =    "",
+  -- --         keymap_inst_accept =      "<Tab>",
+  -- --         keymap_inst_cancel =      "<Esc>",
+  -- --         keymap_debug_toggle =     "",
+  -- --         }
+  -- --     end,
+  -- -- },
 }
